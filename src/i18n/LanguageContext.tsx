@@ -24,10 +24,9 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   const t = translations[lang];
   const isRtl = RTL_LANGUAGES.includes(lang);
 
-  const basePath = import.meta.env.PROD ? '/clinics/temelci' : '';
-
   const setLang = (newLang: Language) => {
     const currentPath = window.location.pathname;
+    const basePath = import.meta.env.PROD ? '/clinics/temelci' : '';
     const routeWithoutBase = currentPath.replace(basePath + '/', '/');
     
     const pathParts = routeWithoutBase.split('/').filter(Boolean);
@@ -38,10 +37,10 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       pathParts.unshift(newLang);
     }
     
-    navigate(basePath + '/' + pathParts.join('/'));
+    navigate('/' + pathParts.join('/'));
   };
 
-  const localePath = (path: string) => `${basePath}/${lang}${path}`;
+  const localePath = (path: string) => `/${lang}${path}`;
 
   const value = useMemo(() => ({
     lang, t, isRtl, setLang, languages: LANGUAGES, localePath
