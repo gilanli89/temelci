@@ -37,7 +37,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     navigate('/' + pathParts.join('/'));
   };
 
-  const localePath = (path: string) => `/${lang}${path}`;
+  const localePath = (path: string) => `/clinics/temelci/${lang}${path}`;
 
   const value = useMemo(() => ({
     lang, t, isRtl, setLang, languages: LANGUAGES, localePath
