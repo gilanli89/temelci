@@ -228,7 +228,7 @@ export const translations: Record<Language, TranslationKeys> = {
     viewAll: 'View All',
     getStarted: 'Get Started',
     ourLocation: 'Our Location',
-    clinicLocation: 'Lefkoşa, Northern Cyprus',
+    clinicLocation: 'Kyrenia (Girne), Northern Cyprus',
     benefits: 'Benefits',
     whoIsItFor: 'Who Is It For?',
     treatmentProcess: 'Treatment Process',
