@@ -700,7 +700,7 @@ export const translations: Record<Language, TranslationKeys> = {
     faq: 'שאלות נפוצות',
     heroTitle: 'החיוך המושלם שלך מתחיל בקפריסין',
     heroSubtitle: 'מרפאת שיניים טמלג\'י',
-    heroDescription: 'טיפולי שיניים ברמה עולמית עם ד"ר נורל טמלג\'י. שנו את החיוך שלכם עם הוליווד סמייל, שתלים, ציפויים ועוד.',
+    heroDescription: 'טיפולי שיניים ברמה עולמית במרפאת Temelci בקירניה, צפון קפריסין. שנו את החיוך שלכם עם הוליווד סמייל, שתלים, ציפויים ועוד.',
     bookWhatsApp: 'הזמן בוואטסאפ',
     freeConsultation: 'ייעוץ חינם',
     sendSmilePhotos: 'שלח תמונות חיוך',
