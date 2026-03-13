@@ -370,7 +370,7 @@ export const translations: Record<Language, TranslationKeys> = {
     faq: 'Συχνές Ερωτήσεις',
     heroTitle: 'Το Τέλειο Χαμόγελό Σας Ξεκινά στην Κύπρο',
     heroSubtitle: 'Οδοντιατρική Κλινική Temelci',
-    heroDescription: 'Οδοντιατρική φροντίδα παγκόσμιας κλάσης με τον Δρ. Nural Temelci. Μεταμορφώστε το χαμόγελό σας με Hollywood Smile, εμφυτεύματα και πολλά άλλα.',
+    heroDescription: 'Οδοντιατρική φροντίδα παγκόσμιας κλάσης στην κλινική Temelci στην Κερύνεια, Βόρεια Κύπρος. Μεταμορφώστε το χαμόγελό σας με Hollywood Smile, εμφυτεύματα και πολλά άλλα.',
     bookWhatsApp: 'Κράτηση μέσω WhatsApp',
     freeConsultation: 'Δωρεάν Συμβουλευτική',
     sendSmilePhotos: 'Στείλτε τις Φωτογραφίες σας',
