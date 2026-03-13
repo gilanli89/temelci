@@ -778,7 +778,7 @@ export const translations: Record<Language, TranslationKeys> = {
     viewAll: 'הצג הכל',
     getStarted: 'התחל',
     ourLocation: 'המיקום שלנו',
-    clinicLocation: 'לפקושה, צפון קפריסין',
+    clinicLocation: 'קירניה (גירנה), צפון קפריסין',
     benefits: 'יתרונות',
     whoIsItFor: 'למי זה מתאים?',
     treatmentProcess: 'תהליך הטיפול',
