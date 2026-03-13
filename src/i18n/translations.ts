@@ -810,7 +810,7 @@ export const translations: Record<Language, TranslationKeys> = {
     faq: 'FAQ',
     heroTitle: 'Ihr Perfektes Lächeln Beginnt auf Zypern',
     heroSubtitle: 'Temelci Zahnklinik',
-    heroDescription: 'Zahnmedizin auf Weltniveau mit Dr. Nural Temelci. Verwandeln Sie Ihr Lächeln mit Hollywood Smile, Implantaten, Veneers und mehr.',
+    heroDescription: 'Zahnmedizin auf Weltniveau in der Temelci Zahnklinik in Kyrenia, Nordzypern. Verwandeln Sie Ihr Lächeln mit Hollywood Smile, Implantaten, Veneers und mehr.',
     bookWhatsApp: 'Über WhatsApp buchen',
     freeConsultation: 'Kostenlose Beratung',
     sendSmilePhotos: 'Lächeln-Fotos senden',
