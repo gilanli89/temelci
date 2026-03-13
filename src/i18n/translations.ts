@@ -150,7 +150,7 @@ export const translations: Record<Language, TranslationKeys> = {
     faq: 'FAQ',
     heroTitle: 'Your Perfect Smile Starts in Cyprus',
     heroSubtitle: 'Temelci Dental Clinic',
-    heroDescription: 'World-class dental care with Dr. Nural Temelci. Transform your smile with Hollywood Smile, implants, veneers and more — at a fraction of the cost.',
+    heroDescription: 'World-class dental care at Temelci Dental Clinic in Kyrenia, Northern Cyprus. Transform your smile with Hollywood Smile, implants, veneers and more — at a fraction of the cost.',
     bookWhatsApp: 'Book on WhatsApp',
     freeConsultation: 'Get Free Consultation',
     sendSmilePhotos: 'Send Your Smile Photos',
