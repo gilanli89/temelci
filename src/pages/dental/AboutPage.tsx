@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
-import { Award, GraduationCap, Globe, Heart } from 'lucide-react';
-import doctorImg from '@/assets/doctor-portrait.jpg';
+import { Award, GraduationCap, Globe, Heart, MapPin } from 'lucide-react';
+import heroImg from '@/assets/hero-clinic.jpg';
 
 const AboutPage = () => {
   const { t } = useLanguage();
@@ -20,7 +20,7 @@ const AboutPage = () => {
         <div className="container-dental max-w-5xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <img src={doctorImg} alt={t.aboutDoctorName} className="rounded-2xl shadow-lg w-full" />
+              <img src={heroImg} alt="Temelci Dental Clinic" className="rounded-2xl shadow-lg w-full" />
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <h2 className="heading-section mb-4">{t.aboutDoctorName}</h2>
@@ -41,6 +41,13 @@ const AboutPage = () => {
                 <div className="flex items-center gap-3">
                   <Heart className="h-6 w-6 text-primary" />
                   <span className="text-sm font-medium">10,000+ {t.happyPatients}</span>
+                </div>
+              </div>
+              <div className="flex items-start gap-3 p-4 bg-primary/5 rounded-xl mb-6">
+                <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium">{t.ourLocation}</p>
+                  <p className="text-sm text-muted-foreground">{t.clinicLocation}</p>
                 </div>
               </div>
               <WhatsAppButton text={t.freeConsultation} />
