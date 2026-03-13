@@ -558,7 +558,7 @@ export const translations: Record<Language, TranslationKeys> = {
     viewAll: 'Смотреть Все',
     getStarted: 'Начать',
     ourLocation: 'Наше Расположение',
-    clinicLocation: 'Лефкоша, Северный Кипр',
+    clinicLocation: 'Кирения (Гирне), Северный Кипр',
     benefits: 'Преимущества',
     whoIsItFor: 'Для Кого?',
     treatmentProcess: 'Процесс Лечения',
