@@ -888,7 +888,7 @@ export const translations: Record<Language, TranslationKeys> = {
     viewAll: 'Alle Anzeigen',
     getStarted: 'Loslegen',
     ourLocation: 'Unser Standort',
-    clinicLocation: 'Lefkoşa, Nordzypern',
+    clinicLocation: 'Kyrenia (Girne), Nordzypern',
     benefits: 'Vorteile',
     whoIsItFor: 'Für Wen?',
     treatmentProcess: 'Behandlungsablauf',
