@@ -668,7 +668,7 @@ export const translations: Record<Language, TranslationKeys> = {
     viewAll: 'عرض الكل',
     getStarted: 'ابدأ الآن',
     ourLocation: 'موقعنا',
-    clinicLocation: 'لفكوشا، شمال قبرص',
+    clinicLocation: 'كيرينيا (جيرنه)، شمال قبرص',
     benefits: 'الفوائد',
     whoIsItFor: 'لمن هو مناسب؟',
     treatmentProcess: 'مراحل العلاج',
