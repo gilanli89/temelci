@@ -83,7 +83,7 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Sonner />
-      <BrowserRouter basename="/clinics/temelci">
+      <BrowserRouter basename={import.meta.env.PROD ? "/clinics/temelci" : ""}>
         <Routes>
           <Route path="/" element={<Navigate to="/en" replace />} />
           <Route path="/:lang/*" element={<LangRoutes />} />
