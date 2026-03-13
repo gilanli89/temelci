@@ -448,7 +448,7 @@ export const translations: Record<Language, TranslationKeys> = {
     viewAll: 'Δείτε Όλα',
     getStarted: 'Ξεκινήστε',
     ourLocation: 'Τοποθεσία',
-    clinicLocation: 'Λευκωσία, Βόρεια Κύπρος',
+    clinicLocation: 'Κερύνεια (Γκιρνέ), Βόρεια Κύπρος',
     benefits: 'Οφέλη',
     whoIsItFor: 'Για Ποιους Είναι;',
     treatmentProcess: 'Διαδικασία',
