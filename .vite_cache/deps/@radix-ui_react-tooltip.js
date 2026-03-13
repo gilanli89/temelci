@@ -1,10 +1,10 @@
 "use client";
 import {
+  require_react_dom
+} from "./chunk-5UNB55DE.js";
+import {
   require_jsx_runtime
 } from "./chunk-QKY2CS7C.js";
-import {
-  require_react_dom
-} from "./chunk-SO43GD6T.js";
 import {
   require_react
 } from "./chunk-HQJSOCRU.js";
