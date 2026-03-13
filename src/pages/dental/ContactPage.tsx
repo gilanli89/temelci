@@ -91,7 +91,7 @@ const ContactPage = () => {
         <div className="container-dental max-w-5xl">
           <div className="rounded-2xl overflow-hidden border border-border">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3260.5!2d33.36!3d35.19!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDExJzI0LjAiTiAzM8KwMjEnMzYuMCJF!5e0!3m2!1sen!2s!4v1"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3260.5!2d33.3417!3d35.3406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14de6b6a6b6b6b6b%3A0x6b6b6b6b6b6b6b6b!2sKyrenia%2C%20Northern%20Cyprus!5e0!3m2!1sen!2s!4v1"
               width="100%" height="350" style={{ border: 0 }} allowFullScreen loading="lazy" title="Google Maps" />
           </div>
         </div>
