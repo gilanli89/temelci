@@ -4,8 +4,9 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
+const isProduction = mode === "production";
 export default defineConfig(({ mode }) => ({
-  base: "/clinics/temelci/",
+  base: isProduction ? "/clinics/temelci/" : "/",
   server: {
     host: "::",
     port: 8080,
