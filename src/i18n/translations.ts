@@ -260,7 +260,7 @@ export const translations: Record<Language, TranslationKeys> = {
     faq: 'SSS',
     heroTitle: 'Mükemmel Gülüşünüz Kıbrıs\'ta Başlıyor',
     heroSubtitle: 'Temelci Diş Kliniği',
-    heroDescription: 'Dr. Nural Temelci ile dünya standartlarında diş bakımı. Hollywood Smile, implant, veneer ve daha fazlasıyla gülüşünüzü dönüştürün.',
+    heroDescription: 'Girne, Kuzey Kıbrıs\'taki Temelci Diş Kliniği\'nde dünya standartlarında diş bakımı. Hollywood Smile, implant, veneer ve daha fazlasıyla gülüşünüzü dönüştürün.',
     bookWhatsApp: 'WhatsApp\'tan Randevu Al',
     freeConsultation: 'Ücretsiz Konsültasyon',
     sendSmilePhotos: 'Gülüş Fotoğraflarınızı Gönderin',
