@@ -338,7 +338,7 @@ export const translations: Record<Language, TranslationKeys> = {
     viewAll: 'Tümünü Gör',
     getStarted: 'Başlayın',
     ourLocation: 'Konumumuz',
-    clinicLocation: 'Lefkoşa, Kuzey Kıbrıs',
+    clinicLocation: 'Girne, Kuzey Kıbrıs',
     benefits: 'Faydalar',
     whoIsItFor: 'Kimler İçin?',
     treatmentProcess: 'Tedavi Süreci',
