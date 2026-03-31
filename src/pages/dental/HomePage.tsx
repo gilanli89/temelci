@@ -30,7 +30,7 @@ const HomePage = () => {
   ];
 
   const stats = [
-    { value: '25+', label: t.yearsExperience },
+    { value: '30+', label: t.yearsExperience },
     { value: '10,000+', label: t.happyPatients },
     { value: '15,000+', label: t.treatments_count },
     { value: '30+', label: t.countriesServed },
