@@ -12,6 +12,7 @@ import ReviewsPage from "./pages/dental/ReviewsPage";
 import SocialPage from "./pages/dental/SocialPage";
 import AboutPage from "./pages/dental/AboutPage";
 import ContactPage from "./pages/dental/ContactPage";
+import LandingPage from "./pages/dental/LandingPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const LangRoutes = () => (
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
+        <Route path="landing" element={<LandingPage />} />
         <Route path="treatments" element={<TreatmentsPage />} />
         <Route path="tedaviler" element={<TreatmentsPage />} />
         <Route path="therapies" element={<TreatmentsPage />} />
