@@ -41,6 +41,7 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">{t.home}</h4>
             <div className="space-y-2">
+              <Link to={localePath(`/${t.aboutSlug}#doctors`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.ourTeam}</Link>
               <Link to={localePath(`/${t.beforeAfterSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.beforeAfter}</Link>
               <Link to={localePath(`/${t.reviewsSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.reviews}</Link>
               <Link to={localePath(`/${t.aboutSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.about}</Link>

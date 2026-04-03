@@ -14,9 +14,9 @@ export const Navbar = () => {
   const navLinks = [
     { label: t.home, path: '' },
     { label: t.treatments, path: `/${t.treatmentsSlug}` },
+    { label: t.ourTeam, path: `/${t.aboutSlug}#doctors` },
     { label: t.beforeAfter, path: `/${t.beforeAfterSlug}` },
     { label: t.reviews, path: `/${t.reviewsSlug}` },
-    { label: t.social, path: `/${t.socialSlug}` },
     { label: t.about, path: `/${t.aboutSlug}` },
     { label: t.contact, path: `/${t.contactSlug}` },
   ];

@@ -126,6 +126,8 @@ export type TranslationKeys = {
   treatmentProcess: string;
   expectedResults: string;
   readyToStart: string;
+  // Team nav label
+  ourTeam: string;
   // Routes (for URL slugs)
   treatmentsSlug: string;
   beforeAfterSlug: string;
@@ -244,6 +246,7 @@ export const translations: Record<Language, TranslationKeys> = {
     treatmentProcess: 'Treatment Process',
     expectedResults: 'Expected Results',
     readyToStart: 'Ready to Get Started?',
+    ourTeam: 'Our Team',
     treatmentsSlug: 'treatments',
     beforeAfterSlug: 'before-after',
     reviewsSlug: 'reviews',
@@ -358,6 +361,7 @@ export const translations: Record<Language, TranslationKeys> = {
     treatmentProcess: 'Tedavi Süreci',
     expectedResults: 'Beklenen Sonuçlar',
     readyToStart: 'Başlamaya Hazır mısınız?',
+    ourTeam: 'Ekibimiz',
     treatmentsSlug: 'tedaviler',
     beforeAfterSlug: 'once-sonra',
     reviewsSlug: 'yorumlar',
@@ -472,6 +476,7 @@ export const translations: Record<Language, TranslationKeys> = {
     treatmentProcess: 'Διαδικασία',
     expectedResults: 'Αναμενόμενα Αποτελέσματα',
     readyToStart: 'Έτοιμοι να Ξεκινήσετε;',
+    ourTeam: 'Η Ομάδα μας',
     treatmentsSlug: 'therapies',
     beforeAfterSlug: 'prin-meta',
     reviewsSlug: 'kritikes',
@@ -586,6 +591,7 @@ export const translations: Record<Language, TranslationKeys> = {
     treatmentProcess: 'Процесс Лечения',
     expectedResults: 'Ожидаемые Результаты',
     readyToStart: 'Готовы Начать?',
+    ourTeam: 'Наша Команда',
     treatmentsSlug: 'lechenie',
     beforeAfterSlug: 'do-posle',
     reviewsSlug: 'otzyvy',
@@ -700,6 +706,7 @@ export const translations: Record<Language, TranslationKeys> = {
     treatmentProcess: 'مراحل العلاج',
     expectedResults: 'النتائج المتوقعة',
     readyToStart: 'مستعد للبدء؟',
+    ourTeam: 'فريقنا',
     treatmentsSlug: 'al-ilajat',
     beforeAfterSlug: 'qabl-baad',
     reviewsSlug: 'taqyimat',
@@ -814,6 +821,7 @@ export const translations: Record<Language, TranslationKeys> = {
     treatmentProcess: 'תהליך הטיפול',
     expectedResults: 'תוצאות צפויות',
     readyToStart: 'מוכנים להתחיל?',
+    ourTeam: 'הצוות שלנו',
     treatmentsSlug: 'tipulim',
     beforeAfterSlug: 'lifnei-acharei',
     reviewsSlug: 'bikorot',
@@ -928,6 +936,7 @@ export const translations: Record<Language, TranslationKeys> = {
     treatmentProcess: 'Behandlungsablauf',
     expectedResults: 'Erwartete Ergebnisse',
     readyToStart: 'Bereit Loszulegen?',
+    ourTeam: 'Unser Team',
     treatmentsSlug: 'behandlungen',
     beforeAfterSlug: 'vorher-nachher',
     reviewsSlug: 'bewertungen',
@@ -1042,6 +1051,7 @@ export const translations: Record<Language, TranslationKeys> = {
     treatmentProcess: 'فرآیند درمان',
     expectedResults: 'نتایج مورد انتظار',
     readyToStart: 'آماده شروع هستید؟',
+    ourTeam: 'تیم ما',
     treatmentsSlug: 'darman-ha',
     beforeAfterSlug: 'pish-pas',
     reviewsSlug: 'nazar',
