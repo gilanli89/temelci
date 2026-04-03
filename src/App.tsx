@@ -30,6 +30,7 @@ const LangRoutes = () => (
         <Route path="al-ilajat" element={<TreatmentsPage />} />
         <Route path="tipulim" element={<TreatmentsPage />} />
         <Route path="behandlungen" element={<TreatmentsPage />} />
+        <Route path="darman-ha" element={<TreatmentsPage />} />
         <Route path="before-after" element={<BeforeAfterPage />} />
         <Route path="once-sonra" element={<BeforeAfterPage />} />
         <Route path="prin-meta" element={<BeforeAfterPage />} />
@@ -37,6 +38,7 @@ const LangRoutes = () => (
         <Route path="qabl-baad" element={<BeforeAfterPage />} />
         <Route path="lifnei-acharei" element={<BeforeAfterPage />} />
         <Route path="vorher-nachher" element={<BeforeAfterPage />} />
+        <Route path="pish-pas" element={<BeforeAfterPage />} />
         <Route path="reviews" element={<ReviewsPage />} />
         <Route path="yorumlar" element={<ReviewsPage />} />
         <Route path="kritikes" element={<ReviewsPage />} />
@@ -44,6 +46,7 @@ const LangRoutes = () => (
         <Route path="taqyimat" element={<ReviewsPage />} />
         <Route path="bikorot" element={<ReviewsPage />} />
         <Route path="bewertungen" element={<ReviewsPage />} />
+        <Route path="nazar" element={<ReviewsPage />} />
         <Route path="social" element={<SocialPage />} />
         <Route path="sosyal" element={<SocialPage />} />
         <Route path="koinonika" element={<SocialPage />} />
@@ -51,6 +54,7 @@ const LangRoutes = () => (
         <Route path="tawasol" element={<SocialPage />} />
         <Route path="hevrati" element={<SocialPage />} />
         <Route path="soziales" element={<SocialPage />} />
+        <Route path="ejtemai" element={<SocialPage />} />
         <Route path="about" element={<AboutPage />} />
         <Route path="hakkimizda" element={<AboutPage />} />
         <Route path="sxetika" element={<AboutPage />} />
@@ -58,6 +62,7 @@ const LangRoutes = () => (
         <Route path="an-na" element={<AboutPage />} />
         <Route path="odot" element={<AboutPage />} />
         <Route path="ueber-uns" element={<AboutPage />} />
+        <Route path="darbare" element={<AboutPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="iletisim" element={<ContactPage />} />
         <Route path="epikoinonia" element={<ContactPage />} />
@@ -65,6 +70,7 @@ const LangRoutes = () => (
         <Route path="ittisal" element={<ContactPage />} />
         <Route path="tsorkesher" element={<ContactPage />} />
         <Route path="kontakt" element={<ContactPage />} />
+        <Route path="tamas" element={<ContactPage />} />
         <Route path=":treatmentSlug" element={<TreatmentDetailPage />} />
       </Route>
     </Routes>
