@@ -13,6 +13,8 @@ import SocialPage from "./pages/dental/SocialPage";
 import AboutPage from "./pages/dental/AboutPage";
 import ContactPage from "./pages/dental/ContactPage";
 import LandingPage from "./pages/dental/LandingPage";
+import HollywoodSmileLanding from "./pages/dental/HollywoodSmileLanding";
+import AllOn4Landing from "./pages/dental/AllOn4Landing";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +23,8 @@ const LangRoutes = () => (
   <LanguageProvider>
     <Routes>
       <Route path="landing" element={<LandingPage />} />
+      <Route path="landing/hollywood-smile" element={<HollywoodSmileLanding />} />
+      <Route path="landing/allon4" element={<AllOn4Landing />} />
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="treatments" element={<TreatmentsPage />} />
