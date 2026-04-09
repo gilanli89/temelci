@@ -4,7 +4,9 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from './WhatsAppButton';
 
-export const Navbar = () => {
+export const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
+
+const Navbar = () => {
   const { t, lang, setLang, languages, localePath } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
@@ -24,7 +26,7 @@ export const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
       <div className="container-dental flex items-center justify-between h-16 md:h-20 px-4">
-        <Link to={localePath('')} className="flex items-center gap-2">
+        <Link to={localePath('')} onClick={scrollToTop} className="flex items-center gap-2">
           <span className="text-xl md:text-2xl font-display font-bold text-primary">Temelci</span>
           <span className="text-xs font-body text-muted-foreground uppercase tracking-widest">Dental</span>
         </Link>
@@ -32,7 +34,7 @@ export const Navbar = () => {
         {/* Desktop */}
         <div className="hidden lg:flex items-center gap-6">
           {navLinks.map(link => (
-            <Link key={link.path} to={localePath(link.path)}
+            <Link key={link.path} to={localePath(link.path)} onClick={scrollToTop}
               className="text-sm font-medium text-foreground/80 hover:text-primary transition-colors">
               {link.label}
             </Link>
@@ -74,7 +76,7 @@ export const Navbar = () => {
         <div className="lg:hidden bg-card border-b border-border">
           <div className="px-4 py-4 space-y-1">
             {navLinks.map(link => (
-              <Link key={link.path} to={localePath(link.path)}
+              <Link key={link.path} to={localePath(link.path)} onClick={scrollToTop}
                 onClick={() => setIsOpen(false)}
                 className="block py-3 text-sm font-medium text-foreground/80 hover:text-primary border-b border-border/50">
                 {link.label}

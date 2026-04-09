@@ -3,6 +3,8 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from './WhatsAppButton';
 import { MapPin, Phone, Mail } from 'lucide-react';
 
+const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
 export const Footer = () => {
   const { t, localePath } = useLanguage();
 
@@ -30,10 +32,10 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">{t.treatments}</h4>
             <div className="space-y-2">
-              <Link to={localePath(`/${t.hollywoodSmileSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.hollywoodSmile}</Link>
-              <Link to={localePath(`/${t.implantsSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.dentalImplants}</Link>
-              <Link to={localePath(`/${t.veneersSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.veneers}</Link>
-              <Link to={localePath(`/${t.crownsSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.crowns}</Link>
+              <Link to={localePath(`/${t.hollywoodSmileSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.hollywoodSmile}</Link>
+              <Link to={localePath(`/${t.implantsSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.dentalImplants}</Link>
+              <Link to={localePath(`/${t.veneersSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.veneers}</Link>
+              <Link to={localePath(`/${t.crownsSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.crowns}</Link>
             </div>
           </div>
 
@@ -41,11 +43,11 @@ export const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">{t.home}</h4>
             <div className="space-y-2">
-              <Link to={localePath(`/${t.aboutSlug}#doctors`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.ourTeam}</Link>
-              <Link to={localePath(`/${t.beforeAfterSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.beforeAfter}</Link>
-              <Link to={localePath(`/${t.reviewsSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.reviews}</Link>
-              <Link to={localePath(`/${t.aboutSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.about}</Link>
-              <Link to={localePath(`/${t.contactSlug}`)} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.contact}</Link>
+              <Link to={localePath(`/${t.aboutSlug}#doctors`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.ourTeam}</Link>
+              <Link to={localePath(`/${t.beforeAfterSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.beforeAfter}</Link>
+              <Link to={localePath(`/${t.reviewsSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.reviews}</Link>
+              <Link to={localePath(`/${t.aboutSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.about}</Link>
+              <Link to={localePath(`/${t.contactSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.contact}</Link>
             </div>
           </div>
 
