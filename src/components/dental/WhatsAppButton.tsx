@@ -1,7 +1,7 @@
 import { MessageCircle } from 'lucide-react';
 import { forwardRef } from 'react';
 
-const WHATSAPP_NUMBER = '905391104212';
+const WHATSAPP_NUMBER = '905338229445';
 
 type WhatsAppButtonProps = {
   text: string;

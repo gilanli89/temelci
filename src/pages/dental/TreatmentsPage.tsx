@@ -6,19 +6,24 @@ import { Sparkles, Shield, Star, Crown, Award, Zap, Heart, ChevronRight } from '
 import implantImg from '@/assets/dental-implant.jpg';
 import veneersImg from '@/assets/veneers.jpg';
 import crownsImg from '@/assets/crowns.jpg';
+import hollywoodSmileImg from '@/assets/hollywood-smile.jpg';
+import teethWhiteningImg from '@/assets/teeth-whitening.jpg';
+import zirconiaCrownsImg from '@/assets/zirconia-crowns.jpg';
+import smileMakeoverImg from '@/assets/smile-makeover.jpg';
+import fullMouthImg from '@/assets/full-mouth-restoration.jpg';
 
 const TreatmentsPage = () => {
   const { t, localePath } = useLanguage();
 
   const treatments = [
-    { name: t.hollywoodSmile, desc: t.hollywoodSmileDesc, slug: t.hollywoodSmileSlug, img: veneersImg, icon: Sparkles },
+    { name: t.hollywoodSmile, desc: t.hollywoodSmileDesc, slug: t.hollywoodSmileSlug, img: hollywoodSmileImg, icon: Sparkles },
     { name: t.dentalImplants, desc: t.dentalImplantsDesc, slug: t.implantsSlug, img: implantImg, icon: Shield },
     { name: t.veneers, desc: t.veneersDesc, slug: t.veneersSlug, img: veneersImg, icon: Star },
     { name: t.crowns, desc: t.crownsDesc, slug: t.crownsSlug, img: crownsImg, icon: Crown },
-    { name: t.zirconiaCrowns, desc: t.zirconiaCrownsDesc, slug: t.zirconiaCrownsSlug, img: crownsImg, icon: Award },
-    { name: t.teethWhitening, desc: t.teethWhiteningDesc, slug: t.teethWhiteningSlug, img: veneersImg, icon: Zap },
-    { name: t.smileMakeover, desc: t.smileMakeoverDesc, slug: t.smileMakeoverSlug, img: veneersImg, icon: Heart },
-    { name: t.fullMouthRestoration, desc: t.fullMouthRestorationDesc, slug: t.fullMouthRestorationSlug, img: implantImg, icon: Shield },
+    { name: t.zirconiaCrowns, desc: t.zirconiaCrownsDesc, slug: t.zirconiaCrownsSlug, img: zirconiaCrownsImg, icon: Award },
+    { name: t.teethWhitening, desc: t.teethWhiteningDesc, slug: t.teethWhiteningSlug, img: teethWhiteningImg, icon: Zap },
+    { name: t.smileMakeover, desc: t.smileMakeoverDesc, slug: t.smileMakeoverSlug, img: smileMakeoverImg, icon: Heart },
+    { name: t.fullMouthRestoration, desc: t.fullMouthRestorationDesc, slug: t.fullMouthRestorationSlug, img: fullMouthImg, icon: Shield },
   ];
 
   return (
