@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { Award, GraduationCap, Globe, Heart, MapPin, Stethoscope, Clock, Users } from 'lucide-react';
@@ -71,7 +72,7 @@ const bgColors = [
 ];
 
 const AboutPage = () => {
-  const { t, lang } = useLanguage();
+  const { t, lang, localePath } = useLanguage();
 
   return (
     <>
@@ -173,6 +174,16 @@ const AboutPage = () => {
                   </div>
 
                   <p className="text-sm text-foreground/70 leading-relaxed">{doc.bio[lang]}</p>
+                  {doc.initials === 'SK' && (
+                    <div className="mt-4 pt-4 border-t border-border">
+                      <Link
+                        to={localePath('/dr-serife-kole')}
+                        className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
+                      >
+                        📚 {lang === 'tr' ? 'Akademik profil ve yayınlar →' : 'View academic profile & publications →'}
+                      </Link>
+                    </div>
+                  )}
                 </div>
               </motion.div>
             ))}
