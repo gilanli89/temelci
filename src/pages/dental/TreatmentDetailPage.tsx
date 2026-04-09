@@ -23,7 +23,7 @@ type TreatmentData = {
   faq: { q: string; a: string }[];
 };
 
-const getTreatmentData = (slug: string, t: any): TreatmentData | null => {
+const getTreatmentData = (slug: string, t: any, lang: string = "en"): TreatmentData | null => {
   const data: Record<string, TreatmentData> = {
     [t.hollywoodSmileSlug]: {
       titleKey: 'hollywoodSmile',
@@ -381,14 +381,374 @@ const getTreatmentData = (slug: string, t: any): TreatmentData | null => {
     },
   };
 
-  return data[slug] || null;
+
+  // Turkish translations for treatment detail pages
+  const trData: Record<string, TreatmentData> = {
+    [t.hollywoodSmileSlug]: {
+      titleKey: "hollywoodSmile",
+      descKey: "hollywoodSmileDesc",
+      img: hollywoodSmileImg,
+      benefits: [
+        "5-7 günde tamamlanan tam gülüş dönüşümü",
+        "Yüz şeklinize özel tasarlanmış porselen veneerler",
+        "Parlak beyaz, kusursuz hizalanmış dişler",
+        "Ultra ince veneerler — minimum diş törpüleme",
+        "İngiltere fiyatlarına kıyasla %60-70 tasarruf",
+        "Bünyemizdeki laboratuvar — daha hızlı, daha kaliteli",
+        "Düzenli bakımla 15-20 yıl dayanıklılık",
+        "VIP havalimanı transferi ve otel koordinasyonu dahil",
+      ],
+      forWhom: [
+        "Beyazlatmaya yanıt vermeyen lekeli veya renklenmiş dişleri olanlar",
+        "Aralıklı, kırık veya hafif düzensiz dişleri olanlar",
+        "Tek kısa seyahatle tam gülüş dönüşümü isteyenler",
+        "İngiltere, Almanya ve Avrupa\'dan uygun fiyatlı alternatif arayanlar",
+        "Yurt içinde yüksek fiyat teklifi alanlar",
+      ],
+      process: [
+        "WhatsApp\'tan gülüş fotoğrafınızı gönderin — 24 saat içinde ücretsiz değerlendirme",
+        "Dijital gülüş tasarımı: tedaviye başlamadan önce sonucu önizleyin",
+        "Ercan veya Larnaca havalimanından VIP transfer ile Girne\'ye varış",
+        "1-2. Gün: renk seçimi, diş hazırlığı, geçici veneer takımı",
+        "3-5. Gün: in-house laboratuvarımızda özel porselen veneer üretimi",
+        "6-7. Gün: kalıcı yapıştırma, kapanış ayarı ve gülüş tanıtımı",
+        "Yeni gülüşünüzle ülkenize dönün — WhatsApp sonrası bakım desteği dahil",
+      ],
+      results: [
+        "Tamamen dönüştürülmüş, ünlü kalitesinde bir gülüş",
+        "Doğal dişlerden ayırt edilemeyen veneerler",
+        "Düzenli bakımla 15-20 yıl dayanıklılık",
+        "Lekeye dayanıklı porselen — gülüşünüz yıllarca beyaz kalır",
+        "Anında özgüven artışı — hastalar sürekli hayat değiştirici sonuçlar bildiriyor",
+      ],
+      faq: [
+        { q: "Kıbrıs\'ta kaç gün kalmam gerekir?", a: "Çoğu Hollywood Smile tedavisi 5-7 günde tamamlanır. Rahat bir deneyim için 7 gecelik konaklama öneriyoruz." },
+        { q: "Sonuç doğal mı görünecek?", a: "Dijital gülüş tasarımı ve ten renginize göre renk eşleştirme ile tamamen doğal görünen sonuçlar elde edilir. Arkadaşlarınız gülüşünüzü fark eder, veneerlerinizi değil." },
+        { q: "İşlem ağrılı mı?", a: "Tüm hazırlık lokal anestezi altında yapılır. İlk 2-3 günde hafif hassasiyet normaldir ve yönetilebilir. Çoğu hasta sürecin ne kadar rahat olduğuna şaşırır." },
+        { q: "İngiltere\'ye kıyasla ne kadar tasarruf ederim?", a: "İngiltere\'de tam Hollywood Smile genellikle £8.000-£15.000 arasındadır. Temelci Dental\'de uçak ve konaklama dahil bile ciddi tasarruf sağlarsınız." },
+        { q: "Döndükten sonra bir sorun çıkarsa ne olur?", a: "Tüm veneer çalışmalarımız yazılı garanti kapsamındadır. Küçük düzeltmeler için bulunduğunuz ülkedeki diş hekimiyle koordinasyon sağlarız." },
+      ],
+    },
+    [t.implantsSlug]: {
+      titleKey: "dentalImplants",
+      descKey: "dentalImplantsDesc",
+      img: implantImg,
+      benefits: [
+        "Ömür boyu süren kalıcı diş çözümü",
+        "Doğal diş gibi görünen, hissettiren ve işlev gören implant",
+        "Titanyum kök çene kemiğini korur ve uyarır",
+        "Komşu sağlıklı dişlere zarar vermez",
+        "%98+ başarı oranı — modern diş hekimliğinin altın standardı",
+        "Straumann implant kullanılır — implantolojinin dünya standardı",
+        "İngiltere fiyatlarına kıyasla %50-65 tasarruf",
+        "30+ yıllık uzmanlarımız binlerce implant uyguladı",
+      ],
+      forWhom: [
+        "Bir veya daha fazla eksik dişi kalıcı olarak tamamlamak isteyenler",
+        "Gevşek, ağrılı veya rahatsız protezlerden kurtulmak isteyenler",
+        "Köprü yerine sağlıklı dişlerini koruyacak çözüm arayanlar",
+        "Yeterli kemik yoğunluğuna sahip hastalar (veya kemik grefti adayları)",
+        "İmplant maliyetini yurt dışında karşılaştıran İngiliz ve Avrupalı hastalar",
+      ],
+      process: [
+        "X-ray\'ınızı WhatsApp\'tan gönderin — 24 saat içinde ücretsiz uygunluk değerlendirmesi",
+        "Girne\'ye varış — tam 3D CBCT tarama ve tedavi planlaması",
+        "Lokal anestezi altında implant yerleştirme — genellikle implant başına 45-60 dakika",
+        "Çoğu vakada aynı gün geçici restorasyon takımı",
+        "İyileşme süreci: osseointegrasyon (kemik kaynaşması) için 3-6 ay",
+        "2. ziyaret: dayanak yerleştirme ve özel porselen kron takımı",
+        "Son kontrol ve kapanış ayarı — implantınız tamamlandı",
+      ],
+      results: [
+        "Ömür boyu süren tam işlevsel kalıcı diş",
+        "Korunmuş çene kemiği ve yüz yapısı",
+        "Tam özgüvenle yeme, konuşma ve gülme",
+        "Çıkarma, yapıştırıcı veya normal fırçalamanın ötesinde bakım gerektirmez",
+        "Tekrarlayan köprü veya protez onarımlarına kıyasla uzun vadeli tasarruf",
+      ],
+      faq: [
+        { q: "İmplantı tek seyahatte tamamlayabilir miyim?", a: "İmplant vidası ilk ziyarette yerleştirilir. Tam tamamlanma (kron takımı) implant kemikle kaynaştıktan sonra 3-6 ay içinde 2. ziyarette gerçekleşir. Pek çok hastamız bunu tekrar tatil fırsatı olarak değerlendiriyor." },
+        { q: "Ameliyat ağrılı mı?", a: "İşlem lokal anestezi altında yapılır ve iyi tolere edilir. Ameliyat sonrası rahatsızlık genellikle hafiftir ve 2-3 gün ağrı kesici ile yönetilir." },
+        { q: "Hangi marka implant kullanıyorsunuz?", a: "Ağırlıklı olarak Straumann implant kullanıyoruz — en kapsamlı klinik kanıt tabanına sahip küresel kalite standardı. Vakaya göre diğer premium Avrupa sertifikalı sistemler de tercih edilir." },
+        { q: "Kıbrıs ile İngiltere\'deki implant maliyeti arasındaki fark nedir?", a: "İngiltere\'de tek implant genellikle £2.000-£3.500 arasındadır. Temelci Dental\'de aynı Straumann implant ve kron, çok daha uygun fiyatla sunulur — uçak ve konaklama dahil bile net tasarruf sağlanır." },
+        { q: "İmplant başarısız olursa ne olur?", a: "İmplant başarısızlığı %2\'nin altında nadir bir durumdur. Böyle bir durumda garanti süresi içinde implantı ücretsiz olarak yenileriz." },
+      ],
+    },
+    [t.veneersSlug]: {
+      titleKey: "veneers",
+      descKey: "veneersDesc",
+      img: veneersImg,
+      benefits: [
+        "Ultra ince porselen laminatlar — kontakt lens kadar ince",
+        "Minimum diş törpüleme — doğal minenizin büyük kısmı korunur",
+        "Leke, kırık, aralık ve hafif düzensizlikleri tek tedavide kapatır",
+        "Yüksek lekeye dayanıklılık — dişleriniz yıllarca parlak kalır",
+        "Mükemmel doğal görünüm için özel renk eşleştirme",
+        "Tek 5-7 günlük seyahatte tamamlanır",
+        "In-house laboratuvar üretimi — hassas uyum ve hızlı teslimat",
+        "İngiltere ve Almanya veneer fiyatlarına kıyasla %60+ tasarruf",
+      ],
+      forWhom: [
+        "Beyazlatmaya yanıt vermeyen inatçı lekeleri olanlar",
+        "Ön dişlerinde küçük kırık, çatlak veya aşınma olanlar",
+        "Küçük aralık veya hafif düzensizlik bulunanlar",
+        "Tam dönüşüm yerine belirli dişlerde hedefli iyileştirme isteyenler",
+        "Uzun ömürlü sonuçlarla koruyucu kozmetik çözüm arayanlar",
+      ],
+      process: [
+        "WhatsApp\'tan gülüş fotoğrafı gönderin — 24 saat içinde ücretsiz konsültasyon",
+        "Girne\'ye varış — renk konsültasyonu ve dijital gülüş önizlemesi",
+        "Lokal anestezi altında minimum diş hazırlığı",
+        "Hassas ölçü alımı — geçici veneerler hemen takılır",
+        "In-house laboratuvarda özel porselen veneer üretimi (2-3 gün)",
+        "Son yapıştırma: uyum, renk ve kapanış kontrolü",
+        "Cila ve son ayarlar — yeni gülüşünüz tamamlandı",
+      ],
+      results: [
+        "Belirgin şekilde iyileştirilmiş gülüş — daha parlak, düzenli ve genç görünüm",
+        "10-15 yıl ömür, normal bakımla",
+        "Tamamen lekeye dayanıklı porselen yüzey",
+        "Gerçek mine dokusunu taklit eden doğal ışık geçirgenliği",
+        "Sonuçlar anlık — Kıbrıs\'tan yeni gülüşünüzle dönersiniz",
+      ],
+      faq: [
+        { q: "Veneer ile Hollywood Smile arasındaki fark nedir?", a: "Hollywood Smile, görünür tüm dişleri kapsayan tam bir veneer setidir. Bireysel veneerler ise yalnızca ihtiyaç duyulan dişlere uygulanır. Uzmanımız konsültasyonda en uygun yaklaşımı önerir." },
+        { q: "Veneerler doğal dişlerime zarar verir mi?", a: "Düzgün oturma için çok az mine (genellikle 0.3-0.5 mm) törpülenir. Bu minimal ve geri alınamaz olmakla birlikte, doğal diş yapısının büyük bölümü korunur." },
+        { q: "Rengi seçebilir miyim?", a: "Kesinlikle. Vita renk sistemi ve dijital önizleme araçlarıyla, herhangi bir işlem başlamadan önce nihai rengi görüp onaylarsınız." },
+        { q: "Veneerlere nasıl bakılır?", a: "Normal fırçalama ve diş ipi kullanımı yeterlidir. Sert nesneleri (buz, sert şeker) doğrudan ısırmaktan kaçının. Diş gıcırdatıyorsanız gece plağı kullanın. Bu önlemlerle veneerleriniz on yılı aşkın süre dayanır." },
+      ],
+    },
+    [t.crownsSlug]: {
+      titleKey: "crowns",
+      descKey: "crownsDesc",
+      img: crownsImg,
+      benefits: [
+        "360° tam diş kapsama — hasar görmüş dişi korur ve güçlendirir",
+        "Çatlamış, büyük dolgulu veya kanal tedavisi görmüş dişleri restore eder",
+        "Doğal diş renginizle eşleştirilen porselen — neredeyse görünmez",
+        "Dayanıklı ve uzun ömürlü — düzenli bakımla 10-15 yıl",
+        "Tam çiğneme işlevi ve kapanış konforu sağlar",
+        "In-house laboratuvar: daha hızlı teslimat ve hassas renk eşleştirme",
+        "İngiltere ve AB fiyatlarına kıyasla %50-65 tasarruf",
+        "Aynı gün geçici kron — diş hiçbir zaman açık kalmaz",
+      ],
+      forWhom: [
+        "Dolgu yapılamayacak kadar hasar görmüş veya kırık dişleri olanlar",
+        "Kanal tedavisi geçirmiş hastalar (kron tedavi edilen dişi korur)",
+        "Çatlamış veya dişi zayıflatan büyük eski dolguları olanlar",
+        "Diş şeklini, işlevini veya görünümünü restore etmesi gerekenler",
+        "Yurt içinde pahalı kron teklifi alanlar",
+      ],
+      process: [
+        "Klinik muayene ve dijital röntgen — dişin tam değerlendirmesi",
+        "Lokal anestezi altında diş hazırlığı: kron yerleşimi için şekillendirilir",
+        "Hassas ölçü alımı — aynı gün geçici kron takılır",
+        "In-house laboratuvar özel porselen kron üretir (2-3 iş günü)",
+        "Kron denemesi: renk, uyum ve kapanış kontrol ve ayarlanır",
+        "Kalıcı yapıştırma — kron güvenli şekilde sabitlenir",
+        "Son cila ve kapanış hizalaması — restore edilmiş dişiniz tamamlandı",
+      ],
+      results: [
+        "Doğal görünen ve işlev gören tam restore edilmiş diş",
+        "Daha fazla çatlama veya çürümeye karşı tam koruma",
+        "Rahat, dengeli kapanış yeniden sağlandı",
+        "İyi ağız hijyeniyle 10-15 yıl veya daha fazla ömür",
+        "Zarar görmüş dişten kaynaklanan hassasiyet veya ağrı ortadan kalkar",
+      ],
+      faq: [
+        { q: "Hasar görmüş diş için dolgu mu kron mu daha iyi?", a: "Büyük hasar, geniş dolgu veya kanal tedavisi görmüş dişler için kron üstün koruma sağlar. Dolgu yalnızca kaybedilen diş dokusunun yerini alır; kron tüm dişi sarar ve kırığı önler." },
+        { q: "Kron diğer dişlerimle uyumlu görünür mü?", a: "Evet. Vita renk rehberi ve doğal ışık değerlendirmesiyle kronunuzu komşu dişlere hassas şekilde eşleştiriyoruz. In-house laboratuvarımız, işi dışarıya veren kliniklere kıyasla daha yüksek renk doğruluğu sağlar." },
+        { q: "Kron hazırlığı ağrılı mı?", a: "Diş hazırlığı lokal anestezi altında yapılır. Geçici kron hemen takılır. Anestezi geçtikten sonra oluşabilecek hassasiyet genellikle hafif ve kısa sürelidir." },
+        { q: "Tek seyahatte kron yaptırabilir miyim?", a: "Evet. In-house dental laboratuvarımız sayesinde çoğu kron 5-7 gün içinde tamamlanır — tek seyahate sığar." },
+      ],
+    },
+    [t.zirconiaCrownsSlug]: {
+      titleKey: "zirconiaCrowns",
+      descKey: "zirconiaCrownsDesc",
+      img: zirconiaCrownsImg,
+      benefits: [
+        "Mevcut en güçlü kron malzemesi — arka dişler için ideal",
+        "Olağanüstü estetik — doğal mine gibi ışık geçirenlik",
+        "Tamamen metal içermez — diş eti sınırında siyah çizgi asla oluşmaz",
+        "Biyouyumlu — metal hassasiyeti veya alerjisi olanlara güvenli",
+        "CAD/CAM hassas freze ile mükemmel uyum",
+        "Kırılma ve çatlamaya karşı yüksek direnç",
+        "İngiltere veya Almanya zirkonyum kron fiyatlarına kıyasla %55-65 tasarruf",
+        "In-house laboratuvarda üretim — renk tutarlılığı ve hızlı teslimat",
+      ],
+      forWhom: [
+        "En kaliteli kron malzemesini isteyenler",
+        "Metal alaşımlı kronlarda diş eti sınırında siyah çizgi yaşayanlar",
+        "Metal alerjisi veya hassasiyeti olanlar",
+        "Maksimum güç gerektiren arka dişlere kron yaptırmak isteyenler",
+        "Kusursuz estetik bütünlük arayan hastalar",
+      ],
+      process: [
+        "Konsültasyon ve renk değerlendirmesi — dijital araçlarla hassas renk eşleştirme",
+        "Lokal anestezi altında diş hazırlığı — zirkonyum yerleşimi için hassas şekillendirme",
+        "Ağız içi dijital tarama — geleneksel ölçü gerekmez",
+        "CAD/CAM tasarım: kronunuz dijital olarak mükemmel anatomiye göre mühendislenir",
+        "Katı zirkonyum bloktan CNC hassas freze",
+        "Renklendirme, sırlama ve pişirme — laboratuvarda son estetik rötuş",
+        "Deneme, kapanış kontrolü ve kalıcı yapıştırma — 5-7 günde tamamlanır",
+      ],
+      results: [
+        "Doğal diş minosinden daha güçlü kron — 15-20 yıl dayanıklılık",
+        "Komşu dişlerle mükemmel renk uyumu — yapay beyazlık veya siyah çizgi yok",
+        "Sıfır metal bileşen — daha güvenli, daha temiz, daha biyouyumlu",
+        "Doğal çiğneme hissiyle rahat kapanış",
+        "Güç ve estetik arasında sıfır ödün gerektiren premium restorasyon",
+      ],
+      faq: [
+        { q: "Zirkonyum neden metal destekli porselen krondan üstün?", a: "Metal destekli porselen (PFM) kronların metal altyapısı zamanla diş eti sınırında siyah çizgi olarak görünebilir. Zirkonyum tamamen metal içermez, üstün estetik sunar ve PFM\'den daha güçlüdür. Artık dental restorasyonların altın standardıdır." },
+        { q: "Zirkonyum ön dişler için uygun mu?", a: "Evet. Modern yüksek şeffaflıklı zirkonyum, gerçek minenin ışık geçirgenliğini taklit eder ve estetiğin kritik olduğu ön dişler için idealdir." },
+        { q: "Zirkonyum kronlar ne kadar dayanır?", a: "Düzenli ağız bakımı ve kontroller ile zirkonyum kronlar genellikle 15-20 yıl dayanır. Kırılma direnci porselen alternatiflere göre önemli ölçüde yüksektir." },
+        { q: "Tek seyahatte zirkonyum kron yaptırabilir miyim?", a: "Evet. In-house CAD/CAM laboratuvarımız çoğu vakada zirkonyum kronları tek 5-7 günlük ziyarette tamamlamamızı sağlar." },
+      ],
+    },
+    [t.teethWhiteningSlug]: {
+      titleKey: "teethWhitening",
+      descKey: "teethWhiteningDesc",
+      img: teethWhiteningImg,
+      benefits: [
+        "Tek seansta 8 tona kadar beyazlama",
+        "Profesyonel jel — eczane ürünlerinden çok daha etkili",
+        "LED ışık aktivasyonu ile hızlandırılmış, eşit sonuç",
+        "İşlem öncesi diş eti koruyucu uygulanır",
+        "Anında görünür sonuç — kliniği parlak gülüşle terk edersiniz",
+        "İsteğe bağlı eve götürme tepsisi ile bakım kolaylaştırılır",
+        "Genellikle veneer veya Hollywood Smile ile kombine edilir",
+        "İngiltere beyazlatma kliniği fiyatlarının çok altında",
+      ],
+      forWhom: [
+        "Kahve, çay, kırmızı şarap veya sigaradan kaynaklanan sararmış dişleri olanlar",
+        "Düğün, özel etkinlik veya önemli bir olay öncesinde hızlı iyileştirme isteyenler",
+        "Kapsamlı tedavi olmadan hızlı ve görünür sonuç isteyenler",
+        "Başka bir işlemle birlikte beyazlatma yaptırmak isteyen dental turistler",
+        "Eczane ürünleriyle hayal kırıklığı yaşayanlar",
+      ],
+      process: [
+        "Uygunluk ön değerlendirmesi — beyazlatma her duruma uygun değildir",
+        "Eşit beyazlatma için yüzey birikintilerini gidermek amacıyla diş temizliği",
+        "Yumuşak dokuyu korumak için özel diş eti kalkanı uygulaması",
+        "Diş yüzeylerine profesyonel beyazlatma jeli uygulaması",
+        "LED ışık aktivasyonu — 3 tur, her biri 15-20 dakika",
+        "Jel temizleme ve başlangıç rengiyle karşılaştırmalı final değerlendirmesi",
+        "İstenirse eve götürme tepsisi ve bakım jeli teslimi",
+      ],
+      results: [
+        "Tek randevuda 8 tona kadar beyazlayan dişler",
+        "Fotoğraflarda ve yüz yüze görünür belirgin gülüş parlaklığı",
+        "Yaşam tarzına bağlı olarak 6-12 ay süre",
+        "Görsel fark yaratan hızlı ve uygun maliyetli iyileştirme",
+        "Veneer, kron veya herhangi bir kozmetik diş işleminin ideal tamamlayıcısı",
+      ],
+      faq: [
+        { q: "Profesyonel beyazlatma güvenli mi?", a: "Evet. Klinik beyazlatma, eğitimli diş hekimleri tarafından uygun diş eti korumasıyla uygulanan düzenlenmiş peroksit konsantrasyonları kullanır. Denetim dışı ev kitlerinden çok daha güvenli ve etkilidir." },
+        { q: "Beyazlatma kron veya veneerlere işe yarar mı?", a: "Hayır. Beyazlatma yalnızca doğal diş minesi üzerinde etkilidir. Görünür kron veya veneeriniz varsa, yeni gölgeyle eşleştirme yapabilmek için restorasyon öncesinde beyazlatma yapılmasını öneririz." },
+        { q: "Sonuçlar ne kadar sürer?", a: "Genellikle 6-12 ay. Yoğun leke yapan yiyecek ve içeceklerden kaçınmak ve ağız hijyenini korumak sonuçları uzatır. Eve götürme tepsisi ile periyodik rötuş yapılabilir." },
+        { q: "Ağrılı mı?", a: "Bazı hastalar işlem sırasında veya sonrasında hafif hassasiyet yaşar. Bu normal ve geçicidir, 24-48 saat içinde geçer. Rahatsızlığı en aza indirmek için duyarsızlaştırıcı jel uyguluyoruz." },
+      ],
+    },
+    [t.smileMakeoverSlug]: {
+      titleKey: "smileMakeover",
+      descKey: "smileMakeoverDesc",
+      img: smileMakeoverImg,
+      benefits: [
+        "Birden fazla sorun tek koordineli tedavi planıyla çözülür",
+        "Dijital gülüş tasarımı — tedaviye başlamadan önce sonucu görün",
+        "Tamamen kişiselleştirilmiş: hiçbir gülüş tasarımı birbirine benzemez",
+        "Veneer, kron, beyazlatma ve implantı gerektiği gibi birleştirir",
+        "In-house laboratuvar tüm restorasyonlarda tutarlılık sağlar",
+        "Çarpıcı dönüşüm tek 7-10 günlük seyahatte mümkün",
+        "İngiltere veya AB maliyetlerine kıyasla %55-70 tasarruf",
+        "Bütünsel yaklaşım: işlev, sağlık ve estetik birlikte ele alınır",
+      ],
+      forWhom: [
+        "Birden fazla kozmetik ve işlevsel sorunu aynı anda çözmek isteyenler",
+        "Yurt içi yüksek maliyetler nedeniyle gülüş dönüşümünü erteleyenler",
+        "Doğu Akdeniz\'de tatil ile diş tedavisini birleştirmek isteyenler",
+        "Artık eskimiş veya tutarsız görünen önceki diş çalışmaları olanlar",
+        "Yıllar içinde parça parça tedavi yerine tek bir uyumlu sonuç isteyenler",
+      ],
+      process: [
+        "WhatsApp\'tan gülüş fotoğraflarınızı ve endişelerinizi gönderin — ücretsiz ilk değerlendirme",
+        "Varış konsültasyonu: tam muayene, 3D tarama ve ayrıntılı hedef görüşmesi",
+        "Dijital gülüş tasarımı: önerilen sonucun görsel önizlemesi",
+        "Zaman çizelgesi, aşamalar ve net fiyatlandırmayla tedavi planı sunumu",
+        "1. Aşama: temel çalışmalar — gerekli çekimler, implantlar veya diş eti tedavisi",
+        "2. Aşama: restorasyonlar — tasarıma göre veneer, kron, beyazlatma",
+        "Final tanıtımı: ayarlamalar, cila ve sonucun profesyonel fotoğraflaması",
+      ],
+      results: [
+        "Tamamen dönüştürülmüş gülüş — tutarlı, uyumlu ve doğal görünümlü",
+        "İyileştirilmiş yüz oranları — özelliklerinizi tamamlayan gülüş tasarımı",
+        "Restore edilmiş işlev: rahat kapanış, kolay çiğneme, net konuşma",
+        "Bakımla uzun ömürlü sonuçlar — çoğu restorasyon 10-20 yıl dayanır",
+        "Hastaların sürekli aldıkları en iyi kararlardan biri olarak nitelendirdiği hayat değiştirici sonuç",
+      ],
+      faq: [
+        { q: "Gülüş tasarımına hangi tedaviler dahil olabilir?", a: "Gülüş tasarımı tamamen size özeldir. Diş beyazlatma, porselen veneer, zirkonyum kron, diş implantı, diş eti şekillendirme veya bunların kombinasyonu içerebilir. Uzmanımız yalnızca hedefinize ulaşmak için gerçekten gerekli olanları önerir." },
+        { q: "Gülüş tasarımı tek seyahatte tamamlanabilir mi?", a: "Çoğu hasta için estetik kısım 7-10 günde tamamlanır. Plana implant dahilse, final kron takımı için 3-6 ay sonra 2. ziyaret gerekir." },
+        { q: "Nasıl görüneceğimi önceden bilebilir miyim?", a: "Dijital gülüş tasarımı yazılımıyla tedaviye başlamadan önce gerçekçi bir önizleme hazırlıyoruz. Diş şekli, boyutu ve rengi siz onayladıktan sonra işleme geçiyoruz." },
+        { q: "Kıbrıs ile İngiltere\'deki gülüş tasarımı maliyeti ne kadar farklı?", a: "İngiltere\'de kapsamlı gülüş tasarımı £10.000-£25.000 veya daha fazla tutabilir. Temelci Dental hastalarımız, seyahat ve konaklama dahil bile İngiltere\'deki maliyetin çok altında aynı klinik sonucu elde ediyor." },
+      ],
+    },
+    [t.fullMouthRestorationSlug]: {
+      titleKey: "fullMouthRestoration",
+      descKey: "fullMouthRestorationDesc",
+      img: fullMouthImg,
+      benefits: [
+        "Tüm dişlerin estetik ve işlevsel olarak eksiksiz rehabilitasyonu",
+        "Onlarca yıllık hasar, aşınma, çürük veya diş kaybı tek koordineli planla çözülür",
+        "Çok uzmanla ekip: implantoloji, protez ve estetik diş hekimliği",
+        "Hassas cerrahi ve protetik planlama için 3D CBCT tarama",
+        "Tüm dişlerde uyumlu restorasyonlar için in-house dental laboratuvar",
+        "İngiltere veya Almanya tam ağız restorasyonu maliyetlerine kıyasla %55-70 tasarruf",
+        "Kıbrıs\'ta geçirilen süreyi minimumda tutmak için aşamalı planlama",
+        "Tüm çalışmalarda kapsamlı sonrası bakım planı ve yazılı garanti",
+      ],
+      forWhom: [
+        "Yıllarca diş bakımını ihmal edip kapsamlı rehabilitasyona ihtiyaç duyanlar",
+        "Gıcırdatma (bruksizm) veya asit erozyonundan kaynaklanan ciddi diş aşınması yaşayanlar",
+        "Birden fazla eksik dişi veya başarısız restorasyonları olanlar",
+        "Yurt içinde kapsamlı tedavi için çok yüksek fiyat teklifi alanlar",
+        "Planlı bir süreçte tüm diş sağlığını sıfırdan yenilemek isteyenler",
+      ],
+      process: [
+        "Kapsamlı ilk konsültasyon: fotoğraflar, röntgenler ve tam 3D CBCT tarama",
+        "Aşamalı zaman çizelgesi ve sabit fiyatlandırmayla ayrıntılı tedavi planı sunumu",
+        "1. Aşama: gerekli çekimler, kemik grefti ve implant yerleştirme",
+        "İyileşme aşaması: osseointegrasyon süresince geçici restorasyon kullanımı",
+        "2. Aşama: tüm kalıcı kronlar, köprüler ve veneerler yapılır ve takılır",
+        "Oklüzal (kapanış) dengeleme ve tam ark ayarı",
+        "Final kontrolü, profesyonel temizlik ve uzun vadeli bakım planı sunumu",
+      ],
+      results: [
+        "Kapsamlı hasardan eksiksiz sağlığa: tam restore edilmiş, işlevsel ve güzel dentisyon",
+        "Stabil kapanış, rahat çiğneme ve özgüvenli konuşma yeniden kazanılır",
+        "Tüm görünür dişlerde tutarlı, doğal görünümlü estetik",
+        "Uzun vadeli ağız sağlığı — düzgün restore edilmiş dişler daha kolay bakım gerektirir",
+        "Hastaların sürekli dönüştürücü olarak nitelendirdiği yaşam kalitesinde derin iyileşme",
+      ],
+      faq: [
+        { q: "Tam ağız restorasyonu ne kadar sürer?", a: "Süre karmaşıklığa bağlıdır. İmplant içeren vakalarda süreç, 4-8 ay içinde 2 ziyareti kapsar (implant yerleştirme, ardından kron takımı). Yalnızca restorasyon gerektiren vakalarda tedavi 10-14 günde tamamlanabilir." },
+        { q: "Tam ağız restorasyonu ne kadar tutar?", a: "İngiltere veya Almanya\'da tam ağız restorasyonu tedavi kapsamına göre £20.000-£50.000 veya daha fazla tutabilir. Hastalarımız Kuzey Kıbrıs\'ta eşdeğer klinik sonucu bunun çok altında bir maliyetle elde ediyor." },
+        { q: "Tedavi süresince dişsiz kalır mıyım?", a: "Hayır. Her zaman geçici restorasyon sağlıyoruz; süreç boyunca — ziyaretler arasında bile — asla işlevsel ve sunulabilir dişsiz kalmıyorsunuz." },
+        { q: "Tam ağız restorasyonu yaşlı hastalar için uygun mu?", a: "Evet. Tam ağız restorasyonu hastalarımızın pek çoğu 60 yaş üzerindedir. Yaş bir engel değildir. Genel sağlık değerlendirilerek tedavinin uygun ve iyi tolere edildiğinden emin olmak için muhafazakâr ve dikkatli bir yaklaşım benimsiyoruz." },
+      ],
+    },
+  };
+
+  if (lang === "tr") return trData[slug] || null;
+    return data[slug] || null;
 };
 
 const TreatmentDetailPage = () => {
-  const { t, localePath } = useLanguage();
+  const { t, localePath, lang } = useLanguage();
   const { treatmentSlug } = useParams<{ treatmentSlug: string }>();
   
-  const treatment = getTreatmentData(treatmentSlug || '', t);
+  const treatment = getTreatmentData(treatmentSlug || '', t, lang);
 
   if (!treatment) {
     return (
