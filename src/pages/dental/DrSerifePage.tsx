@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { BookOpen, Award, GraduationCap, Globe, ExternalLink, FlaskConical } from 'lucide-react';
@@ -218,6 +219,9 @@ const DrSerifePage = () => {
       <section className="section-padding bg-secondary/20">
         <div className="container-dental max-w-4xl">
           <div className="text-center mb-10">
+            <Link to={localePath("/research")} className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline mb-4 block">
+              📄 View all publications with full text & PDF download →
+            </Link>
             <h2 className="heading-section mb-3">
               {isTr ? 'Akademik Yayınlar & Araştırmalar' : 'Academic Publications & Research'}
             </h2>
