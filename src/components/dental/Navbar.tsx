@@ -76,8 +76,7 @@ const Navbar = () => {
         <div className="lg:hidden bg-card border-b border-border">
           <div className="px-4 py-4 space-y-1">
             {navLinks.map(link => (
-              <Link key={link.path} to={localePath(link.path)} onClick={scrollToTop}
-                onClick={() => setIsOpen(false)}
+              <Link key={link.path} to={localePath(link.path)} onClick={() => setIsOpen(false)}
                 className="block py-3 text-sm font-medium text-foreground/80 hover:text-primary border-b border-border/50">
                 {link.label}
               </Link>

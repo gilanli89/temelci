@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { Layout } from "@/components/dental/Layout";
+import { ScrollToTop } from "@/components/dental/ScrollToTop";
 import HomePage from "./pages/dental/HomePage";
 import TreatmentsPage from "./pages/dental/TreatmentsPage";
 import TreatmentDetailPage from "./pages/dental/TreatmentDetailPage";
@@ -21,6 +22,7 @@ const queryClient = new QueryClient();
 
 const LangRoutes = () => (
   <LanguageProvider>
+      <ScrollToTop />
     <Routes>
       <Route path="landing" element={<LandingPage />} />
       <Route path="landing/hollywood-smile" element={<HollywoodSmileLanding />} />
