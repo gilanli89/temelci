@@ -201,19 +201,15 @@ export default function LandingPage() {
 
   return (
     <div className="lp2">
-      {/* HEADER */}
-      <header className="lp2-header">
-        <a href="/" className="lp2-logo">
-          <span className="lp2-logo-main">Temelci</span>
-          <span className="lp2-logo-sub">DENTAL</span>
-        </a>
+      {/* LANG BAR */}
+      <div className="lp2-lang-bar">
         <div className="lp2-lang-switch">
           <button className={`lp2-lang-btn ${lang === "en" ? "active" : ""}`} onClick={() => setLang("en")}>🇬🇧 EN</button>
           <button className={`lp2-lang-btn ${lang === "tr" ? "active" : ""}`} onClick={() => setLang("tr")}>🇹🇷 TR</button>
           <button className={`lp2-lang-btn ${lang === "de" ? "active" : ""}`} onClick={() => setLang("de")}>🇩🇪 DE</button>
           <button className={`lp2-lang-btn ${lang === "ru" ? "active" : ""}`} onClick={() => setLang("ru")}>🇷🇺 RU</button>
         </div>
-      </header>
+      </div>
 
       {/* PROGRESS */}
       <div className="lp2-progress-bar">
@@ -482,11 +478,7 @@ export default function LandingPage() {
         )}
       </main>
 
-      {/* FOOTER */}
-      <footer className="lp2-footer">
-        <span>© 2026 Temelci Dental · Kyrenia, North Cyprus</span>
-        <span>+90 533 822 9445 · info@temelcidentist.com</span>
-      </footer>
+
     </div>
   );
 }

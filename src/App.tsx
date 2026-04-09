@@ -24,9 +24,11 @@ const LangRoutes = () => (
   <LanguageProvider>
       <ScrollToTop />
     <Routes>
-      <Route path="landing" element={<LandingPage />} />
-      <Route path="landing/hollywood-smile" element={<HollywoodSmileLanding />} />
-      <Route path="landing/allon4" element={<AllOn4Landing />} />
+      <Route element={<Layout />}>
+        <Route path="landing" element={<LandingPage />} />
+        <Route path="landing/hollywood-smile" element={<HollywoodSmileLanding />} />
+        <Route path="landing/allon4" element={<AllOn4Landing />} />
+      </Route>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
         <Route path="treatments" element={<TreatmentsPage />} />
