@@ -19,6 +19,7 @@ import AllOn4Landing from "./pages/dental/AllOn4Landing";
 import DrSerifePage from "./pages/dental/DrSerifePage";
 import ResearchPage from "./pages/dental/ResearchPage";
 import ResearchDetailPage from "./pages/dental/ResearchDetailPage";
+import ImplantPackageLanding from "./pages/dental/ImplantPackageLanding";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const LangRoutes = () => (
         <Route path="landing" element={<LandingPage />} />
         <Route path="landing/hollywood-smile" element={<HollywoodSmileLanding />} />
         <Route path="landing/allon4" element={<AllOn4Landing />} />
+        <Route path="landing/implant-packages" element={<ImplantPackageLanding />} />
       </Route>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />

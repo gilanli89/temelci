@@ -341,3 +341,72 @@
 @media (max-width: 380px) {
   .lp2-treatments-grid { grid-template-columns: 1fr; }
 }
+
+/* ── SHARED LP SECTIONS ── */
+.section-white { background: #fff; padding: 64px 24px; }
+.section-dark { background: var(--navy); padding: 64px 24px; }
+.section-grey { background: #f7f9fc; padding: 64px 24px; }
+.section-inner { max-width: 900px; margin: 0 auto; }
+.section-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3.5vw, 32px);
+  font-weight: 700;
+  text-align: center;
+  color: var(--navy);
+  margin-bottom: 36px;
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.why-card {
+  padding: 22px 20px;
+  background: #f8fafc;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+}
+.why-card h3 { font-size: 15px; font-weight: 700; color: var(--navy); margin: 10px 0 6px; }
+.why-card p { font-size: 13px; color: #666; line-height: 1.6; margin: 0; }
+
+.steps-list { display: flex; flex-direction: column; gap: 20px; max-width: 640px; margin: 0 auto; }
+.step-item { display: flex; gap: 18px; align-items: flex-start; }
+.step-num {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: var(--teal); color: #fff;
+  font-size: 13px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.step-item h3 { font-size: 15px; font-weight: 700; margin: 0 0 4px; }
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+.review-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 22px 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.faq-list { display: flex; flex-direction: column; gap: 2px; }
+.faq-item {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.faq-item:hover { border-color: var(--teal); }
+.faq-q {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 18px; font-weight: 600; font-size: 14px; color: #1a1a2e;
+}
+.faq-icon { font-size: 20px; color: var(--teal); font-weight: 300; flex-shrink: 0; margin-left: 12px; }
+.faq-a { padding: 0 18px 16px; font-size: 14px; color: #555; line-height: 1.7; }
