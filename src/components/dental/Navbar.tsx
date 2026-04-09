@@ -98,3 +98,5 @@ const Navbar = () => {
     </nav>
   );
 };
+
+export { Navbar };
