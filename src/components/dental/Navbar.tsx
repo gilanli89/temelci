@@ -6,7 +6,7 @@ import { WhatsAppButton } from './WhatsAppButton';
 
 export const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
-const Navbar = () => {
+export const Navbar = () => {
   const { t, lang, setLang, languages, localePath } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
@@ -99,4 +99,3 @@ const Navbar = () => {
   );
 };
 
-export { Navbar };
