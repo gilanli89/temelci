@@ -18,6 +18,7 @@ import HollywoodSmileLanding from "./pages/dental/HollywoodSmileLanding";
 import AllOn4Landing from "./pages/dental/AllOn4Landing";
 import DrSerifePage from "./pages/dental/DrSerifePage";
 import OurClinicPage from "./pages/dental/OurClinicPage";
+import DentalTourismPage from "./pages/dental/DentalTourismPage";
 import ResearchPage from "./pages/dental/ResearchPage";
 import ResearchDetailPage from "./pages/dental/ResearchDetailPage";
 import ImplantPackageLanding from "./pages/dental/ImplantPackageLanding";
@@ -85,6 +86,14 @@ const LangRoutes = () => (
         <Route path="hamirpa-shelanu" element={<OurClinicPage />} />
         <Route path="unsere-klinik" element={<OurClinicPage />} />
         <Route path="klinik-ma" element={<OurClinicPage />} />
+        <Route path="dental-tourism" element={<DentalTourismPage />} />
+        <Route path="dis-turizmi" element={<DentalTourismPage />} />
+        <Route path="odontiatrikos-tourismos" element={<DentalTourismPage />} />
+        <Route path="stom-turizm" element={<DentalTourismPage />} />
+        <Route path="siyaha-ilajiya" element={<DentalTourismPage />} />
+        <Route path="tayarut-refuit" element={<DentalTourismPage />} />
+        <Route path="zahntourismus" element={<DentalTourismPage />} />
+        <Route path="gardeshgari-dandan" element={<DentalTourismPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="dr-serife-kole" element={<DrSerifePage />} />
         <Route path="dr-serife-kole-kocadal" element={<DrSerifePage />} />

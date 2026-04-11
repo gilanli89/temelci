@@ -18,6 +18,7 @@ export const Navbar = () => {
   const navLinks = [
     { label: t.home, path: '' },
     { label: t.treatments, path: `/${t.treatmentsSlug}` },
+    { label: t.dentalTourism, path: `/${t.dentalTourismSlug}` },
     { label: t.ourClinic, path: `/${t.ourClinicSlug}` },
     { label: t.ourTeam, path: `/${t.aboutSlug}#doctors` },
     { label: t.beforeAfter, path: `/${t.beforeAfterSlug}` },
