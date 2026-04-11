@@ -34,7 +34,6 @@ const PHOTOS = [
   'e4e19a96-d290-4e3c-9220-4c0ca901c340',
   'a9dd8387-a41f-477c-bcb2-3eeccdf2bc19',
   'e2f32e9d-d634-4f12-a8db-af6d1abcc0ca',
-  '472ae5f2-803e-4a45-b74d-8bb12d091b66',
   'a3d56cd6-1d6a-459e-8ae9-8a5902857555-1',
 ];
 
