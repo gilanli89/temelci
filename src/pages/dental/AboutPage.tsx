@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
-import { Award, GraduationCap, Globe, Heart, MapPin, Stethoscope, Clock, Users } from 'lucide-react';
+import { Award, GraduationCap, Globe, Heart, MapPin, Smile, Clock, Users } from 'lucide-react';
 import heroImg from '@/assets/hero-clinic.jpg';
 import photoNural from '@/assets/doctors/nural_temelci.jpg';
 import photoAli from '@/assets/doctors/ali_temelci.jpg';
@@ -176,7 +176,7 @@ const AboutPage = () => {
                       <span className="text-xs text-muted-foreground">{doc.university[lang]}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Stethoscope className="h-4 w-4 text-muted-foreground shrink-0" />
+                      <Smile className="h-4 w-4 text-muted-foreground shrink-0" />
                       <span className="text-xs text-muted-foreground">{doc.specialization[lang]}</span>
                     </div>
                     <div className="flex items-center gap-2">
