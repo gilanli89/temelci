@@ -128,6 +128,9 @@ export type TranslationKeys = {
   readyToStart: string;
   // Team nav label
   ourTeam: string;
+  // Clinic page
+  ourClinic: string;
+  ourClinicSlug: string;
   // Routes (for URL slugs)
   treatmentsSlug: string;
   beforeAfterSlug: string;
@@ -247,6 +250,8 @@ export const translations: Record<Language, TranslationKeys> = {
     expectedResults: 'Expected Results',
     readyToStart: 'Ready to Get Started?',
     ourTeam: 'Our Team',
+    ourClinic: 'Our Clinic',
+    ourClinicSlug: 'our-clinic',
     treatmentsSlug: 'treatments',
     beforeAfterSlug: 'before-after',
     reviewsSlug: 'reviews',
@@ -364,6 +369,8 @@ export const translations: Record<Language, TranslationKeys> = {
     expectedResults: 'Beklenen Sonuçlar',
     readyToStart: 'Başlamaya Hazır mısınız?',
     ourTeam: 'Ekibimiz',
+    ourClinic: 'Kliniğimiz',
+    ourClinicSlug: 'kliniğimiz',
     treatmentsSlug: 'tedaviler',
     beforeAfterSlug: 'once-sonra',
     reviewsSlug: 'yorumlar',
@@ -479,6 +486,8 @@ export const translations: Record<Language, TranslationKeys> = {
     expectedResults: 'Αναμενόμενα Αποτελέσματα',
     readyToStart: 'Έτοιμοι να Ξεκινήσετε;',
     ourTeam: 'Η Ομάδα μας',
+    ourClinic: 'Η Κλινική μας',
+    ourClinicSlug: 'i-kliniki-mas',
     treatmentsSlug: 'therapies',
     beforeAfterSlug: 'prin-meta',
     reviewsSlug: 'kritikes',
@@ -594,6 +603,8 @@ export const translations: Record<Language, TranslationKeys> = {
     expectedResults: 'Ожидаемые Результаты',
     readyToStart: 'Готовы Начать?',
     ourTeam: 'Наша Команда',
+    ourClinic: 'Наша Клиника',
+    ourClinicSlug: 'nasha-klinika',
     treatmentsSlug: 'lechenie',
     beforeAfterSlug: 'do-posle',
     reviewsSlug: 'otzyvy',
@@ -709,6 +720,8 @@ export const translations: Record<Language, TranslationKeys> = {
     expectedResults: 'النتائج المتوقعة',
     readyToStart: 'مستعد للبدء؟',
     ourTeam: 'فريقنا',
+    ourClinic: 'عيادتنا',
+    ourClinicSlug: 'iyadetouna',
     treatmentsSlug: 'al-ilajat',
     beforeAfterSlug: 'qabl-baad',
     reviewsSlug: 'taqyimat',
@@ -824,6 +837,8 @@ export const translations: Record<Language, TranslationKeys> = {
     expectedResults: 'תוצאות צפויות',
     readyToStart: 'מוכנים להתחיל?',
     ourTeam: 'הצוות שלנו',
+    ourClinic: 'המרפאה שלנו',
+    ourClinicSlug: 'hamirpa-shelanu',
     treatmentsSlug: 'tipulim',
     beforeAfterSlug: 'lifnei-acharei',
     reviewsSlug: 'bikorot',
@@ -939,6 +954,8 @@ export const translations: Record<Language, TranslationKeys> = {
     expectedResults: 'Erwartete Ergebnisse',
     readyToStart: 'Bereit Loszulegen?',
     ourTeam: 'Unser Team',
+    ourClinic: 'Unsere Klinik',
+    ourClinicSlug: 'unsere-klinik',
     treatmentsSlug: 'behandlungen',
     beforeAfterSlug: 'vorher-nachher',
     reviewsSlug: 'bewertungen',
@@ -1054,6 +1071,8 @@ export const translations: Record<Language, TranslationKeys> = {
     expectedResults: 'نتایج مورد انتظار',
     readyToStart: 'آماده شروع هستید؟',
     ourTeam: 'تیم ما',
+    ourClinic: 'کلینیک ما',
+    ourClinicSlug: 'klinik-ma',
     treatmentsSlug: 'darman-ha',
     beforeAfterSlug: 'pish-pas',
     reviewsSlug: 'nazar',

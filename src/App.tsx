@@ -17,6 +17,7 @@ import LandingPage from "./pages/dental/LandingPage";
 import HollywoodSmileLanding from "./pages/dental/HollywoodSmileLanding";
 import AllOn4Landing from "./pages/dental/AllOn4Landing";
 import DrSerifePage from "./pages/dental/DrSerifePage";
+import OurClinicPage from "./pages/dental/OurClinicPage";
 import ResearchPage from "./pages/dental/ResearchPage";
 import ResearchDetailPage from "./pages/dental/ResearchDetailPage";
 import ImplantPackageLanding from "./pages/dental/ImplantPackageLanding";
@@ -76,6 +77,14 @@ const LangRoutes = () => (
         <Route path="odot" element={<AboutPage />} />
         <Route path="ueber-uns" element={<AboutPage />} />
         <Route path="darbare" element={<AboutPage />} />
+        <Route path="our-clinic" element={<OurClinicPage />} />
+        <Route path="kliniğimiz" element={<OurClinicPage />} />
+        <Route path="i-kliniki-mas" element={<OurClinicPage />} />
+        <Route path="nasha-klinika" element={<OurClinicPage />} />
+        <Route path="iyadetouna" element={<OurClinicPage />} />
+        <Route path="hamirpa-shelanu" element={<OurClinicPage />} />
+        <Route path="unsere-klinik" element={<OurClinicPage />} />
+        <Route path="klinik-ma" element={<OurClinicPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="dr-serife-kole" element={<DrSerifePage />} />
         <Route path="dr-serife-kole-kocadal" element={<DrSerifePage />} />
