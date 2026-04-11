@@ -161,7 +161,7 @@ const AboutPage = () => {
               >
                 <div className="p-6">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 rounded-full overflow-hidden shrink-0">
+                    <div className="w-20 h-20 rounded-full overflow-hidden shrink-0">
                       <img src={doc.photo} alt={doc.name} className="w-full h-full object-cover" />
                     </div>
                     <div>
