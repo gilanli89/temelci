@@ -23,6 +23,7 @@ export const Navbar = () => {
     { label: t.ourTeam, path: `/${t.aboutSlug}#doctors` },
     { label: t.beforeAfter, path: `/${t.beforeAfterSlug}` },
     { label: t.reviews, path: `/${t.reviewsSlug}` },
+    { label: t.blog, path: `/${t.blogSlug}` },
     { label: t.about, path: `/${t.aboutSlug}` },
     { label: t.contact, path: `/${t.contactSlug}` },
   ];

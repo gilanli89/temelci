@@ -93,7 +93,7 @@ const SocialPage = () => {
               <div className="text-sm text-muted-foreground mt-1">{t.happyPatients}</div>
             </div>
             <div className="bg-card rounded-2xl border border-border p-6">
-              <div className="text-3xl font-display font-bold text-primary">30+</div>
+              <div className="text-3xl font-display font-bold text-primary">35+</div>
               <div className="text-sm text-muted-foreground mt-1">{t.countriesServed}</div>
             </div>
           </div>

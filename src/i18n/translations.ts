@@ -157,6 +157,9 @@ export type TranslationKeys = {
   // Dental Tourism
   dentalTourism: string;
   dentalTourismSlug: string;
+  // Blog
+  blog: string;
+  blogSlug: string;
   // Routes (for URL slugs)
   treatmentsSlug: string;
   beforeAfterSlug: string;
@@ -314,6 +317,8 @@ export const translations: Record<Language, TranslationKeys> = {
     ourClinicSlug: 'our-clinic',
     dentalTourism: 'Dental Tourism',
     dentalTourismSlug: 'dental-tourism',
+    blog: 'Blog',
+    blogSlug: 'blog',
     treatmentsSlug: 'treatments',
     beforeAfterSlug: 'before-after',
     reviewsSlug: 'reviews',
@@ -468,6 +473,8 @@ export const translations: Record<Language, TranslationKeys> = {
     ourClinicSlug: 'kliniğimiz',
     dentalTourism: 'Diş Turizmi',
     dentalTourismSlug: 'dis-turizmi',
+    blog: 'Blog',
+    blogSlug: 'blog',
     treatmentsSlug: 'tedaviler',
     beforeAfterSlug: 'once-sonra',
     reviewsSlug: 'yorumlar',
@@ -620,6 +627,8 @@ export const translations: Record<Language, TranslationKeys> = {
     ourClinicSlug: 'i-kliniki-mas',
     dentalTourism: 'Οδοντιατρικός Τουρισμός',
     dentalTourismSlug: 'odontiatrikos-tourismos',
+    blog: 'Blog',
+    blogSlug: 'blog',
     treatmentsSlug: 'therapies',
     beforeAfterSlug: 'prin-meta',
     reviewsSlug: 'kritikes',
@@ -772,6 +781,8 @@ export const translations: Record<Language, TranslationKeys> = {
     ourClinicSlug: 'nasha-klinika',
     dentalTourism: 'Стоматологический Туризм',
     dentalTourismSlug: 'stom-turizm',
+    blog: 'Blog',
+    blogSlug: 'blog',
     treatmentsSlug: 'lechenie',
     beforeAfterSlug: 'do-posle',
     reviewsSlug: 'otzyvy',
@@ -924,6 +935,8 @@ export const translations: Record<Language, TranslationKeys> = {
     ourClinicSlug: 'iyadetouna',
     dentalTourism: 'السياحة العلاجية',
     dentalTourismSlug: 'siyaha-ilajiya',
+    blog: 'مدونة',
+    blogSlug: 'blog',
     treatmentsSlug: 'al-ilajat',
     beforeAfterSlug: 'qabl-baad',
     reviewsSlug: 'taqyimat',
@@ -1076,6 +1089,8 @@ export const translations: Record<Language, TranslationKeys> = {
     ourClinicSlug: 'hamirpa-shelanu',
     dentalTourism: 'תיירות רפואית',
     dentalTourismSlug: 'tayarut-refuit',
+    blog: 'בלוג',
+    blogSlug: 'blog',
     treatmentsSlug: 'tipulim',
     beforeAfterSlug: 'lifnei-acharei',
     reviewsSlug: 'bikorot',
@@ -1228,6 +1243,8 @@ export const translations: Record<Language, TranslationKeys> = {
     ourClinicSlug: 'unsere-klinik',
     dentalTourism: 'Zahntourismus',
     dentalTourismSlug: 'zahntourismus',
+    blog: 'Blog',
+    blogSlug: 'blog',
     treatmentsSlug: 'behandlungen',
     beforeAfterSlug: 'vorher-nachher',
     reviewsSlug: 'bewertungen',
@@ -1380,6 +1397,8 @@ export const translations: Record<Language, TranslationKeys> = {
     ourClinicSlug: 'klinik-ma',
     dentalTourism: 'گردشگری دندانپزشکی',
     dentalTourismSlug: 'gardeshgari-dandan',
+    blog: 'وبلاگ',
+    blogSlug: 'blog',
     treatmentsSlug: 'darman-ha',
     beforeAfterSlug: 'pish-pas',
     reviewsSlug: 'nazar',

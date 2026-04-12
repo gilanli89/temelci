@@ -82,7 +82,7 @@ const getTreatmentData = (slug: string, t: any, lang: string = "en"): TreatmentD
         "98%+ success rate — among the highest in modern dentistry",
         "Straumann implants used — the gold standard in implantology",
         "Save 50-65% compared to UK or EU implant prices",
-        "Our specialists have placed thousands of implants over 30+ years",
+        "Our specialists have placed thousands of implants over 35+ years",
       ],
       forWhom: [
         "Patients with one or more missing teeth seeking a permanent solution",

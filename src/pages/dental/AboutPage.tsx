@@ -109,7 +109,7 @@ const AboutPage = () => {
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="flex items-center gap-3">
                   <Award className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-medium">30+ {t.yearsExperience}</span>
+                  <span className="text-sm font-medium">35+ {t.yearsExperience}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Users className="h-6 w-6 text-primary" />
@@ -117,7 +117,7 @@ const AboutPage = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <Globe className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-medium">30+ {t.countriesServed}</span>
+                  <span className="text-sm font-medium">20+ {t.countriesServed}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Heart className="h-6 w-6 text-primary" />
@@ -159,15 +159,14 @@ const AboutPage = () => {
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.08 }}
               >
+                {/* Full-width square photo */}
+                <div className="aspect-square w-full overflow-hidden">
+                  <img src={doc.photo} alt={doc.name} className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
+                </div>
                 <div className="p-6">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-20 h-20 rounded-full overflow-hidden shrink-0">
-                      <img src={doc.photo} alt={doc.name} className="w-full h-full object-cover" />
-                    </div>
-                    <div>
-                      <h3 className="font-display font-semibold text-foreground">{doc.name}</h3>
-                      <p className="text-sm text-primary font-medium">{doc.title[lang]}</p>
-                    </div>
+                  <div className="mb-4">
+                    <h3 className="font-display font-semibold text-foreground text-lg">{doc.name}</h3>
+                    <p className="text-sm text-primary font-medium mt-0.5">{doc.title[lang]}</p>
                   </div>
 
                   <div className="space-y-3 mb-4">

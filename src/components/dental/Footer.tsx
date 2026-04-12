@@ -89,6 +89,7 @@ export const Footer = () => {
               <Link to={localePath(`/${t.aboutSlug}#doctors`)}   onClick={scrollToTop} className={linkClass}>{t.ourTeam}</Link>
               <Link to={localePath(`/${t.beforeAfterSlug}`)}     onClick={scrollToTop} className={linkClass}>{t.beforeAfter}</Link>
               <Link to={localePath(`/${t.reviewsSlug}`)}         onClick={scrollToTop} className={linkClass}>{t.reviews}</Link>
+              <Link to={localePath(`/${t.blogSlug}`)}             onClick={scrollToTop} className={linkClass}>{t.blog}</Link>
               <Link to={localePath(`/${t.aboutSlug}`)}           onClick={scrollToTop} className={linkClass}>{t.about}</Link>
               <Link to={localePath(`/${t.contactSlug}`)}         onClick={scrollToTop} className={linkClass}>{t.contact}</Link>
             </nav>
