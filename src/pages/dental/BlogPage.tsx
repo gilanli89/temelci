@@ -5,15 +5,67 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { BookOpen, GraduationCap, ChevronRight, Tag, Calendar, User } from 'lucide-react';
 import { publications } from './ResearchPage';
+import { ARTICLE_CONTENT } from './BlogArticleData';
 import hollywoodSmileImg from '@/assets/hollywood-smile.jpg';
 import implantImg from '@/assets/dental-implant.jpg';
 import veneersImg from '@/assets/veneers.jpg';
 import fullMouthImg from '@/assets/full-mouth-restoration.jpg';
 import teethWhiteningImg from '@/assets/teeth-whitening.jpg';
 import crownsImg from '@/assets/crowns.jpg';
+import clinicRoom2 from '@/assets/clinic/clinic_room2.jpg';
 
 // ── Blog articles ────────────────────────────────────────────────────────────
 const ARTICLES = [
+  // ── New SEO-focused articles (top of list)
+  {
+    slug: 'north-cyprus-implants-vs-turkey',
+    category: { en: 'Dental Tourism', tr: 'Diş Turizmi' },
+    img: implantImg,
+    date: '2026-04-12',
+    readTime: { en: '9 min read', tr: '9 dk okuma' },
+    author: 'DR. Ali Temelci',
+    title: {
+      en: 'Dental Implants in North Cyprus vs Turkey: Why More Patients Are Choosing Kyrenia',
+      tr: 'Kuzey Kıbrıs\'ta Diş İmplantı mı, Türkiye mi: Hastalar Neden Girne\'yi Tercih Ediyor?'
+    },
+    excerpt: {
+      en: 'Turkey has long dominated the dental tourism conversation. But a growing number of patients are discovering North Cyprus — 90 minutes from Larnaka via the Metehan border crossing — offers everything Turkey does and more.',
+      tr: 'Türkiye uzun süredir diş turizmi gündemlerine hâkimdi. Ancak giderek daha fazla hasta, Metehan sınır kapısıyla Larnaka\'dan 90 dakikada ulaşılan Kuzey Kıbrıs\'ın her şeyi daha iyi sunduğunu keşfediyor.'
+    },
+  },
+  {
+    slug: 'best-hotels-kyrenia-dental-patients',
+    category: { en: 'Dental Tourism', tr: 'Diş Turizmi' },
+    img: clinicRoom2,
+    date: '2026-04-12',
+    readTime: { en: '7 min read', tr: '7 dk okuma' },
+    author: 'Temelci Dental',
+    title: {
+      en: 'Best Hotels & Accommodation in Kyrenia for Dental Patients (2025 Guide)',
+      tr: 'Diş Hastası İçin Girne\'de En İyi Oteller ve Konaklama (2025 Rehberi)'
+    },
+    excerpt: {
+      en: 'From 5-star harbour hotels to well-located Airbnbs — the best places to stay in Kyrenia during your dental treatment, chosen by our patient care team.',
+      tr: '5 yıldızlı liman otellerinden iyi konumlu Airbnb\'lere — hasta bakım ekibimiz tarafından seçilen, diş tedaviniz sırasında Girne\'de kalınacak en iyi yerler.'
+    },
+  },
+  {
+    slug: 'first-days-after-dental-implant',
+    category: { en: 'Patient Guide', tr: 'Hasta Rehberi' },
+    img: implantImg,
+    date: '2026-04-12',
+    readTime: { en: '8 min read', tr: '8 dk okuma' },
+    author: 'DR. Ali Temelci',
+    title: {
+      en: 'What to Expect the First Week After a Dental Implant: Your Day-by-Day Recovery Guide',
+      tr: 'Diş İmplantından Sonra İlk Hafta: Günlük İyileşme Rehberiniz'
+    },
+    excerpt: {
+      en: 'The fear of implant surgery is usually much worse than the reality. Our oral surgeon walks you through exactly what happens on Days 1–7, what to eat, and what is normal.',
+      tr: 'İmplant ameliyatı korkusu genellikle gerçeklikten çok daha kötüdür. Ağız cerrahımız 1-7. günlerde tam olarak neler yaşandığını, ne yenileceğini ve neyin normal olduğunu anlatıyor.'
+    },
+  },
+  // ── Existing articles
   {
     slug: 'hollywood-smile-cyprus-guide',
     category: { en: 'Smile Design', tr: 'Gülüş Tasarımı' },
@@ -22,7 +74,7 @@ const ARTICLES = [
     readTime: { en: '5 min read', tr: '5 dk okuma' },
     author: 'DT. Nural Temelci',
     title: { en: 'Hollywood Smile in Cyprus: What to Expect, How to Prepare', tr: 'Kıbrıs\'ta Hollywood Smile: Ne Beklenmeli, Nasıl Hazırlanılır' },
-    excerpt: { en: 'Everything patients from the UK, Germany and beyond need to know before travelling to Kyrenia for their smile transformation.', tr: 'İngiltere, Almanya ve dünyanın dört bir yanından gelen hastaların Girne\'ye gülüş dönüşümü için seyahat etmeden önce bilmeleri gereken her şey.' },
+    excerpt: { en: 'Everything patients from the UK, Germany and beyond need to know before travelling to Kyrenia for their smile transformation.', tr: 'İngiltere, Almanya ve dünyanın dört bir yanından gelen hastaların Girne\'ye seyahat etmeden önce bilmeleri gereken her şey.' },
   },
   {
     slug: 'dental-implants-vs-bridges',
@@ -32,7 +84,7 @@ const ARTICLES = [
     readTime: { en: '6 min read', tr: '6 dk okuma' },
     author: 'DR. Ali Temelci',
     title: { en: 'Dental Implants vs Bridges: Which Is Right for You?', tr: 'Diş İmplantı mı, Köprü mü: Hangisi Size Uygun?' },
-    excerpt: { en: 'Our oral surgeon explains the clinical and financial differences between the two most common options for replacing a missing tooth.', tr: 'Ağız cerrahımız eksik diş yerine koymanın en yaygın iki seçeneği arasındaki klinik ve finansal farkları açıklıyor.' },
+    excerpt: { en: 'Our oral surgeon explains the clinical and financial differences between the two most common options for replacing a missing tooth.', tr: 'Ağız cerrahımız iki seçenek arasındaki klinik ve finansal farkları açıklıyor.' },
   },
   {
     slug: 'veneers-vs-composite-bonding',
@@ -42,7 +94,7 @@ const ARTICLES = [
     readTime: { en: '4 min read', tr: '4 dk okuma' },
     author: 'DR. DT. Şerife Köle',
     title: { en: 'Veneers vs Composite Bonding: Which Cosmetic Option is Better?', tr: 'Veneer mi, Kompozit Bonding mi: Hangi Estetik Seçenek Daha İyi?' },
-    excerpt: { en: 'A clear, honest comparison from our prosthodontist to help you choose between porcelain veneers and composite bonding for your smile goals.', tr: 'Protetik uzmanımızdan gülüş hedefleriniz için porselen veneer ile kompozit bonding arasında seçim yapmanıza yardımcı olacak net, dürüst bir karşılaştırma.' },
+    excerpt: { en: 'A clear, honest comparison from our prosthodontist to help you choose between porcelain veneers and composite bonding.', tr: 'Protetik uzmanımızdan porselen veneer ile kompozit bonding arasında seçim yapmanıza yardımcı olacak karşılaştırma.' },
   },
   {
     slug: 'all-on-4-complete-guide',
@@ -52,7 +104,7 @@ const ARTICLES = [
     readTime: { en: '7 min read', tr: '7 dk okuma' },
     author: 'DR. Ali Temelci',
     title: { en: 'All-on-4 Dental Implants: The Complete Patient Guide for 2025', tr: 'All-on-4 Diş İmplantları: 2025 İçin Kapsamlı Hasta Rehberi' },
-    excerpt: { en: 'From candidacy assessment and surgery day to the final permanent bridge — what every All-on-4 patient needs to know before committing.', tr: 'Uygunluk değerlendirmesinden ameliyat gününe ve kalıcı köprüye kadar — her All-on-4 hastasının karar vermeden önce bilmesi gerekenler.' },
+    excerpt: { en: 'From candidacy assessment and surgery day to the final permanent bridge — what every All-on-4 patient needs to know.', tr: 'Uygunluk değerlendirmesinden ameliyat gününe kadar her All-on-4 hastasının bilmesi gerekenler.' },
   },
   {
     slug: 'teeth-whitening-methods-compared',
@@ -62,7 +114,7 @@ const ARTICLES = [
     readTime: { en: '4 min read', tr: '4 dk okuma' },
     author: 'DT. Yaşkan Uğurlu',
     title: { en: 'Professional Teeth Whitening vs Home Kits: What the Evidence Shows', tr: 'Profesyonel Diş Beyazlatma vs Evde Kullanılan Kitler: Kanıtlar Ne Gösteriyor' },
-    excerpt: { en: 'Why professional in-clinic whitening achieves results that no over-the-counter product can match — and when home kits are a reasonable option.', tr: 'Profesyonel klinik içi beyazlatmanın neden hiçbir reçetesiz ürünün eşleşemeyeceği sonuçlar elde ettiği — ve evde kullanılan kitlerin ne zaman makul bir seçenek olduğu.' },
+    excerpt: { en: 'Why professional in-clinic whitening achieves results no over-the-counter product can match.', tr: 'Profesyonel klinik içi beyazlatmanın neden hiçbir reçetesiz ürünle eşleşemez sonuçlar elde ettiği.' },
   },
   {
     slug: 'dental-tourism-north-cyprus-guide',
@@ -72,12 +124,12 @@ const ARTICLES = [
     readTime: { en: '8 min read', tr: '8 dk okuma' },
     author: 'Temelci Dental',
     title: { en: 'Dental Tourism in North Cyprus: Your Complete 2025 Guide', tr: 'Kuzey Kıbrıs\'ta Diş Turizmi: 2025 Kapsamlı Rehberiniz' },
-    excerpt: { en: 'Everything about getting to Kyrenia, how to prepare for treatment, accommodation, what to expect clinically, and how to save 60–70% on dental work.', tr: 'Girne\'ye ulaşmaktan tedaviye hazırlanmaya, konaklamadan klinik sürecine ve diş hekimliğinde %60-70 tasarruf etmeye kadar her şey.' },
+    excerpt: { en: 'Everything about getting to Kyrenia, how to prepare for treatment, accommodation, and how to save 60–70% on dental work.', tr: 'Girne\'ye ulaşmaktan tedaviye, konaklamadan diş hekimliğinde %60-70 tasarruf etmeye kadar her şey.' },
   },
 ];
 
-const CATS_EN = ['All', 'Smile Design', 'Implants', 'Aesthetics', 'Dental Tourism'];
-const CATS_TR = ['Tümü', 'Gülüş Tasarımı', 'İmplant', 'Estetik', 'Diş Turizmi'];
+const CATS_EN = ['All', 'Dental Tourism', 'Implants', 'Smile Design', 'Aesthetics', 'Patient Guide'];
+const CATS_TR = ['Tümü', 'Diş Turizmi', 'İmplant', 'Gülüş Tasarımı', 'Estetik', 'Hasta Rehberi'];
 
 // ── component ─────────────────────────────────────────────────────────────────
 export default function BlogPage() {
@@ -171,9 +223,11 @@ export default function BlogPage() {
               {filteredArticles.map((article, i) => (
                 <motion.article key={article.slug} {...fadeUp(i * 0.07)}
                   className="bg-card border border-border rounded-2xl overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                  <Link to={localePath(`/blog/${article.slug}`)}>
                   <div className="aspect-[16/9] overflow-hidden">
                     <img src={article.img} alt={article.title[l]} className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" loading="lazy" />
                   </div>
+                  </Link>
                   <div className="p-6">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="inline-flex items-center gap-1 text-xs font-semibold bg-primary/10 text-primary px-2.5 py-1 rounded-full">
@@ -181,9 +235,11 @@ export default function BlogPage() {
                       </span>
                       <span className="text-xs text-muted-foreground">{article.readTime[l]}</span>
                     </div>
-                    <h2 className="font-display font-semibold text-foreground text-base mb-2 leading-snug line-clamp-2">
+                    <Link to={localePath(`/blog/${article.slug}`)}>
+                    <h2 className="font-display font-semibold text-foreground text-base mb-2 leading-snug line-clamp-2 hover:text-primary transition-colors">
                       {article.title[l]}
                     </h2>
+                    </Link>
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-3">
                       {article.excerpt[l]}
                     </p>
@@ -192,10 +248,9 @@ export default function BlogPage() {
                         <User className="h-3 w-3" />
                         <span>{article.author}</span>
                       </div>
-                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Calendar className="h-3 w-3" />
-                        <span>{new Date(article.date).toLocaleDateString(l === 'tr' ? 'tr-TR' : 'en-GB', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
-                      </div>
+                      <Link to={localePath(`/blog/${article.slug}`)} className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
+                        {l === 'tr' ? 'Oku' : 'Read'} <ChevronRight className="h-3 w-3" />
+                      </Link>
                     </div>
                   </div>
                 </motion.article>
