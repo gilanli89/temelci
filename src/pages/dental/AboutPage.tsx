@@ -21,6 +21,8 @@ const doctors = [
     bio: { en: 'With 36+ years in aesthetic smile design and implantology, Dt. Temelci is one of the field\'s most established figures. Her minimally invasive philosophy preserves as much natural tooth structure as possible while delivering aesthetic and functional outcomes. Every smile design is individually planned around the patient\'s facial anatomy, lip structure and personal expectations.', tr: '36 yılı aşkın klinik deneyimiyle estetik gülüş tasarımı ve implant uygulamalarında alanın en köklü isimlerinden biridir. Minimal invaziv felsefesiyle diş dokusunu koruyarak estetik ve fonksiyonel sonuçlara ulaşır. Her gülüş tasarımını hastanın yüz anatomisi, dudak yapısı ve beklentileri doğrultusunda özenle planlar.', el: 'Με 36+ χρόνια στον αισθητικό σχεδιασμό χαμόγελου και εμφυτευματολογία, είναι μία από τις πλέον καθιερωμένες φυσιογνωμίες του κλάδου. Η ελάχιστα επεμβατική φιλοσοφία της διαφυλάσσει τη φυσική δομή του δοντιού. Κάθε σχεδιασμός χαμόγελου σχεδιάζεται γύρω από την ανατομία και τις προσδοκίες του ασθενούς.', ru: 'Имея 36+ лет опыта в эстетическом дизайне улыбки и имплантологии, является одной из самых авторитетных фигур в области. Минимально инвазивная философия позволяет сохранить естественную структуру зуба, достигая эстетических результатов. Каждый дизайн улыбки планируется с учётом анатомии лица и ожиданий пациента.', ar: 'مع أكثر من 36 عاماً في تصميم الابتسامة التجميلية وزراعة الأسنان، تُعدّ من أبرز الأسماء في المجال. فلسفتها الجراحية الطفيفة التوغل تحافظ على بنية السن الطبيعية مع تحقيق نتائج جمالية ووظيفية. كل تصميم ابتسامة يُخطط وفق تشريح وجه المريض وتوقعاته.', he: 'עם 36+ שנות ניסיון בעיצוב חיוך אסתטי ושתלנות, היא אחת הדמויות המבוססות ביותר בתחום. הגישה המינימלית פולשנית שלה שומרת על מירב המבנה הטבעי של השן. כל עיצוב חיוך מתוכנן בהתאם לאנטומיית הפנים וציפיות המטופל.', fa: 'با بیش از ۳۶ سال تجربه در طراحی لبخند زیبایی و ایمپلنتولوژی، از معتبرترین چهره‌های این حوزه است. فلسفه حداقل تهاجمی او ساختار طبیعی دندان را حفظ کرده، نتایج زیبایی و عملکردی را محقق می‌کند. هر طراحی لبخند بر اساس آناتومی صورت و انتظارات بیمار برنامه‌ریزی می‌شود.', de: 'Mit 36+ Jahren in ästhetischem Smile-Design und Implantologie gehört sie zu den renommiertesten Persönlichkeiten ihres Faches. Ihre minimal-invasive Philosophie erhält die natürliche Zahnstruktur bei maximaler Ästhetik. Jedes Smile-Design wird individuell auf die Gesichtsanatomie und Erwartungen des Patienten abgestimmt.' },
     initials: 'NT',
     photo: photoNural,
+    universityUrl: 'https://www.istanbul.edu.tr',
+    universityLogo: 'istanbul',
   },
   {
     name: 'DR. Ali Temelci',
@@ -31,6 +33,8 @@ const doctors = [
     bio: { en: 'An oral and maxillofacial surgery specialist with extensive experience in dental implants, impacted wisdom tooth extractions, cyst operations and jaw infections. He uses 3D imaging and bone quality analysis to build individualised surgical protocols for each patient. He also performs facial aesthetic procedures including Botox and bichectomy, always prioritising long-term, sustainable results.', tr: 'Dental implant, gömülü yirmi yaş dişi çekimi, kist operasyonları ve ağız kaynaklı enfeksiyonların cerrahi tedavisinde geniş deneyime sahip ağız, diş ve çene cerrahisi uzmanıdır. Her vakada 3 boyutlu görüntüleme ve kemik kalitesi analizi ile bireyselleştirilmiş cerrahi protokoller oluşturur. Botoks ve bişektomi dahil yüz estetiği uygulamalarında da hizmet vermekte, uzun vadeli kalıcı çözümlere odaklanmaktadır.', el: 'Ειδικός στοματο-γναθοπροσωπικής χειρουργικής με εκτεταμένη εμπειρία σε εμφυτεύματα, εξαγωγές φρονιμιτών, κύστες και λοιμώξεις. Χρησιμοποιεί 3D απεικόνιση και ανάλυση ποιότητας οστού για εξατομικευμένα χειρουργικά πρωτόκολλα. Εκτελεί επίσης αισθητικές επεμβάσεις προσώπου όπως Botox και bichectomy.', ru: 'Специалист по челюстно-лицевой хирургии с обширным опытом в имплантатах, удалении ретинированных зубов, кистах и инфекциях. Использует 3D-визуализацию и анализ плотности кости для индивидуальных хирургических протоколов. Также проводит эстетические процедуры лица, включая Ботокс и бикэктомию.', ar: 'أخصائي جراحة الفم والفك والوجه بخبرة واسعة في الزراعات وخلع ضروس العقل المنطمرة والكيسات والالتهابات. يستخدم التصوير ثلاثي الأبعاد وتحليل جودة العظم لبناء بروتوكولات جراحية فردية. يجري أيضاً إجراءات تجميل الوجه بما فيها البوتوكس والبيشكتومي.', he: 'מנתח פה ולסת עם ניסיון נרחב בשתלים, עקירות שיני בינה נשכבות, ציסטות וזיהומים. משתמש בדימות תלת-ממדי וניתוח איכות עצם לבניית פרוטוקולים כירורגיים אישיים. מבצע גם הליכי אסתטיקת פנים כולל בוטוקס וביקקטומי.', fa: 'متخصص جراحی دهان، فک و صورت با تجربه گسترده در ایمپلنت، کشیدن دندان عقل نهفته، عملیات کیست و عفونت‌های دهانی. از تصویربرداری سه‌بعدی و آنالیز کیفیت استخوان برای پروتکل‌های جراحی فردی استفاده می‌کند. اقدامات زیبایی صورت شامل بوتاکس و بیشکتومی نیز انجام می‌دهد.', de: 'Mund-Kiefer-Gesichtschirurg mit umfangreicher Erfahrung in Implantaten, Weisheitszahnentfernungen, Zysten und Kieferinfektionen. Nutzt 3D-Bildgebung und Knochenqualitätsanalyse für individuelle Operationsprotokolle. Führt auch Gesichtsästhetik-Eingriffe durch, darunter Botox und Bichektomie.' },
     initials: 'AT',
     photo: photoAli,
+    universityUrl: 'https://www.neu.edu.tr',
+    universityLogo: 'neu',
   },
   {
     name: 'DT. Rasih Denktaş Çelebi',
@@ -41,6 +45,8 @@ const doctors = [
     bio: { en: 'The clinic\'s most experienced practitioner with 42 years of uninterrupted practice since graduating from Hacettepe University in 1984. He has witnessed and integrated every major technological shift in endodontics — from rotary instrumentation to digital radiology. Expert in anatomically complex canals, calcified cases and revisions of previously failed treatments; his deep diagnostic rigour underpins the clinic\'s consistently high endodontic success rates.', tr: '1984\'te Hacettepe Üniversitesi\'nden mezun olduğundan bu yana 42 yıllık kesintisiz pratiğiyle kliniğin en deneyimli hekimidir. Endodontideki her teknolojik dönüşümü yakından izleyerek klinik pratiğine entegre etmiştir. Anatomik açıdan karmaşık kanallar, kalsifiye vakalar ve başarısız tedavi revizyonlarında uzmandır; derin tanısal titizliği, kliniğin yüksek endodontik başarı oranlarının temelini oluşturmaktadır.', el: 'Ο πλέον έμπειρος κλινικός ιατρός με 42 συνεχή χρόνια πράξης από το 1984. Έχει ενσωματώσει κάθε τεχνολογική εξέλιξη στην ενδοδοντία. Ειδικός σε ανατομικά σύνθετα κανάλια, ασβεστοποιημένες περιπτώσεις και αποτυχημένες θεραπείες.', ru: 'Самый опытный клиницист с 42 годами практики с 1984 года. Интегрировал все технологические достижения эндодонтии. Специализируется на анатомически сложных каналах, кальцифицированных случаях и ревизии неудачных лечений.', ar: 'الطبيب الأكثر خبرة في العيادة بـ 42 عاماً من الممارسة المتواصلة منذ 1984. استوعب كل تطور تكنولوجي في علاج الجذور. متخصص في القنوات المعقدة تشريحياً والحالات المتكلسة ومراجعة العلاجات الفاشلة.', he: 'הרופא המנוסה ביותר עם 42 שנות עבודה מאז 1984. שילב כל התפתחות טכנולוגית באנדודונטיה. מומחה בתעלות מורכבות אנטומית, מקרים מסוידים ותיקון טיפולים כושלים.', fa: 'باتجربه‌ترین پزشک کلینیک با ۴۲ سال فعالیت مداوم از سال ۱۹۸۴. هر تحول فناورانه در اندودنتی را در عمل کلینیکی خود ادغام کرده است. متخصص در کانال‌های پیچیده از نظر آناتومیک، موارد کلسیفیه و بازبینی درمان‌های ناموفق.', de: 'Der erfahrenste Kliniker mit 42 Jahren ununterbrochener Praxis seit 1984. Hat jeden technologischen Wandel in der Endodontie integriert. Spezialist für anatomisch komplexe Kanäle, kalzifizierte Fälle und Revision fehlgeschlagener Behandlungen.' },
     initials: 'RD',
     photo: photoRasih,
+    universityUrl: 'https://www.hacettepe.edu.tr',
+    universityLogo: 'hacettepe',
   },
   {
     name: 'DT. Yaşkan Uğurlu',
@@ -51,6 +57,8 @@ const doctors = [
     bio: { en: 'Specialises in canal treatment, aesthetic composite restorations and periodontal therapy, applying modern rotary instrumentation and current irrigation protocols. His strong empathetic communication style — listening to patient concerns before treatment begins — makes him particularly sought after by anxious patients and those who have avoided dental care for years. He considers making every patient feel safe and valued an inseparable part of good treatment.', tr: 'Kanal tedavisi, estetik kompozit restorasyon ve periodontal tedavi alanlarında uzmanlaşmış; modern rotary enstrümantasyon ve güncel irrigasyon protokollerini başarıyla uygulamaktadır. Güçlü empatik iletişim tarzı — tedaviye başlamadan önce hasta kaygılarını dikkatle dinlemesi — onu özellikle diş hekimi fobisi olan ve uzun süre muayeneden kaçınan hastalar arasında tercih edilen hekim yapmaktadır. Her hastanın güvende ve değerli hissetmesini iyi tedavinin ayrılmaz parçası olarak benimser.', el: 'Εξειδικεύεται σε ενδοδοντία, αισθητικές αποκαταστάσεις και περιοδοντική θεραπεία με σύγχρονα περιστροφικά συστήματα. Η ενσυναίσθησή του και η επικοινωνία πριν τη θεραπεία τον κάνουν ιδιαίτερα δημοφιλή σε άγχος ασθενείς.', ru: 'Специализируется на лечении каналов, эстетических реставрациях и пародонтологии с современными ротационными системами. Эмпатичный стиль общения делает его особенно востребованным среди пациентов с дентофобией.', ar: 'متخصص في علاج الجذور وترميم الأسنان التجميلي وعلاج اللثة بأنظمة دوارة حديثة. أسلوبه التواصلي المتعاطف يجعله خياراً مفضلاً للمرضى الخائفين من طبيب الأسنان.', he: 'מתמחה בטיפולי שורש, שיחזורים אסתטיים וטיפול פריודנטלי עם מערכות סיבוביות מודרניות. סגנון תקשורת אמפתי הופך אותו לפופולרי במיוחד בקרב מטופלים חרדים.', fa: 'در درمان کانال، ترمیم کامپوزیت زیبایی و درمان پریودنتال با سیستم‌های روتاری مدرن تخصص دارد. سبک ارتباطی همدلانه‌اش او را به گزینه محبوبی برای بیماران مضطرب تبدیل کرده است.', de: 'Spezialist für Kanalbehandlung, ästhetische Kompositrestaurationen und Parodontologie mit modernen Rotationssystemen. Sein empathischer Kommunikationsstil macht ihn besonders bei ängstlichen Patienten beliebt.' },
     initials: 'YU',
     photo: photoYaskan,
+    universityUrl: 'https://www.neu.edu.tr',
+    universityLogo: 'neu',
   },
   {
     name: 'DR. DT. Şerife Köle',
@@ -61,6 +69,8 @@ const doctors = [
     bio: { en: 'Graduated top of her class at Near East University, then completed her doctoral specialisation in Prosthodontics at Gazi University (2022). Her multi-parametric approach to implant-supported prosthetics balances aesthetic harmony, bite force distribution and tissue compatibility. She applies the same scientific rigour to laminate veneers and zirconia crowns, calibrating colour, form and surface texture to match each patient\'s natural dentition.', tr: 'Yakın Doğu Üniversitesi\'nden dönem birincisi olarak mezun olmuş; ardından Gazi Üniversitesi\'nde Protetik Diş Tedavisi alanında doktorasını 2022\'de tamamlamıştır. İmplant üstü protez planlamasında estetik uyum, ısırma kuvvetlerinin dengeli dağılımı ve doku uyumunu bir arada değerlendirir. Aynı bilimsel titizliği lamine veneer ve zirkonyum kron uygulamalarına taşır; renk, form ve yüzey dokusunu hastanın doğal dişlerine göre kalibre eder.', el: 'Αποφοίτησε πρώτη από το Πανεπιστήμιο Εγγύς Ανατολής, στη συνέχεια ολοκλήρωσε διδακτορικό στην Προσθετική στο Πανεπιστήμιο Gazi (2022). Εξισορροπεί αισθητική, δύναμη δαγκώματος και συμβατότητα ιστών στις εμφυτευματικές προσθέσεις.', ru: 'Окончила с отличием Университет Ближнего Востока, затем — докторантуру по протезированию в Университете Гази (2022). В имплантационном протезировании балансирует эстетику, распределение жевательной нагрузки и тканевую совместимость.', ar: 'تخرجت الأولى من جامعة الشرق الأدنى ثم أكملت دكتوراه في التركيبات بجامعة غازي (2022). توازن في تركيبات الزرعات بين الجماليات وتوزيع قوة العض وتوافق الأنسجة.', he: 'סיימה ראשונה מאוניברסיטת המזרח הקרוב, לאחר מכן השלימה דוקטורט בפרוסתודונטיה באוניברסיטת גאזי (2022). מאזנת אסתטיקה, חלוקת כוחות לעיסה ותאימות רקמות בתותבות על שתלים.', fa: 'نفر اول از دانشگاه خاور نزدیک فارغ‌التحصیل شد، سپس دکترای تخصصی پروتز دندان را در دانشگاه غازی (۲۰۲۲) تکمیل کرد. در پروتزهای روی ایمپلنت بین هارمونی زیبایی، توزیع نیروی گاز و سازگاری بافتی تعادل برقرار می‌کند.', de: 'Schloss als Klassenbeste an der Nahost-Universität ab, dann Promotion in Prothetik an der Gazi-Universität (2022). Balanciert Ästhetik, Kaudruckverteilung und Gewebeverträglichkeit bei implantatgetragenem Zahnersatz.' },
     initials: 'SK',
     photo: photoSerife,
+    universityUrl: 'https://www.gazi.edu.tr',
+    universityLogo: 'gazi',
   },
   {
     name: 'DT. Anna Zubtcovskaia-Derya',
@@ -71,6 +81,8 @@ const doctors = [
     bio: { en: 'A graduate of Izhevsk State Medical Academy, Russia (1994), Dt. Zubtcovskaia-Derya brings 27+ years of specialisation in endodontic treatment, aesthetic composite restorations and professional oral hygiene. Her international background gives her a natural ability to connect with patients from diverse cultures — an asset highly valued in the clinic\'s international patient environment. She is a strong advocate of preventive dentistry and guides every patient toward six-monthly check-ups.', tr: '1994\'te Rusya\'nın Izhevsk Devlet Tıp Akademisi\'nden mezun olan Dt. Zubtcovskaia-Derya, 27 yılı aşkın pratiğini endodontik tedavi, estetik kompozit restorasyon ve profesyonel ağız hijyeni üzerine yoğunlaştırmıştır. Uluslararası mesleki geçmişi, farklı kültürlerden hastalara etkin iletişim kurmasını kolaylaştırmakta; kliniğimizin uluslararası hasta ortamında büyük değer taşımaktadır. Önleyici diş hekimliğini güçlü savunan hekim, her hastasını altı aylık periyodik kontrole yönlendirir.', el: 'Απόφοιτος της Κρατικής Ιατρικής Ακαδημίας Ιζέβσκ (1994) με 27+ χρόνια εξειδίκευσης σε ενδοδοντεία, αισθητικές αποκαταστάσεις και ένα πλούσιο υπόβαθρο για πολυπολιτισμικούς ασθενείς. Ισχυρός υποστηρικτής προληπτικής οδοντιατρικής.', ru: 'Выпускница Ижевской государственной медицинской академии (1994) с 27+ годами специализации в эндодонтии, эстетических реставрациях и профилактике. Международный опыт помогает эффективно общаться с пациентами разных культур.', ar: 'خريجة أكاديمية إيجيفسك الطبية (1994) بخبرة 27+ سنة في علاج الجذور والترميم التجميلي وصحة الفم. خلفيتها الدولية تُمكّنها من التواصل مع مرضى من ثقافات متعددة.', he: 'בוגרת האקדמיה הרפואית של איז\'בסק (1994) עם 27+ שנות התמחות באנדודונטיה, שיחזורים אסתטיים ואנטיסגה מקצועית. רקעה הבינלאומי מעניק לה יכולת טבעית להתחבר למטופלים ממגוון תרבויות.', fa: 'فارغ‌التحصیل آکادمی پزشکی دولتی ایژوسک (۱۹۹۴) با بیش از ۲۷ سال تخصص در اندودنتی، ترمیم زیبایی و بهداشت دهان. پیشینه بین‌المللی‌اش ارتباط طبیعی با بیماران از فرهنگ‌های مختلف را ممکن می‌سازد.', de: 'Absolventin der Staatlichen Medizinischen Akademie Ischewsk (1994) mit 27+ Jahren Spezialisierung in Endodontie, ästhetischen Restaurationen und professioneller Mundhygiene. Ihr internationaler Hintergrund erleichtert die Kommunikation mit Patienten aus verschiedenen Kulturen.' },
     initials: 'AZ',
     photo: photoAnna,
+    universityUrl: 'https://igma.izhevsk.ru',
+    universityLogo: 'izhevsk',
   },
 ];
 
@@ -82,6 +94,15 @@ const bgColors = [
   'bg-rose-500/10 text-rose-600',
   'bg-cyan-500/10 text-cyan-600',
 ];
+
+// University logo badges
+const UNIVERSITY_LOGOS: Record<string, { abbr: string; full: string; color: string; bg: string }> = {
+  istanbul:  { abbr: 'İÜ',  full: 'İstanbul Üniversitesi',         color: '#c0392b', bg: '#fdf0ef' },
+  neu:       { abbr: 'NEU', full: 'Near East University',           color: '#003087', bg: '#eef2fb' },
+  hacettepe: { abbr: 'HÜ',  full: 'Hacettepe Üniversitesi',         color: '#B5121B', bg: '#fdf0ef' },
+  gazi:      { abbr: 'GÜ',  full: 'Gazi Üniversitesi',             color: '#cc0000', bg: '#fdf0ef' },
+  izhevsk:   { abbr: 'IGMA',full: 'Izhevsk State Medical Academy', color: '#1a4f8a', bg: '#eef2fb' },
+};
 
 const AboutPage = () => {
   const { t, lang, localePath } = useLanguage();
@@ -185,6 +206,38 @@ const AboutPage = () => {
                   </div>
 
                   <p className="text-sm text-foreground/70 leading-relaxed">{doc.bio[lang]}</p>
+
+                  {/* University logo + link */}
+                  {doc.universityLogo && UNIVERSITY_LOGOS[doc.universityLogo] && (
+                    <div className="mt-4 pt-4 border-t border-border">
+                      <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
+                        {lang === 'tr' ? 'Mezuniyet' : 'Education'}
+                      </p>
+                      <a
+                        href={doc.universityUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2.5 group"
+                      >
+                        {/* Logo badge */}
+                        <div
+                          className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 font-black text-xs transition-transform group-hover:scale-105"
+                          style={{
+                            backgroundColor: UNIVERSITY_LOGOS[doc.universityLogo].bg,
+                            color: UNIVERSITY_LOGOS[doc.universityLogo].color,
+                            border: `1.5px solid ${UNIVERSITY_LOGOS[doc.universityLogo].color}30`,
+                          }}
+                        >
+                          {UNIVERSITY_LOGOS[doc.universityLogo].abbr}
+                        </div>
+                        <span className="text-xs text-muted-foreground group-hover:text-primary transition-colors leading-tight">
+                          {UNIVERSITY_LOGOS[doc.universityLogo].full}
+                          <span className="block text-[10px] opacity-60">↗ {lang === 'tr' ? 'Ziyaret et' : 'Visit'}</span>
+                        </span>
+                      </a>
+                    </div>
+                  )}
+
                   {doc.initials === 'SK' && (
                     <div className="mt-4 pt-4 border-t border-border">
                       <Link
