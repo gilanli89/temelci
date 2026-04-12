@@ -23,6 +23,65 @@ type TreatmentData = {
   faq: { q: string; a: string }[];
 };
 
+// Maps all non-EN slugs to their EN equivalent for content lookup
+const SLUG_TO_EN: Record<string, string> = {
+  "anamorfosi-xamogelou": "smile-makeover",
+  "bazsazi-kamel": "full-mouth-restoration",
+  "bruksizm-tedavisi": "bruxism-treatment",
+  "cirkonievye-koronki": "zirconia-crowns",
+  "dis-beyazlatma": "teeth-whitening",
+  "dis-eti-hastaligi": "gum-disease-treatment",
+  "dizajn-ulybki": "smile-makeover",
+  "emfyteymata": "implants",
+  "finir": "veneers",
+  "gollivudskaya-ulybka": "hollywood-smile",
+  "gulus-tasarimi": "smile-makeover",
+  "halbana": "teeth-whitening",
+  "ibtisamat-hollywood": "hollywood-smile",
+  "implant": "implants",
+  "implantate": "implants",
+  "implantaty": "implants",
+  "itzuv-hiyukh": "smile-makeover",
+  "kanal-tedavisi": "root-canal-treatment",
+  "kompozit-dolgu": "composite-fillings",
+  "koronki": "crowns",
+  "kron": "crowns",
+  "kronen": "crowns",
+  "ktarim": "crowns",
+  "lazer-dis-eti": "laser-gum-treatment",
+  "leykfansi": "teeth-whitening",
+  "onleyici-dis-hekimligi": "preventive-dentistry",
+  "opseis": "veneers",
+  "ortodonti": "orthodontics",
+  "otbelivanie": "teeth-whitening",
+  "pliri-apokatastasi": "full-mouth-restoration",
+  "polnaya-restavraciya": "full-mouth-restoration",
+  "rukesh": "crowns",
+  "seffaf-plak": "clear-aligners",
+  "sefid-kardan": "teeth-whitening",
+  "shikum-pe-male": "full-mouth-restoration",
+  "shtalim": "implants",
+  "stemmata": "crowns",
+  "tabyid-asnan": "teeth-whitening",
+  "tajmil-ibtisama": "smile-makeover",
+  "tam-agiz-restorasyonu": "full-mouth-restoration",
+  "tarahi-labkhand": "smile-makeover",
+  "tarmim-kamel": "full-mouth-restoration",
+  "tijan": "crowns",
+  "tijan-zirkonia": "zirconia-crowns",
+  "tsipuyim": "veneers",
+  "vanir": "veneers",
+  "veneer": "veneers",
+  "viniry": "veneers",
+  "vollmund-restauration": "full-mouth-restoration",
+  "yirmilik-dis-cekimi": "wisdom-tooth-removal",
+  "zahnaufhellung": "teeth-whitening",
+  "ziraat-asnan": "implants",
+  "zirkonia": "zirconia-crowns",
+  "zirkonkronen": "zirconia-crowns",
+  "zirkonyum-kron": "zirconia-crowns",
+};
+
 const getTreatmentData = (slug: string, t: any, lang: string = "en"): TreatmentData | null => {
   const data: Record<string, TreatmentData> = {
     [t.hollywoodSmileSlug]: {
@@ -1660,8 +1719,10 @@ const getTreatmentData = (slug: string, t: any, lang: string = "en"): TreatmentD
     },
   };
 
-  if (lang === "tr") return trData[slug] || null;
-    return data[slug] || null;
+  if (lang === "tr") return trData[slug] || trData[SLUG_TO_EN[slug]] || data[SLUG_TO_EN[slug]] || data[slug] || null;
+  // For other langs, resolve via mapping to EN slug
+  const enSlug = SLUG_TO_EN[slug] || slug;
+  return data[enSlug] || data[slug] || null;
 };
 
 const TreatmentDetailPage = () => {
