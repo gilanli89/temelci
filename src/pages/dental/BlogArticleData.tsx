@@ -20,8 +20,8 @@ export const ARTICLE_CONTENT: Record<string, any> = {
     img: implantImg,
     date: '2026-04-12',
     readTime: { en: '9 min read', tr: '9 dk okuma' },
-    author: 'DR. Ali Temelci',
-    authorTitle: 'Oral & Maxillofacial Surgeon',
+    author: 'Temelci Dental',
+    authorTitle: 'Temelci Dental Clinic',
     title: {
       en: 'Dental Implants in North Cyprus vs Turkey: Why More Patients Are Choosing Kyrenia',
       tr: 'Kuzey Kıbrıs\'ta Diş İmplantı mı, Türkiye mi: Hastalar Neden Girne\'yi Tercih Ediyor?'
@@ -132,7 +132,7 @@ Düşündükten sonra çoğu hasta için seçim basit. Size neler yapabileceğim
     date: '2026-04-12',
     readTime: { en: '7 min read', tr: '7 dk okuma' },
     author: 'Temelci Dental',
-    authorTitle: 'Patient Care Team',
+    authorTitle: 'Temelci Dental Clinic',
     title: {
       en: 'Best Hotels & Accommodation in Kyrenia for Dental Patients (2025 Guide)',
       tr: 'Diş Hastası Hastaları İçin Girne\'de En İyi Oteller ve Konaklama (2025 Rehberi)'
@@ -251,8 +251,8 @@ Otel rezervasyonlarına komisyon almıyor veya oteller ile finansal ortaklık ya
     img: implantImg,
     date: '2026-04-12',
     readTime: { en: '8 min read', tr: '8 dk okuma' },
-    author: 'DR. Ali Temelci',
-    authorTitle: 'Oral & Maxillofacial Surgeon',
+    author: 'Temelci Dental',
+    authorTitle: 'Temelci Dental Clinic',
     title: {
       en: 'What to Expect the First Week After a Dental Implant: Your Day-by-Day Recovery Guide',
       tr: 'Diş İmplantından Sonra İlk Hafta: Günlük İyileşme Rehberiniz'
