@@ -1210,14 +1210,6 @@ const getTreatmentData = (slug: string, t: any, lang: string = "en"): TreatmentD
         { q: "Tam ağız restorasyonu yaşlı hastalar için uygun mu?", a: "Evet. Tam ağız restorasyonu hastalarımızın pek çoğu 60 yaş üzerindedir. Yaş bir engel değildir. Genel sağlık değerlendirilerek tedavinin uygun ve iyi tolere edildiğinden emin olmak için muhafazakâr ve dikkatli bir yaklaşım benimsiyoruz." },
       ],
     },
-  };
-
-        { q: "Tam ağız restorasyonu ne kadar sürer?", a: "Süre karmaşıklığa bağlıdır. İmplant içeren vakalarda süreç, 4-8 ay içinde 2 ziyareti kapsar (implant yerleştirme, ardından kron takımı). Yalnızca restorasyon gerektiren vakalarda tedavi 10-14 günde tamamlanabilir." },
-        { q: "Tam ağız restorasyonu ne kadar tutar?", a: "İngiltere veya Almanya\'da tam ağız restorasyonu tedavi kapsamına göre £20.000-£50.000 veya daha fazla tutabilir. Hastalarımız Kuzey Kıbrıs\'ta eşdeğer klinik sonucu bunun çok altında bir maliyetle elde ediyor." },
-        { q: "Tedavi süresince dişsiz kalır mıyım?", a: "Hayır. Her zaman geçici restorasyon sağlıyoruz; süreç boyunca — ziyaretler arasında bile — asla işlevsel ve sunulabilir dişsiz kalmıyorsunuz." },
-        { q: "Tam ağız restorasyonu yaşlı hastalar için uygun mu?", a: "Evet. Tam ağız restorasyonu hastalarımızın pek çoğu 60 yaş üzerindedir. Yaş bir engel değildir. Genel sağlık değerlendirilerek tedavinin uygun ve iyi tolere edildiğinden emin olmak için muhafazakâr ve dikkatli bir yaklaşım benimsiyoruz." },
-      ],
-    },
     [t.rootCanalSlug]: {
       titleKey: 'rootCanal', descKey: 'rootCanalDesc', img: implantImg,
       benefits: [
