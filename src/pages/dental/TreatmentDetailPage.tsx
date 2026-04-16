@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
@@ -1728,8 +1728,14 @@ const getTreatmentData = (slug: string, t: any, lang: string = "en"): TreatmentD
 const TreatmentDetailPage = () => {
   const { t, localePath, lang } = useLanguage();
   const { treatmentSlug } = useParams<{ treatmentSlug: string }>();
+  const location = useLocation();
   
-  const treatment = getTreatmentData(treatmentSlug || '', t, lang);
+  // When route is explicit (path="hollywood-smile"), useParams gives no param
+  // Fall back to reading the last segment of the URL path
+  const slugFromPath = location.pathname.split('/').filter(Boolean).pop() || '';
+  const slug = treatmentSlug || slugFromPath;
+  
+  const treatment = getTreatmentData(slug, t, lang);
 
   if (!treatment) {
     return (
