@@ -3,7 +3,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from './WhatsAppButton';
 import { MapPin, Phone, Mail, Star, Clock, Shield } from 'lucide-react';
 
-const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
 
 export const Footer = () => {
   const { t, lang, localePath } = useLanguage();
@@ -113,7 +113,7 @@ export const Footer = () => {
             <p className={headingClass}>{lang === 'tr' ? 'Klinik' : 'Clinic'}</p>
             <nav aria-label="Clinic pages">
               <Link to={localePath(`/${t.ourClinicSlug}`)}       onClick={scrollToTop} className={linkClass}>{t.ourClinic}</Link>
-              <Link to={localePath(`/${t.aboutSlug}#doctors`)}   onClick={scrollToTop} className={linkClass}>{t.ourTeam}</Link>
+              <Link to={localePath(`/${t.aboutSlug}#doctors`)}   className={linkClass}>{t.ourTeam}</Link>
               <Link to={localePath(`/${t.beforeAfterSlug}`)}     onClick={scrollToTop} className={linkClass}>{t.beforeAfter}</Link>
               <Link to={localePath(`/${t.reviewsSlug}`)}         onClick={scrollToTop} className={linkClass}>{t.reviews}</Link>
               <Link to={localePath(`/${t.blogSlug}`)}             onClick={scrollToTop} className={linkClass}>{t.blog}</Link>

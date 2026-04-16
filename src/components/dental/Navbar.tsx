@@ -4,7 +4,7 @@ import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { QuoteModal } from './QuoteModal';
 
-export const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+export const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
 
 export const Navbar = () => {
   const { t, lang, setLang, languages, localePath } = useLanguage();
@@ -13,6 +13,13 @@ export const Navbar = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+
+  const handleNav = (path: string) => {
+    if (!path.includes('#')) scrollToTop();
+    setOpenDropdown(null);
+    setIsOpen(false);
+    setLangOpen(false);
+  };
 
   const currentLang = languages.find(l => l.code === lang);
   const isTr = lang === 'tr';
@@ -106,7 +113,7 @@ export const Navbar = () => {
                   }`}>
                     {group.dropdown.map(item => (
                       <Link key={item.path} to={localePath(item.path)}
-                        onClick={() => { setOpenDropdown(null); scrollToTop(); }}
+                        onClick={() => handleNav(item.path)}
                         className={dropLinkClass}>
                         {item.label}
                       </Link>
@@ -115,7 +122,7 @@ export const Navbar = () => {
                       <>
                         <div className="my-1 mx-3 border-t border-border" />
                         <Link to={localePath(`/${t.treatmentsSlug}`)}
-                          onClick={() => { setOpenDropdown(null); scrollToTop(); }}
+                          onClick={() => handleNav(item.path)}
                           className="block px-4 py-2.5 text-sm font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors">
                           {isTr ? 'Tüm Tedaviler →' : 'All Treatments →'}
                         </Link>
@@ -128,7 +135,7 @@ export const Navbar = () => {
 
             {/* Direct links */}
             {directLinks.map(link => (
-              <Link key={link.path} to={localePath(link.path)} onClick={scrollToTop}
+              <Link key={link.path} to={localePath(link.path)} onClick={() => handleNav(link.path)}
                 className="px-3 py-2 rounded-lg text-sm font-medium text-foreground/80 hover:text-primary hover:bg-secondary/50 transition-colors whitespace-nowrap">
                 {link.label}
               </Link>
@@ -218,14 +225,14 @@ export const Navbar = () => {
                 <div className="grid grid-cols-2 gap-1">
                   {navGroups[0].dropdown.map(item => (
                     <Link key={item.path} to={localePath(item.path)}
-                      onClick={() => { setIsOpen(false); scrollToTop(); }}
+                      onClick={() => handleNav(item.path)}
                       className="text-sm text-foreground/80 hover:text-primary py-2 px-3 rounded-xl hover:bg-secondary/60 transition-colors">
                       {item.label}
                     </Link>
                   ))}
                 </div>
                 <Link to={localePath(`/${t.treatmentsSlug}`)}
-                  onClick={() => { setIsOpen(false); scrollToTop(); }}
+                  onClick={() => handleNav(item.path)}
                   className="block text-sm font-bold text-primary px-3 pt-2 hover:underline">
                   {isTr ? 'Tüm Tedaviler →' : 'All Treatments →'}
                 </Link>
@@ -237,7 +244,7 @@ export const Navbar = () => {
                 </p>
                 {navGroups[1].dropdown.map(item => (
                   <Link key={item.path} to={localePath(item.path)}
-                    onClick={() => { setIsOpen(false); scrollToTop(); }}
+                    onClick={() => handleNav(item.path)}
                     className="block py-2.5 px-3 text-sm font-medium text-foreground/80 hover:text-primary rounded-xl hover:bg-secondary/60 transition-colors">
                     {item.label}
                   </Link>
@@ -247,7 +254,7 @@ export const Navbar = () => {
               <div className="border-t border-border/50 pt-2">
                 {directLinks.map(link => (
                   <Link key={link.path} to={localePath(link.path)}
-                    onClick={() => { setIsOpen(false); scrollToTop(); }}
+                    onClick={() => handleNav(item.path)}
                     className="block py-2.5 px-3 text-sm font-medium text-foreground/80 hover:text-primary rounded-xl hover:bg-secondary/60 transition-colors">
                     {link.label}
                   </Link>
