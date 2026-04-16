@@ -25,12 +25,12 @@ export const Layout = () => {
       <Footer />
       <WhatsAppButton text="" variant="sticky" />
 
-      {/* Back to top */}
+      {/* Back to top — sits left of WhatsApp button */}
       {showTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           aria-label="Back to top"
-          className="fixed bottom-20 right-4 z-40 w-10 h-10 rounded-full bg-card border border-border shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-colors"
+          className="fixed bottom-6 right-20 z-40 w-10 h-10 rounded-full bg-card border border-border shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all hover:scale-110"
         >
           <ChevronUp className="h-5 w-5" />
         </button>

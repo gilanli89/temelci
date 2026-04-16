@@ -1,8 +1,8 @@
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
-import { ChevronRight, Check } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Check } from 'lucide-react';
 import implantImg from '@/assets/dental-implant.jpg';
 import veneersImg from '@/assets/veneers.jpg';
 import crownsImg from '@/assets/crowns.jpg';
@@ -1729,18 +1729,22 @@ const TreatmentDetailPage = () => {
   const { t, localePath, lang } = useLanguage();
   const { treatmentSlug } = useParams<{ treatmentSlug: string }>();
   const location = useLocation();
-  
+  const navigate = useNavigate();
+
   // When route is explicit (path="hollywood-smile"), useParams gives no param
   // Fall back to reading the last segment of the URL path
   const slugFromPath = location.pathname.split('/').filter(Boolean).pop() || '';
   const slug = treatmentSlug || slugFromPath;
-  
+
   const treatment = getTreatmentData(slug, t, lang);
 
   if (!treatment) {
     return (
-      <div className="section-padding container-dental text-center">
-        <h1 className="heading-display">Treatment Not Found</h1>
+      <div className="section-padding container-dental text-center pt-32">
+        <h1 className="heading-display mb-4">Treatment Not Found</h1>
+        <button onClick={() => navigate(-1)} className="text-primary hover:underline text-sm">
+          ← Go Back
+        </button>
       </div>
     );
   }
@@ -1748,8 +1752,23 @@ const TreatmentDetailPage = () => {
   const title = (t as any)[treatment.titleKey] || treatment.titleKey;
   const desc = (t as any)[treatment.descKey] || treatment.descKey;
 
+  // Update page title
+  if (typeof document !== 'undefined') {
+    document.title = `${title} in North Cyprus | Temelci Dental`;
+  }
+
   return (
     <>
+      {/* Back button */}
+      <div className="container-dental px-4 pt-4 pb-0">
+        <button
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-primary transition-colors"
+        >
+          <ChevronLeft className="h-4 w-4" />
+          {lang === 'tr' ? 'Geri' : 'Back'}
+        </button>
+      </div>
       {/* Hero */}
       <section className="relative">
         <div className="aspect-[21/9] max-h-[400px] overflow-hidden">

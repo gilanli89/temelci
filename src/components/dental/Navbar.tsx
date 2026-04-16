@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown, Globe } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { QuoteModal } from './QuoteModal';
@@ -13,6 +13,13 @@ export const Navbar = () => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  // Check if a path is active
+  const isActive = (path: string) => {
+    if (!path) return location.pathname === `/${lang}`;
+    return location.pathname.includes(path.replace('#', '').split('#')[0]);
+  };
 
   const handleNav = (path: string) => {
     if (!path.includes('#')) scrollToTop();
@@ -136,7 +143,11 @@ export const Navbar = () => {
             {/* Direct links */}
             {directLinks.map(link => (
               <Link key={link.path} to={localePath(link.path)} onClick={() => handleNav(link.path)}
-                className="px-3 py-2 rounded-lg text-sm font-medium text-foreground/80 hover:text-primary hover:bg-secondary/50 transition-colors whitespace-nowrap">
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
+                  isActive(link.path)
+                    ? 'text-primary bg-primary/8'
+                    : 'text-foreground/80 hover:text-primary hover:bg-secondary/50'
+                }`}>
                 {link.label}
               </Link>
             ))}
