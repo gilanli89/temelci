@@ -46,6 +46,7 @@ export const Footer = () => {
               <Link to={localePath(`/${t.aboutSlug}#doctors`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.ourTeam}</Link>
               <Link to={localePath(`/${t.beforeAfterSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.beforeAfter}</Link>
               <Link to={localePath(`/${t.reviewsSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.reviews}</Link>
+              <Link to={localePath(`/${t.researchSlug}`)} onClick={scrollToTop}>{t.research || '📄 Research'}</Link>
               <Link to={localePath(`/${t.aboutSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.about}</Link>
               <Link to={localePath(`/${t.contactSlug}`)} onClick={scrollToTop} className="block text-sm opacity-70 hover:opacity-100 transition-opacity">{t.contact}</Link>
               <Link to={localePath('/landing')} onClick={scrollToTop} className="block text-sm font-semibold text-primary hover:opacity-80 transition-opacity">🦷 {t.freeConsultation}</Link>
