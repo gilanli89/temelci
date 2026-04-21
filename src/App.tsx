@@ -17,6 +17,10 @@ import LandingPage from "./pages/dental/LandingPage";
 import HollywoodSmileLanding from "./pages/dental/HollywoodSmileLanding";
 import AllOn4Landing from "./pages/dental/AllOn4Landing";
 import DrSerifePage from "./pages/dental/DrSerifePage";
+import OurClinicPage from "./pages/dental/OurClinicPage";
+import BlogPage from "./pages/dental/BlogPage";
+import BlogArticlePage from "./pages/dental/BlogArticlePage";
+import DentalTourismPage from "./pages/dental/DentalTourismPage";
 import ResearchPage from "./pages/dental/ResearchPage";
 import ResearchDetailPage from "./pages/dental/ResearchDetailPage";
 import ImplantPackageLanding from "./pages/dental/ImplantPackageLanding";
@@ -76,6 +80,24 @@ const LangRoutes = () => (
         <Route path="odot" element={<AboutPage />} />
         <Route path="ueber-uns" element={<AboutPage />} />
         <Route path="darbare" element={<AboutPage />} />
+        <Route path="our-clinic" element={<OurClinicPage />} />
+        <Route path="kliniğimiz" element={<OurClinicPage />} />
+        <Route path="i-kliniki-mas" element={<OurClinicPage />} />
+        <Route path="nasha-klinika" element={<OurClinicPage />} />
+        <Route path="iyadetouna" element={<OurClinicPage />} />
+        <Route path="hamirpa-shelanu" element={<OurClinicPage />} />
+        <Route path="unsere-klinik" element={<OurClinicPage />} />
+        <Route path="klinik-ma" element={<OurClinicPage />} />
+        <Route path="blog" element={<BlogPage />} />
+        <Route path="blog/:slug" element={<BlogArticlePage />} />
+        <Route path="dental-tourism" element={<DentalTourismPage />} />
+        <Route path="dis-turizmi" element={<DentalTourismPage />} />
+        <Route path="odontiatrikos-tourismos" element={<DentalTourismPage />} />
+        <Route path="stom-turizm" element={<DentalTourismPage />} />
+        <Route path="siyaha-ilajiya" element={<DentalTourismPage />} />
+        <Route path="tayarut-refuit" element={<DentalTourismPage />} />
+        <Route path="zahntourismus" element={<DentalTourismPage />} />
+        <Route path="gardeshgari-dandan" element={<DentalTourismPage />} />
         <Route path="contact" element={<ContactPage />} />
         <Route path="dr-serife-kole" element={<DrSerifePage />} />
         <Route path="dr-serife-kole-kocadal" element={<DrSerifePage />} />
@@ -88,6 +110,80 @@ const LangRoutes = () => (
         <Route path="tsorkesher" element={<ContactPage />} />
         <Route path="kontakt" element={<ContactPage />} />
         <Route path="tamas" element={<ContactPage />} />
+        <Route path="all-on-4" element={<TreatmentDetailPage />} />
+        <Route path="anamorfosi-xamogelou" element={<TreatmentDetailPage />} />
+        <Route path="bazsazi-kamel" element={<TreatmentDetailPage />} />
+        <Route path="bruksizm-tedavisi" element={<TreatmentDetailPage />} />
+        <Route path="bruxism-treatment" element={<TreatmentDetailPage />} />
+        <Route path="cirkonievye-koronki" element={<TreatmentDetailPage />} />
+        <Route path="clear-aligners" element={<TreatmentDetailPage />} />
+        <Route path="composite-fillings" element={<TreatmentDetailPage />} />
+        <Route path="crowns" element={<TreatmentDetailPage />} />
+        <Route path="dental-bonding" element={<TreatmentDetailPage />} />
+        <Route path="dis-beyazlatma" element={<TreatmentDetailPage />} />
+        <Route path="dis-eti-hastaligi" element={<TreatmentDetailPage />} />
+        <Route path="dizajn-ulybki" element={<TreatmentDetailPage />} />
+        <Route path="emfyteymata" element={<TreatmentDetailPage />} />
+        <Route path="finir" element={<TreatmentDetailPage />} />
+        <Route path="full-mouth-restoration" element={<TreatmentDetailPage />} />
+        <Route path="gollivudskaya-ulybka" element={<TreatmentDetailPage />} />
+        <Route path="gulus-tasarimi" element={<TreatmentDetailPage />} />
+        <Route path="gum-disease-treatment" element={<TreatmentDetailPage />} />
+        <Route path="halbana" element={<TreatmentDetailPage />} />
+        <Route path="hollywood-smile" element={<TreatmentDetailPage />} />
+        <Route path="ibtisamat-hollywood" element={<TreatmentDetailPage />} />
+        <Route path="implant" element={<TreatmentDetailPage />} />
+        <Route path="implantate" element={<TreatmentDetailPage />} />
+        <Route path="implantaty" element={<TreatmentDetailPage />} />
+        <Route path="implants" element={<TreatmentDetailPage />} />
+        <Route path="itzuv-hiyukh" element={<TreatmentDetailPage />} />
+        <Route path="kanal-tedavisi" element={<TreatmentDetailPage />} />
+        <Route path="kompozit-dolgu" element={<TreatmentDetailPage />} />
+        <Route path="koronki" element={<TreatmentDetailPage />} />
+        <Route path="kron" element={<TreatmentDetailPage />} />
+        <Route path="kronen" element={<TreatmentDetailPage />} />
+        <Route path="ktarim" element={<TreatmentDetailPage />} />
+        <Route path="laser-gum-treatment" element={<TreatmentDetailPage />} />
+        <Route path="lazer-dis-eti" element={<TreatmentDetailPage />} />
+        <Route path="leykfansi" element={<TreatmentDetailPage />} />
+        <Route path="onleyici-dis-hekimligi" element={<TreatmentDetailPage />} />
+        <Route path="opseis" element={<TreatmentDetailPage />} />
+        <Route path="orthodontics" element={<TreatmentDetailPage />} />
+        <Route path="ortodonti" element={<TreatmentDetailPage />} />
+        <Route path="otbelivanie" element={<TreatmentDetailPage />} />
+        <Route path="pliri-apokatastasi" element={<TreatmentDetailPage />} />
+        <Route path="polnaya-restavraciya" element={<TreatmentDetailPage />} />
+        <Route path="preventive-dentistry" element={<TreatmentDetailPage />} />
+        <Route path="root-canal-treatment" element={<TreatmentDetailPage />} />
+        <Route path="rukesh" element={<TreatmentDetailPage />} />
+        <Route path="seffaf-plak" element={<TreatmentDetailPage />} />
+        <Route path="sefid-kardan" element={<TreatmentDetailPage />} />
+        <Route path="shikum-pe-male" element={<TreatmentDetailPage />} />
+        <Route path="shtalim" element={<TreatmentDetailPage />} />
+        <Route path="smile-makeover" element={<TreatmentDetailPage />} />
+        <Route path="stemmata" element={<TreatmentDetailPage />} />
+        <Route path="tabyid-asnan" element={<TreatmentDetailPage />} />
+        <Route path="tajmil-ibtisama" element={<TreatmentDetailPage />} />
+        <Route path="tam-agiz-restorasyonu" element={<TreatmentDetailPage />} />
+        <Route path="tarahi-labkhand" element={<TreatmentDetailPage />} />
+        <Route path="tarmim-kamel" element={<TreatmentDetailPage />} />
+        <Route path="teeth-whitening" element={<TreatmentDetailPage />} />
+        <Route path="tijan" element={<TreatmentDetailPage />} />
+        <Route path="tijan-zirkonia" element={<TreatmentDetailPage />} />
+        <Route path="tsipuyim" element={<TreatmentDetailPage />} />
+        <Route path="vanir" element={<TreatmentDetailPage />} />
+        <Route path="veneer" element={<TreatmentDetailPage />} />
+        <Route path="veneers" element={<TreatmentDetailPage />} />
+        <Route path="viniry" element={<TreatmentDetailPage />} />
+        <Route path="vollmund-restauration" element={<TreatmentDetailPage />} />
+        <Route path="wisdom-tooth-removal" element={<TreatmentDetailPage />} />
+        <Route path="yirmilik-dis-cekimi" element={<TreatmentDetailPage />} />
+        <Route path="zahnaufhellung" element={<TreatmentDetailPage />} />
+        <Route path="ziraat-asnan" element={<TreatmentDetailPage />} />
+        <Route path="zirconia-crowns" element={<TreatmentDetailPage />} />
+        <Route path="zirkonia" element={<TreatmentDetailPage />} />
+        <Route path="zirkonkronen" element={<TreatmentDetailPage />} />
+        <Route path="zirkonyum-kron" element={<TreatmentDetailPage />} />
         <Route path=":treatmentSlug" element={<TreatmentDetailPage />} />
       </Route>
     </Routes>
