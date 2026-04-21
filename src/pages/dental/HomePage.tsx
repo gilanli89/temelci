@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
+import { useSEO } from '@/hooks/useSEO';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
+import { QuoteButton } from '@/components/dental/QuoteButton';
 import { Star, Shield, Award, Users, Globe, ChevronRight, Sparkles, Heart, Zap, Crown } from 'lucide-react';
 import heroImg from '@/assets/hero-clinic.jpg';
 import implantImg from '@/assets/dental-implant.jpg';
@@ -17,6 +19,12 @@ const fadeInUp = {
 
 const HomePage = () => {
   const { t, localePath } = useLanguage();
+
+  useSEO({
+    title: "Temelci Dental Kyrenia | Dental Tourism North Cyprus | Since 1990",
+    description: "Premier dental clinic in Kyrenia, North Cyprus. Dental implants, Hollywood smile, veneers, All-on-4/6. In-house lab, 180 years combined experience, EU-grade materials. Save 60-70% vs UK.",
+    canonical: "https://temelcidentist.com/en",
+  });
 
   const treatments = [
     { name: t.hollywoodSmile, desc: t.hollywoodSmileDesc, slug: t.hollywoodSmileSlug, img: veneersImg, icon: Sparkles },
@@ -72,8 +80,8 @@ const HomePage = () => {
             <h1 className="heading-display text-background mb-6">{t.heroTitle}</h1>
             <p className="text-lg text-background/80 mb-8 leading-relaxed">{t.heroDescription}</p>
             <div className="flex flex-wrap gap-4">
-              <WhatsAppButton text={t.bookWhatsApp} variant="hero" />
-              <WhatsAppButton text={t.freeConsultation} variant="outline" className="border-background/30 text-background hover:bg-background/10 hover:text-background" />
+              <QuoteButton text={t.freeConsultation || 'Get Free Quote'} variant="hero" />
+              <WhatsAppButton text={t.bookWhatsApp} variant="outline" className="border-background/30 text-background hover:bg-background/10 hover:text-background" />
             </div>
           </motion.div>
         </div>
@@ -245,7 +253,7 @@ const HomePage = () => {
         <div className="container-dental">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-primary-foreground mb-6">{t.footerCta}</h2>
           <div className="flex flex-wrap justify-center gap-4">
-            <WhatsAppButton text={t.bookWhatsApp} variant="hero" />
+            <QuoteButton text={t.freeConsultation || 'Get Free Quote'} variant="hero" />
             <WhatsAppButton text={t.sendSmilePhotos} variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground" />
           </div>
         </div>

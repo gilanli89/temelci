@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
+import { useSEO } from '@/hooks/useSEO';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { Download, ExternalLink, ArrowLeft, Check, FlaskConical, BookOpen } from 'lucide-react';
 import { publications } from './ResearchPage';
@@ -11,6 +12,16 @@ const ResearchDetailPage = () => {
   const isTr = lang === 'tr';
 
   const pub = publications.find(p => p.slug === slug);
+
+  useSEO({
+    title: pub
+      ? `${isTr ? pub.titleTr : pub.title} | Dr. Şerife Köle | Temelci Dental Research`
+      : 'Publication Not Found | Temelci Dental',
+    description: pub
+      ? `${pub.abstract.slice(0, 155)}...`
+      : 'The requested research publication could not be found.',
+    canonical: pub ? `https://temelcidentist.com/${lang}/research/${pub.slug}` : undefined,
+  });
 
   if (!pub) {
     return (

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useSEO } from "@/hooks/useSEO";
 import { QuoteModal } from "@/components/dental/QuoteModal";
 import "./LandingPage.css";
 
@@ -57,6 +58,12 @@ const FAQS = [
 export default function AllOn4Landing() {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  useSEO({
+    title: "All-on-4 & All-on-6 North Cyprus | Fixed Full Arch Implants | Temelci Dental",
+    description: "All-on-4 & All-on-6 dental implants in Kyrenia, North Cyprus. Premium Straumann & Nobel Biocare implants, same-day teeth, 2 visits total. Save 60-65% vs UK or Turkey.",
+    canonical: "https://temelcidentist.com/en/landing/allon4",
+  });
 
   const waMsg = "Hi! I'm interested in All-on-4 / All-on-6 implants at Temelci Dental. Can you send me information and pricing?";
 

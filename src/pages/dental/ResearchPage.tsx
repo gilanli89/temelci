@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
+import { useSEO } from '@/hooks/useSEO';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
+import { QuoteButton } from '@/components/dental/QuoteButton';
 import { Download, ExternalLink, BookOpen, FlaskConical, GraduationCap } from 'lucide-react';
 
 export const publications = [
@@ -280,6 +282,16 @@ const ResearchPage = () => {
   const { lang, localePath } = useLanguage();
   const isTr = lang === 'tr';
 
+  useSEO({
+    title: isTr
+      ? "Yayınlar & Araştırmalar | Dr. Şerife Köle | Temelci Dental"
+      : "Publications & Research | Dr. Şerife Köle, Prosthodontist | Temelci Dental",
+    description: isTr
+      ? "Dr. Şerife Köle'nin hakemli dergiler, uluslararası kitaplar ve kongre bildirilerindeki 10 akademik yayını. PEEK, PEKK, zirkonya, All-on-4 ve implant protezi araştırmaları."
+      : "10 peer-reviewed academic publications by Dr. Şerife Köle, Prosthodontist at Temelci Dental. Research on PEEK, PEKK, zirconia, All-on-Four implants, and prosthetic dentistry. Full-text PDFs available.",
+    canonical: `https://temelcidentist.com/${lang}/research`,
+  });
+
   return (
     <>
       {/* HERO */}
@@ -403,7 +415,7 @@ const ResearchPage = () => {
               ? 'Araştırmalarıyla desteklenen klinik uzmanlık — implant protezi, veneer ve tam çene rehabilitasyonu için'
               : 'Research-backed clinical expertise — for implant prosthetics, veneers and full-arch rehabilitation'}
           </p>
-          <WhatsAppButton text={isTr ? 'Ücretsiz Konsültasyon' : 'Free Consultation'} variant="hero" />
+          <QuoteButton text={isTr ? 'Ücretsiz Konsültasyon' : 'Free Consultation'} variant="hero" />
         </div>
       </section>
     </>

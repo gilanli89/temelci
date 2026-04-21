@@ -2,6 +2,7 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
+import { QuoteButton } from '@/components/dental/QuoteButton';
 import { ChevronRight, ChevronLeft, Check } from 'lucide-react';
 import implantImg from '@/assets/dental-implant.jpg';
 import veneersImg from '@/assets/veneers.jpg';
@@ -1786,7 +1787,7 @@ const TreatmentDetailPage = () => {
       {/* WhatsApp CTA */}
       <section className="bg-primary py-6">
         <div className="container-dental px-4 flex flex-wrap items-center justify-center gap-4">
-          <WhatsAppButton text={t.bookWhatsApp} variant="hero" />
+          <QuoteButton text={t.bookWhatsApp} variant="hero" />
           <WhatsAppButton text={t.sendSmilePhotos} variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground" />
         </div>
       </section>

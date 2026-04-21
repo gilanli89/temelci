@@ -64,7 +64,7 @@ const ContactPage = () => {
 
             {/* Contact Form */}
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <form className="bg-card rounded-2xl border border-border p-8 space-y-5" onSubmit={e => { e.preventDefault(); window.open(`https://wa.me/905481234567?text=Contact form submission`, '_blank'); }}>
+              <form className="bg-card rounded-2xl border border-border p-8 space-y-5" onSubmit={e => { e.preventDefault(); window.open(`https://wa.me/905338229445?text=Contact form submission`, '_blank'); }}>
                 <div>
                   <label className="block text-sm font-medium mb-2">{t.yourName}</label>
                   <input type="text" className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" required />

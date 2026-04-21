@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
+import { QuoteButton } from '@/components/dental/QuoteButton';
 import { BookOpen, Award, GraduationCap, Globe, ExternalLink, FlaskConical } from 'lucide-react';
 
 const publications = [
@@ -340,7 +341,7 @@ const DrSerifePage = () => {
               ? 'İmplant protezi, veneer veya tam çene rehabilitasyonu için akademik uzmanlıkla desteklenmiş klinik değerlendirme'
               : 'Clinical assessment backed by academic expertise — for implant prosthetics, veneers or full-arch rehabilitation'}
           </p>
-          <WhatsAppButton text={isTr ? 'Ücretsiz Konsültasyon' : 'Free Consultation'} variant="hero" />
+          <QuoteButton text={isTr ? 'Ücretsiz Konsültasyon' : 'Free Consultation'} variant="hero" />
         </div>
       </section>
     </>

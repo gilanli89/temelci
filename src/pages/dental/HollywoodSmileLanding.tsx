@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useSEO } from "@/hooks/useSEO";
 import { QuoteModal } from "@/components/dental/QuoteModal";
 import "./LandingPage.css";
 
@@ -51,6 +52,12 @@ export default function HollywoodSmileLanding() {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const { lang } = useLanguage();
+
+  useSEO({
+    title: "Hollywood Smile North Cyprus | Save 60-70% vs UK | Temelci Dental",
+    description: "Premium Hollywood Smile in Kyrenia, North Cyprus. Porcelain veneers & zirconia crowns in 5-7 days. Save 60-70% vs UK prices. In-house lab, written guarantee, VIP transfer included.",
+    canonical: "https://temelcidentist.com/en/landing/hollywood-smile",
+  });
 
   const waMsg = "Hi! I'm interested in Hollywood Smile at Temelci Dental. Can you send me information and pricing?";
 

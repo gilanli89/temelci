@@ -46,7 +46,12 @@ export const QuoteModal = ({ isOpen, onClose }: Props) => {
 
   const next = () => {
     if (step === 1 && selected.length === 0) { setError(isTr ? 'Lütfen en az bir tedavi seçin' : 'Please select at least one treatment'); return; }
-    if (step === 2 && (!form.name || !form.phone || !form.country)) { setError(isTr ? 'Ad, telefon ve ülke zorunludur' : 'Name, phone and country are required'); return; }
+    if (step === 2) {
+      if (!form.name || !form.phone || !form.country) { setError(isTr ? 'Ad, telefon ve ülke zorunludur' : 'Name, phone and country are required'); return; }
+      // Phone must have at least 7 digits
+      const digits = form.phone.replace(/\D/g, '');
+      if (digits.length < 7) { setError(isTr ? 'Lütfen geçerli bir telefon numarası girin' : 'Please enter a valid phone number'); return; }
+    }
     setError(''); setStep(s => s + 1);
   };
 
@@ -144,9 +149,15 @@ export const QuoteModal = ({ isOpen, onClose }: Props) => {
                   <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wide block mb-1">
                     {isTr ? 'WhatsApp *' : 'WhatsApp *'}
                   </label>
-                  <input className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
+                  <input
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    className="w-full px-3 py-2.5 rounded-xl border border-border bg-background text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/10"
                     placeholder="+44 7700..."
-                    value={form.phone} onChange={e => setForm(p => ({...p, phone: e.target.value}))} />
+                    value={form.phone}
+                    onChange={e => setForm(p => ({...p, phone: e.target.value}))}
+                  />
                 </div>
               </div>
               <div>

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
+import { QuoteButton } from '@/components/dental/QuoteButton';
 import { Star } from 'lucide-react';
 
 const ReviewsPage = () => {

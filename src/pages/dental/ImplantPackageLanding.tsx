@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { useSEO } from "@/hooks/useSEO";
 import { QuoteModal } from "@/components/dental/QuoteModal";
 import "./LandingPage.css";
 
@@ -67,6 +68,12 @@ const FAQS = [
 export default function ImplantPackageLanding() {
   const [quoteOpen, setQuoteOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  useSEO({
+    title: "Dental Implant Package Deals North Cyprus | Save 50-65% | Temelci Dental",
+    description: "All-inclusive dental implant packages in North Cyprus. Straumann & Nobel Biocare implants, VIP transfer, hotel, 3D CT planning. Complete packages from single implant to full arch.",
+    canonical: "https://temelcidentist.com/en/landing/implant-packages",
+  });
 
   const waMsg = "Hi! I'm interested in dental implant packages at Temelci Dental. Can you send me pricing and information?";
 

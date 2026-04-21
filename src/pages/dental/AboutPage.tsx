@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
+import { QuoteButton } from '@/components/dental/QuoteButton';
 import { Award, GraduationCap, Globe, Heart, MapPin, Smile, Clock, Users } from 'lucide-react';
 import heroImg from '@/assets/hero-clinic.jpg';
 import photoNural from '@/assets/doctors/nural_temelci.jpg';
@@ -259,7 +260,7 @@ const AboutPage = () => {
       <section className="section-padding bg-primary text-center">
         <div className="container-dental">
           <h2 className="text-2xl md:text-3xl font-display font-bold text-primary-foreground mb-6">{t.footerCta}</h2>
-          <WhatsAppButton text={t.bookWhatsApp} variant="hero" />
+          <QuoteButton text={t.bookWhatsApp} variant="hero" />
         </div>
       </section>
     </>
