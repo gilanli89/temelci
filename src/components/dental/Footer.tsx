@@ -144,7 +144,7 @@ export const Footer = () => {
                 { name: 'DT. Nural Temelci',          anchor: 'nural-temelci' },
                 { name: 'DR. Ali Temelci',             anchor: 'ali-temelci' },
                 { name: 'DT. Rasih Denktaş Çelebi',   anchor: 'rasih' },
-                { name: 'DT. Yaşkan Uğurlu',          anchor: 'yaskan' },
+                
                 { name: 'DR. DT. Şerife Köle',        anchor: 'serife' },
                 { name: 'DT. Anna Zubtcovskaia',       anchor: 'anna' },
               ].map(doc => (

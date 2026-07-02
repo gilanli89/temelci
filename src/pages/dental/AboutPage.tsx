@@ -8,7 +8,7 @@ import heroImg from '@/assets/hero-clinic.jpg';
 import photoNural from '@/assets/doctors/nural_temelci.jpg';
 import photoAli from '@/assets/doctors/ali_temelci.jpg';
 import photoRasih from '@/assets/doctors/rasih_denktash.jpg';
-import photoYaskan from '@/assets/doctors/yaskan_ugurlu.jpg';
+
 import photoSerife from '@/assets/doctors/serife_kole.jpg';
 import photoAnna from '@/assets/doctors/anna_zubtcovskaia.jpg';
 
@@ -48,18 +48,6 @@ const doctors = [
     photo: photoRasih,
     universityUrl: 'https://www.hacettepe.edu.tr',
     universityLogo: 'hacettepe',
-  },
-  {
-    name: 'DT. Yaşkan Uğurlu',
-    title: { en: 'General Dentist', tr: 'Diş Hekimi', el: 'Γενικός Οδοντίατρος', ru: 'Стоматолог', ar: 'طبيب أسنان عام', he: 'רופא שיניים כללי', fa: 'دندانپزشک عمومی', de: 'Zahnarzt' },
-    experience: '5',
-    university: { en: 'Near East University, 2021', tr: 'Yakın Doğu Üniversitesi, 2021', el: 'Πανεπιστήμιο Εγγύς Ανατολής, 2021', ru: 'Университет Ближнего Востока, 2021', ar: 'جامعة الشرق الأدنى، 2021', he: 'אוניברסיטת המזרח הקרוב, 2021', fa: 'دانشگاه خاور نزدیک، ۲۰۲۱', de: 'Nahost-Universität, 2021' },
-    specialization: { en: 'Endodontics, Aesthetic Composites & Periodontics', tr: 'Endodonti, Estetik Kompozit & Periodonti', el: 'Ενδοδοντία, Αισθητικά Σύνθετα & Περιοδοντία', ru: 'Эндодонтия, Эстетические Композиты & Пародонтология', ar: 'علاج الجذور والحشوات التجميلية وعلاج اللثة', he: 'אנדודונטיה, קומפוזיט אסתטי ופריודונטיה', fa: 'اندودنتی، کامپوزیت زیبایی و پریودنتی', de: 'Endodontie, Ästhetische Komposite & Parodontologie' },
-    bio: { en: 'Specialises in canal treatment, aesthetic composite restorations and periodontal therapy, applying modern rotary instrumentation and current irrigation protocols. His strong empathetic communication style — listening to patient concerns before treatment begins — makes him particularly sought after by anxious patients and those who have avoided dental care for years. He considers making every patient feel safe and valued an inseparable part of good treatment.', tr: 'Kanal tedavisi, estetik kompozit restorasyon ve periodontal tedavi alanlarında uzmanlaşmış; modern rotary enstrümantasyon ve güncel irrigasyon protokollerini başarıyla uygulamaktadır. Güçlü empatik iletişim tarzı — tedaviye başlamadan önce hasta kaygılarını dikkatle dinlemesi — onu özellikle diş hekimi fobisi olan ve uzun süre muayeneden kaçınan hastalar arasında tercih edilen hekim yapmaktadır. Her hastanın güvende ve değerli hissetmesini iyi tedavinin ayrılmaz parçası olarak benimser.', el: 'Εξειδικεύεται σε ενδοδοντία, αισθητικές αποκαταστάσεις και περιοδοντική θεραπεία με σύγχρονα περιστροφικά συστήματα. Η ενσυναίσθησή του και η επικοινωνία πριν τη θεραπεία τον κάνουν ιδιαίτερα δημοφιλή σε άγχος ασθενείς.', ru: 'Специализируется на лечении каналов, эстетических реставрациях и пародонтологии с современными ротационными системами. Эмпатичный стиль общения делает его особенно востребованным среди пациентов с дентофобией.', ar: 'متخصص في علاج الجذور وترميم الأسنان التجميلي وعلاج اللثة بأنظمة دوارة حديثة. أسلوبه التواصلي المتعاطف يجعله خياراً مفضلاً للمرضى الخائفين من طبيب الأسنان.', he: 'מתמחה בטיפולי שורש, שיחזורים אסתטיים וטיפול פריודנטלי עם מערכות סיבוביות מודרניות. סגנון תקשורת אמפתי הופך אותו לפופולרי במיוחד בקרב מטופלים חרדים.', fa: 'در درمان کانال، ترمیم کامپوزیت زیبایی و درمان پریودنتال با سیستم‌های روتاری مدرن تخصص دارد. سبک ارتباطی همدلانه‌اش او را به گزینه محبوبی برای بیماران مضطرب تبدیل کرده است.', de: 'Spezialist für Kanalbehandlung, ästhetische Kompositrestaurationen und Parodontologie mit modernen Rotationssystemen. Sein empathischer Kommunikationsstil macht ihn besonders bei ängstlichen Patienten beliebt.' },
-    initials: 'YU',
-    photo: photoYaskan,
-    universityUrl: 'https://www.neu.edu.tr',
-    universityLogo: 'neu',
   },
   {
     name: 'DR. DT. Şerife Köle',
