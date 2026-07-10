@@ -5,6 +5,9 @@ import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { QuoteButton } from '@/components/dental/QuoteButton';
 import { BookOpen, Award, GraduationCap, Globe, ExternalLink, FlaskConical } from 'lucide-react';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const _unused_motion = motion;
+
 const publications = [
   {
     type: 'journal',
@@ -124,7 +127,7 @@ const typeConfig: Record<string, { label: string; labelTr: string; color: string
 };
 
 const DrSerifePage = () => {
-  const { t, lang } = useLanguage();
+  const { t, lang, localePath } = useLanguage();
   const isTr = lang === 'tr';
 
   return (
