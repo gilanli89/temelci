@@ -6,7 +6,7 @@ import { toast } from 'sonner';
 import { Upload, Copy, Trash2 } from 'lucide-react';
 import { uploadToBucket } from '@/lib/mediaUpload';
 
-interface Item { id: string; url: string; name: string; folder: string; created_at: string; size?: number; }
+interface Item { id: string; url: string; path: string; alt: string | null; folder: string | null; created_at: string; size_bytes?: number | null; }
 
 export default function MediaLibrary() {
   const [items, setItems] = useState<Item[]>([]);
@@ -23,7 +23,7 @@ export default function MediaLibrary() {
     for (const f of files) {
       try {
         const { url, path } = await uploadToBucket('media', f, 'library');
-        await supabase.from('media').insert({ url, name: f.name, folder: 'library', size: f.size, mime: f.type, path } as any);
+        await supabase.from('media').insert({ url, alt: f.name, folder: 'library', size_bytes: f.size, mime_type: f.type, path } as any);
       } catch (err) { toast.error(`Upload failed: ${f.name}`); }
     }
     toast.success(`${files.length} file(s) uploaded`);
@@ -50,9 +50,9 @@ export default function MediaLibrary() {
         {items.map(m => (
           <Card key={m.id} className="p-2 group relative">
             {m.url.match(/\.(png|jpe?g|webp|gif|svg)/i)
-              ? <img src={m.url} alt={m.name} className="w-full aspect-square object-cover rounded" />
-              : <div className="w-full aspect-square rounded bg-secondary grid place-items-center text-xs text-muted-foreground p-2 text-center break-all">{m.name}</div>}
-            <p className="text-[10px] text-muted-foreground mt-1 truncate">{m.name}</p>
+              ? <img src={m.url} alt={m.alt || ''} className="w-full aspect-square object-cover rounded" />
+              : <div className="w-full aspect-square rounded bg-secondary grid place-items-center text-xs text-muted-foreground p-2 text-center break-all">{m.alt}</div>}
+            <p className="text-[10px] text-muted-foreground mt-1 truncate">{m.alt}</p>
             <div className="absolute inset-x-2 bottom-2 flex gap-1 opacity-0 group-hover:opacity-100 transition">
               <Button size="icon" variant="secondary" className="h-7 w-7"
                 onClick={() => { navigator.clipboard.writeText(m.url); toast.success('URL copied'); }}>
