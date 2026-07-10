@@ -134,6 +134,10 @@ export type TranslationKeys = {
   faq4A: string;
   faq5Q: string;
   faq5A: string;
+  faq6Q?: string;
+  faq6A?: string;
+  researchSlug?: string;
+  landingSlug?: string;
   // Footer
   footerCta: string;
   footerRights: string;

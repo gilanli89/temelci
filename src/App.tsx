@@ -25,6 +25,23 @@ import ResearchPage from "./pages/dental/ResearchPage";
 import ResearchDetailPage from "./pages/dental/ResearchDetailPage";
 import ImplantPackageLanding from "./pages/dental/ImplantPackageLanding";
 import NotFound from "./pages/NotFound";
+import XrayQuoteForm from "./pages/XrayQuoteForm";
+import XraySharedPlan from "./pages/XraySharedPlan";
+import { AdminAuthProvider, RequireAdmin } from "./lib/adminAuth";
+import AdminLogin from "./pages/admin/AdminLogin";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import PostsList from "./pages/admin/PostsList";
+import PostEditor from "./pages/admin/PostEditor";
+import TreatmentsAdmin from "./pages/admin/TreatmentsAdmin";
+import DoctorsAdmin from "./pages/admin/DoctorsAdmin";
+import BeforeAfterAdmin from "./pages/admin/BeforeAfterAdmin";
+import LeadsAdmin from "./pages/admin/LeadsAdmin";
+import MediaLibrary from "./pages/admin/MediaLibrary";
+import SettingsAdmin from "./pages/admin/SettingsAdmin";
+import UsersAdmin from "./pages/admin/UsersAdmin";
+import XrayList from "./pages/admin/XrayList";
+import XrayAnnotator from "./pages/admin/XrayAnnotator";
 
 const queryClient = new QueryClient();
 
@@ -195,11 +212,33 @@ const App = () => (
     <TooltipProvider>
       <Sonner />
       <BrowserRouter basename="">
-        <Routes>
-          <Route path="/" element={<Navigate to="/en" replace />} />
-          <Route path="/:lang/*" element={<LangRoutes />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AdminAuthProvider>
+          <Routes>
+            <Route path="/" element={<Navigate to="/en" replace />} />
+            {/* Public patient X-ray form + shared plan */}
+            <Route path="/xray-quote" element={<XrayQuoteForm />} />
+            <Route path="/quote/:token" element={<XraySharedPlan />} />
+            {/* Admin panel */}
+            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin" element={<RequireAdmin allow={['admin','doctor']}><AdminLayout /></RequireAdmin>}>
+              <Route index element={<Dashboard />} />
+              <Route path="posts" element={<RequireAdmin><PostsList /></RequireAdmin>} />
+              <Route path="posts/:id" element={<RequireAdmin><PostEditor /></RequireAdmin>} />
+              <Route path="treatments" element={<RequireAdmin><TreatmentsAdmin /></RequireAdmin>} />
+              <Route path="doctors" element={<RequireAdmin><DoctorsAdmin /></RequireAdmin>} />
+              <Route path="before-after" element={<RequireAdmin><BeforeAfterAdmin /></RequireAdmin>} />
+              <Route path="xrays" element={<XrayList />} />
+              <Route path="xrays/:id" element={<XrayAnnotator />} />
+              <Route path="leads" element={<RequireAdmin><LeadsAdmin /></RequireAdmin>} />
+              <Route path="media" element={<RequireAdmin><MediaLibrary /></RequireAdmin>} />
+              <Route path="settings" element={<RequireAdmin><SettingsAdmin /></RequireAdmin>} />
+              <Route path="users" element={<RequireAdmin><UsersAdmin /></RequireAdmin>} />
+            </Route>
+            {/* Localized public site */}
+            <Route path="/:lang/*" element={<LangRoutes />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AdminAuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

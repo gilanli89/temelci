@@ -224,7 +224,7 @@ const OurClinicPage = () => {
                 ))}
               </div>
               <div className="mt-8">
-                <WhatsAppButton text={lang === 'tr' ? 'Randevu Al' : 'Book a Consultation'} variant="primary" />
+                <WhatsAppButton text={lang === 'tr' ? 'Randevu Al' : 'Book a Consultation'} variant="hero" />
               </div>
             </motion.div>
           </div>

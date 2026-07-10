@@ -119,7 +119,7 @@ export default function ImplantPackageLanding() {
                 )}
                 <div style={{ fontSize: 32, marginBottom: 12 }}>{p.emoji}</div>
                 <h3 style={{ fontSize: 17, fontWeight: 700, marginBottom: 16, color: "#1a1a2e" }}>{p.name}</h3>
-                <ul style={{ listStyle: "none", padding: 0, margin: "0 0 16px", space: 8 }}>
+                <ul style={{ listStyle: "none", padding: 0, margin: "0 0 16px" }}>
                   {p.includes.map((item, j) => (
                     <li key={j} style={{ display: "flex", alignItems: "flex-start", gap: 8, marginBottom: 8, fontSize: 13, color: "#555" }}>
                       <span style={{ color: "var(--teal)", fontWeight: 700, marginTop: 1 }}>✓</span>
