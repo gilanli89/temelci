@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -6,14 +6,13 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Switch } from '@/components/ui/switch';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TipTapEditor } from '@/components/admin/TipTapEditor';
 import { SeoScore, slugify } from '@/components/admin/SeoScore';
 import { useAdminAuth } from '@/lib/adminAuth';
 import { uploadToBucket } from '@/lib/mediaUpload';
 import { toast } from 'sonner';
-import { Save, ArrowLeft, Upload } from 'lucide-react';
+import { Save, ArrowLeft, Upload, ExternalLink, Eye, EyeOff, CheckCircle2, Loader2 } from 'lucide-react';
 
 const LANGS = [
   { c: 'en', l: 'English' }, { c: 'tr', l: 'Türkçe' }, { c: 'el', l: 'Ελληνικά' },
@@ -27,6 +26,9 @@ export default function PostEditor() {
   const { user } = useAdminAuth();
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const [dirty, setDirty] = useState(false);
+  const currentId = useRef<string | null>(isNew ? null : (id ?? null));
 
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
@@ -70,40 +72,97 @@ export default function PostEditor() {
     } catch { toast.error('Upload failed'); }
   }
 
-  async function save(publish?: boolean) {
-    if (!title.trim() || !slug.trim()) { toast.error('Title and slug are required'); return; }
+  // Track dirty state on any field change (after initial load)
+  useEffect(() => {
+    if (loading) return;
+    setDirty(true);
+  }, [title, slug, language, excerpt, content, coverImage, seoTitle, seoDescription, focusKeyword, keywordsText]);
+
+  async function save(opts?: { publish?: boolean; silent?: boolean }) {
+    const publish = opts?.publish;
+    const silent = opts?.silent;
+    if (!title.trim()) {
+      if (!silent) toast.error('Title is required');
+      return;
+    }
+    const finalSlug = slug.trim() || slugify(title);
     setSaving(true);
+    const nextPublished = publish ?? published;
     const payload = {
-      title, slug, language, excerpt, content,
+      title, slug: finalSlug, language, excerpt, content,
       cover_image: coverImage || null,
       seo_title: seoTitle || title, seo_description: seoDescription, focus_keyword: focusKeyword,
       keywords: keywordsText.split(',').map(k => k.trim()).filter(Boolean),
-      published: publish ?? published,
-      published_at: (publish ?? published) ? new Date().toISOString() : null,
+      published: nextPublished,
+      status: nextPublished ? 'published' : 'draft',
+      published_at: nextPublished ? new Date().toISOString() : null,
       author_id: user?.id,
     };
-    const q = isNew
+    const activeId = currentId.current;
+    const q = !activeId
       ? supabase.from('posts').insert(payload).select('id').single()
-      : supabase.from('posts').update(payload).eq('id', id!).select('id').single();
+      : supabase.from('posts').update(payload).eq('id', activeId).select('id').single();
     const { data, error } = await q;
     setSaving(false);
-    if (error) { toast.error(error.message); return; }
-    toast.success(publish ? 'Published!' : 'Saved');
-    if (isNew && data) nav(`/admin/posts/${data.id}`, { replace: true });
+    if (error) { if (!silent) toast.error(error.message); return; }
+    if (!activeId && data) {
+      currentId.current = data.id;
+      window.history.replaceState(null, '', `/admin/posts/${data.id}`);
+    }
+    if (publish !== undefined) setPublished(nextPublished);
+    setLastSavedAt(new Date());
+    setDirty(false);
+    if (!silent) toast.success(publish === true ? 'Published!' : publish === false ? 'Unpublished' : 'Saved');
   }
 
+  // Auto-save drafts every 8s when there are unsaved changes and we have a title
+  useEffect(() => {
+    if (!dirty || saving || !title.trim()) return;
+    const t = setTimeout(() => { save({ silent: true }); }, 8000);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dirty, saving, title, slug, content, excerpt, coverImage, seoTitle, seoDescription, focusKeyword, keywordsText]);
+
   if (loading) return <div className="text-muted-foreground">Loading…</div>;
+
+  const savedLabel = saving
+    ? 'Saving…'
+    : dirty
+      ? 'Unsaved changes'
+      : lastSavedAt
+        ? `Saved ${lastSavedAt.toLocaleTimeString()}`
+        : '';
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6 gap-3 flex-wrap">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" onClick={() => nav('/admin/posts')}><ArrowLeft className="w-4 h-4" /></Button>
-          <h1 className="font-display text-2xl font-bold">{isNew ? 'New Post' : 'Edit Post'}</h1>
+          <div>
+            <h1 className="font-display text-2xl font-bold">{isNew ? 'New Post' : 'Edit Post'}</h1>
+            <div className="text-xs text-muted-foreground flex items-center gap-1.5 mt-0.5">
+              {saving ? <Loader2 className="w-3 h-3 animate-spin" /> : dirty ? null : lastSavedAt ? <CheckCircle2 className="w-3 h-3 text-emerald-600" /> : null}
+              {savedLabel}
+              {published && !dirty && (
+                <a href={`/${language}/blog/${slug}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 ml-2 text-primary hover:underline">
+                  <ExternalLink className="w-3 h-3" /> View live
+                </a>
+              )}
+            </div>
+          </div>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={() => save(false)} disabled={saving}><Save className="w-4 h-4 mr-2" />Save draft</Button>
-          <Button onClick={() => save(true)} disabled={saving}>{published ? 'Update & Publish' : 'Publish'}</Button>
+          <Button variant="outline" onClick={() => save()} disabled={saving}>
+            <Save className="w-4 h-4 mr-2" />Save draft
+          </Button>
+          {published ? (
+            <Button variant="outline" onClick={() => save({ publish: false })} disabled={saving}>
+              <EyeOff className="w-4 h-4 mr-2" />Unpublish
+            </Button>
+          ) : null}
+          <Button onClick={() => save({ publish: true })} disabled={saving}>
+            <Eye className="w-4 h-4 mr-2" />{published ? 'Update & Publish' : 'Publish'}
+          </Button>
         </div>
       </div>
 
@@ -166,9 +225,11 @@ export default function PostEditor() {
               <Label>Keywords (comma separated)</Label>
               <Input value={keywordsText} onChange={e => setKeywordsText(e.target.value)} placeholder="dental, cyprus, veneers" />
             </div>
-            <div className="flex items-center gap-3 pt-2 border-t border-border">
-              <Switch checked={published} onCheckedChange={setPublished} id="pub" />
-              <Label htmlFor="pub" className="cursor-pointer">Published</Label>
+            <div className="flex items-center gap-2 pt-2 border-t border-border text-sm">
+              <span className="text-muted-foreground">Status:</span>
+              {published
+                ? <span className="font-semibold text-emerald-700">Published</span>
+                : <span className="font-semibold text-amber-700">Draft</span>}
             </div>
           </Card>
         </div>
