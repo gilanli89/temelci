@@ -18,7 +18,9 @@ export type Database = {
         Row: {
           after_image: string
           before_image: string
+          content_status: Database["public"]["Enums"]["content_status"]
           created_at: string
+          deleted_at: string | null
           description: string | null
           id: string
           language: string
@@ -32,7 +34,9 @@ export type Database = {
         Insert: {
           after_image: string
           before_image: string
+          content_status?: Database["public"]["Enums"]["content_status"]
           created_at?: string
+          deleted_at?: string | null
           description?: string | null
           id?: string
           language?: string
@@ -46,7 +50,9 @@ export type Database = {
         Update: {
           after_image?: string
           before_image?: string
+          content_status?: Database["public"]["Enums"]["content_status"]
           created_at?: string
+          deleted_at?: string | null
           description?: string | null
           id?: string
           language?: string
@@ -141,7 +147,10 @@ export type Database = {
         Row: {
           active: boolean
           bio: string | null
+          content_status: Database["public"]["Enums"]["content_status"]
           created_at: string
+          created_by: string | null
+          deleted_at: string | null
           email: string | null
           id: string
           name: string
@@ -152,13 +161,17 @@ export type Database = {
           specialties: string[] | null
           title: string | null
           updated_at: string
+          updated_by: string | null
           user_id: string | null
           whatsapp: string | null
         }
         Insert: {
           active?: boolean
           bio?: string | null
+          content_status?: Database["public"]["Enums"]["content_status"]
           created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
           email?: string | null
           id?: string
           name?: string
@@ -169,13 +182,17 @@ export type Database = {
           specialties?: string[] | null
           title?: string | null
           updated_at?: string
+          updated_by?: string | null
           user_id?: string | null
           whatsapp?: string | null
         }
         Update: {
           active?: boolean
           bio?: string | null
+          content_status?: Database["public"]["Enums"]["content_status"]
           created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
           email?: string | null
           id?: string
           name?: string
@@ -186,10 +203,120 @@ export type Database = {
           specialties?: string[] | null
           title?: string | null
           updated_at?: string
+          updated_by?: string | null
           user_id?: string | null
           whatsapp?: string | null
         }
         Relationships: []
+      }
+      faqs: {
+        Row: {
+          answer: string
+          content_status: Database["public"]["Enums"]["content_status"]
+          created_at: string
+          deleted_at: string | null
+          id: string
+          language: string
+          question: string
+          scope: string
+          scope_ref: string | null
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          answer: string
+          content_status?: Database["public"]["Enums"]["content_status"]
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          language?: string
+          question: string
+          scope?: string
+          scope_ref?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          answer?: string
+          content_status?: Database["public"]["Enums"]["content_status"]
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          language?: string
+          question?: string
+          scope?: string
+          scope_ref?: string | null
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      lead_notes: {
+        Row: {
+          author_id: string | null
+          body: string
+          created_at: string
+          id: string
+          lead_id: string
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          lead_id: string
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          lead_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_notes_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      lead_status_history: {
+        Row: {
+          changed_at: string
+          changed_by: string | null
+          from_status: string | null
+          id: string
+          lead_id: string
+          to_status: string
+        }
+        Insert: {
+          changed_at?: string
+          changed_by?: string | null
+          from_status?: string | null
+          id?: string
+          lead_id: string
+          to_status: string
+        }
+        Update: {
+          changed_at?: string
+          changed_by?: string | null
+          from_status?: string | null
+          id?: string
+          lead_id?: string
+          to_status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_status_history_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       leads: {
         Row: {
@@ -321,8 +448,11 @@ export type Database = {
           author_id: string | null
           category: string | null
           content: string | null
+          content_status: Database["public"]["Enums"]["content_status"]
           cover_image: string | null
           created_at: string
+          created_by: string | null
+          deleted_at: string | null
           excerpt: string | null
           featured_image: string | null
           focus_keyword: string | null
@@ -331,6 +461,7 @@ export type Database = {
           language: string
           published: boolean
           published_at: string | null
+          scheduled_at: string | null
           seo_description: string | null
           seo_title: string | null
           slug: string
@@ -338,13 +469,17 @@ export type Database = {
           tags: string[] | null
           title: string
           updated_at: string
+          updated_by: string | null
         }
         Insert: {
           author_id?: string | null
           category?: string | null
           content?: string | null
+          content_status?: Database["public"]["Enums"]["content_status"]
           cover_image?: string | null
           created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
           excerpt?: string | null
           featured_image?: string | null
           focus_keyword?: string | null
@@ -353,6 +488,7 @@ export type Database = {
           language?: string
           published?: boolean
           published_at?: string | null
+          scheduled_at?: string | null
           seo_description?: string | null
           seo_title?: string | null
           slug: string
@@ -360,13 +496,17 @@ export type Database = {
           tags?: string[] | null
           title?: string
           updated_at?: string
+          updated_by?: string | null
         }
         Update: {
           author_id?: string | null
           category?: string | null
           content?: string | null
+          content_status?: Database["public"]["Enums"]["content_status"]
           cover_image?: string | null
           created_at?: string
+          created_by?: string | null
+          deleted_at?: string | null
           excerpt?: string | null
           featured_image?: string | null
           focus_keyword?: string | null
@@ -375,6 +515,7 @@ export type Database = {
           language?: string
           published?: boolean
           published_at?: string | null
+          scheduled_at?: string | null
           seo_description?: string | null
           seo_title?: string | null
           slug?: string
@@ -382,6 +523,7 @@ export type Database = {
           tags?: string[] | null
           title?: string
           updated_at?: string
+          updated_by?: string | null
         }
         Relationships: []
       }
@@ -409,6 +551,191 @@ export type Database = {
         }
         Relationships: []
       }
+      redirects: {
+        Row: {
+          created_at: string
+          from_path: string
+          id: string
+          status_code: number
+          to_path: string
+        }
+        Insert: {
+          created_at?: string
+          from_path: string
+          id?: string
+          status_code?: number
+          to_path: string
+        }
+        Update: {
+          created_at?: string
+          from_path?: string
+          id?: string
+          status_code?: number
+          to_path?: string
+        }
+        Relationships: []
+      }
+      research_publications: {
+        Row: {
+          abstract: string | null
+          authors: string[] | null
+          content: string | null
+          content_status: Database["public"]["Enums"]["content_status"]
+          cover_image: string | null
+          created_at: string
+          deleted_at: string | null
+          doi: string | null
+          external_url: string | null
+          id: string
+          issue: string | null
+          journal: string | null
+          keywords: string[] | null
+          language: string
+          pages: string | null
+          pdf_url: string | null
+          pub_type: string
+          scheduled_at: string | null
+          sci_indexed: boolean
+          slug: string
+          sort_order: number
+          title: string
+          updated_at: string
+          volume: string | null
+          year: number | null
+        }
+        Insert: {
+          abstract?: string | null
+          authors?: string[] | null
+          content?: string | null
+          content_status?: Database["public"]["Enums"]["content_status"]
+          cover_image?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          doi?: string | null
+          external_url?: string | null
+          id?: string
+          issue?: string | null
+          journal?: string | null
+          keywords?: string[] | null
+          language?: string
+          pages?: string | null
+          pdf_url?: string | null
+          pub_type?: string
+          scheduled_at?: string | null
+          sci_indexed?: boolean
+          slug: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+          volume?: string | null
+          year?: number | null
+        }
+        Update: {
+          abstract?: string | null
+          authors?: string[] | null
+          content?: string | null
+          content_status?: Database["public"]["Enums"]["content_status"]
+          cover_image?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          doi?: string | null
+          external_url?: string | null
+          id?: string
+          issue?: string | null
+          journal?: string | null
+          keywords?: string[] | null
+          language?: string
+          pages?: string | null
+          pdf_url?: string | null
+          pub_type?: string
+          scheduled_at?: string | null
+          sci_indexed?: boolean
+          slug?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+          volume?: string | null
+          year?: number | null
+        }
+        Relationships: []
+      }
+      review_translations: {
+        Row: {
+          content: string
+          id: string
+          lang: string
+          review_id: string
+        }
+        Insert: {
+          content: string
+          id?: string
+          lang: string
+          review_id: string
+        }
+        Update: {
+          content?: string
+          id?: string
+          lang?: string
+          review_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_translations_review_id_fkey"
+            columns: ["review_id"]
+            isOneToOne: false
+            referencedRelation: "reviews"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reviews: {
+        Row: {
+          content: string
+          content_status: Database["public"]["Enums"]["content_status"]
+          country: string | null
+          country_flag: string | null
+          created_at: string
+          deleted_at: string | null
+          id: string
+          language: string
+          patient_name: string
+          rating: number
+          sort_order: number
+          source: string | null
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          content_status?: Database["public"]["Enums"]["content_status"]
+          country?: string | null
+          country_flag?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          language?: string
+          patient_name: string
+          rating?: number
+          sort_order?: number
+          source?: string | null
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          content_status?: Database["public"]["Enums"]["content_status"]
+          country?: string | null
+          country_flag?: string | null
+          created_at?: string
+          deleted_at?: string | null
+          id?: string
+          language?: string
+          patient_name?: string
+          rating?: number
+          sort_order?: number
+          source?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       site_settings: {
         Row: {
           key: string
@@ -424,6 +751,33 @@ export type Database = {
           key?: string
           updated_at?: string
           value?: Json
+        }
+        Relationships: []
+      }
+      treatment_categories: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+          sort_order?: number
+          updated_at?: string
         }
         Relationships: []
       }
@@ -475,59 +829,77 @@ export type Database = {
         Row: {
           active: boolean
           category: string | null
+          category_slug: string | null
           content: string | null
+          content_status: Database["public"]["Enums"]["content_status"]
           created_at: string
+          created_by: string | null
           currency: string | null
           default_price: number | null
+          deleted_at: string | null
           description: string | null
           featured_image: string | null
           icon: string | null
           id: string
           language: string
+          scheduled_at: string | null
           seo_description: string | null
           seo_title: string | null
           slug: string
           sort_order: number | null
           title: string
           updated_at: string
+          updated_by: string | null
         }
         Insert: {
           active?: boolean
           category?: string | null
+          category_slug?: string | null
           content?: string | null
+          content_status?: Database["public"]["Enums"]["content_status"]
           created_at?: string
+          created_by?: string | null
           currency?: string | null
           default_price?: number | null
+          deleted_at?: string | null
           description?: string | null
           featured_image?: string | null
           icon?: string | null
           id?: string
           language?: string
+          scheduled_at?: string | null
           seo_description?: string | null
           seo_title?: string | null
           slug: string
           sort_order?: number | null
           title?: string
           updated_at?: string
+          updated_by?: string | null
         }
         Update: {
           active?: boolean
           category?: string | null
+          category_slug?: string | null
           content?: string | null
+          content_status?: Database["public"]["Enums"]["content_status"]
           created_at?: string
+          created_by?: string | null
           currency?: string | null
           default_price?: number | null
+          deleted_at?: string | null
           description?: string | null
           featured_image?: string | null
           icon?: string | null
           id?: string
           language?: string
+          scheduled_at?: string | null
           seo_description?: string | null
           seo_title?: string | null
           slug?: string
           sort_order?: number | null
           title?: string
           updated_at?: string
+          updated_by?: string | null
         }
         Relationships: []
       }
@@ -659,6 +1031,13 @@ export type Database = {
     }
     Functions: {
       get_xray_plan: { Args: { _token: string }; Returns: Json }
+      has_any_role: {
+        Args: {
+          _roles: Database["public"]["Enums"]["app_role"][]
+          _user_id: string
+        }
+        Returns: boolean
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -672,7 +1051,20 @@ export type Database = {
       }
     }
     Enums: {
-      app_role: "admin" | "doctor"
+      app_role:
+        | "admin"
+        | "doctor"
+        | "super_admin"
+        | "editor"
+        | "translator"
+        | "lead_manager"
+        | "viewer"
+      content_status:
+        | "draft"
+        | "in_review"
+        | "scheduled"
+        | "published"
+        | "archived"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -800,7 +1192,22 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "doctor"],
+      app_role: [
+        "admin",
+        "doctor",
+        "super_admin",
+        "editor",
+        "translator",
+        "lead_manager",
+        "viewer",
+      ],
+      content_status: [
+        "draft",
+        "in_review",
+        "scheduled",
+        "published",
+        "archived",
+      ],
     },
   },
 } as const

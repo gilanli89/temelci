@@ -1,89 +1,81 @@
+# Temelci Dental — Full CMS Migration Plan
 
-# Temelci CMS/CRM — Bug Fix + Production-Ready Refactor
+Bu iş tek turda güvenli şekilde bitmez. Mevcut tasarım/içerik bozulmadan, gerçek Supabase backend'e bağlı, uçtan uca çalışan bir CMS için **fazlı** ilerleyeceğim. Her faz kendi başına test edilebilir ve deploy edilebilir olacak. Her faz sonunda sana onay için döneceğim.
 
-## 1. Kritik Bug: "Access denied" (öncelik #1)
+## Genel Prensipler
 
-**Kök neden:** Önceki güvenlik düzeltmesinde `has_role()` fonksiyonundan `authenticated` rolünün EXECUTE izni kaldırıldı. Ama `user_roles` tablosunun SELECT RLS politikası `has_role()` çağırıyor. Sonuç: kullanıcı login oluyor, sonra kendi rolünü sorgulayamıyor → 403 → "Access denied".
+- Mevcut public site tasarımı, route'ları, çevirileri, görselleri, slug'ları **korunacak** — sadece veri kaynağı statik dosyalardan Supabase'e taşınacak.
+- Her migration **idempotent** (yeniden çalıştırılabilir), her seed mevcut kaydı `ON CONFLICT` ile korur.
+- Public sayfalar önce statik fallback + Supabase okuma **hibrit** modda çalışacak; kayıt varsa DB'den, yoksa mevcut statik içerikten. Bu sayede hiçbir noktada site boşalmaz.
+- Uydurma içerik yok. Eksik çeviri → EN fallback + admin'de "translation incomplete" işareti.
+- Tüm tablolar RLS + explicit GRANT ile korunur. Anonymous sadece `published` içerik okur; `leads`/`xray_*` okuyamaz.
 
-**Ek sorun:** `demo@temelci.com` kullanıcısına hem `admin` hem `doctor` rolü atanmış (trigger yanlış çalışmış).
+## Faz 0 — Denetim ve Temizlik (bu tur)
 
-**Çözüm (tek migration):**
-- `user_roles` SELECT policy'yi `has_role()` kullanmayacak şekilde yaz: kullanıcı sadece kendi satırlarını görsün → `USING (user_id = auth.uid())`. Admin yönetimi için ayrı policy: `USING (public.has_role(auth.uid(),'admin'))` — ama bu policy'nin çalışması için `authenticated`'e `has_role` üzerinde EXECUTE ver. Bu güvenli çünkü fonksiyon SECURITY DEFINER, sadece boolean döner, kullanıcı sadece kendi id'siyle kullanışlı sorgu yapabilir.
-- Duplicate role temizle: demo kullanıcıdan `doctor` rolünü sil.
-- `handle_new_user` ve `assign_default_role` trigger'larından biri fazla — sadece birini tut, diğerini drop et (şu an ikisi de var mı kontrol edilecek, sadece `handle_new_user` kalsın).
+1. Mevcut auth bug'ının (rol yüklenmesi) tam kapandığını doğrula (Playwright ile `demo@temelci.com` login → `/admin` erişimi).
+2. Mevcut statik içerik envanterini çıkar: `src/pages/dental/*`, `src/i18n/translations.ts`, `BlogArticleData.tsx`, treatment/doctor/review dizileri. Her birinin nerede tanımlı olduğunu belgele.
+3. Mevcut Supabase şemasını (`treatments`, `doctors`, `posts`, `before_after`, `leads`, `xray_*`, `site_settings` + translation tabloları) mevcut kolonlarıyla listele → nelerin eksik olduğunu belirle.
+4. Çıktı: kısa envanter raporu + Faz 1 için delta migration taslağı.
 
-## 2. Admin Panel Kararlılığı
+## Faz 1 — Şema Tamamlama + Seed Altyapısı
 
-Mevcut admin sayfaları çalışıyor ama tutarsız. Şunları düzelt:
-- **AdminAuthProvider**: role yüklenirken `isRoleLoading` state ile bekleme ekranı göster; role gelmeden "denied" redirect etme (şu an race condition var).
-- **RequireAdmin / RequireDoctor**: loading state'i düzgün handle et.
-- **Login sonrası redirect**: `?denied=1` bayrağını sadece gerçek denial'da göster.
+- Eksik tablolar: `locales`, `treatment_categories`, `blog_categories`, `research_publications` (+translations), `reviews` (+translations), `faqs` (+translations), `navigation_items`, `page_sections`, `redirects`, `content_revisions`, `audit_logs`, `lead_notes`, `lead_status_history`.
+- Mevcut tablolara eksik kolonlar: `status` enum (`draft|in_review|scheduled|published|archived`), `sort_order`, `published_at`, `scheduled_at`, `deleted_at`, `created_by`, `updated_by`.
+- Roles: mevcut `app_role` enum'a `super_admin`, `editor`, `translator`, `lead_manager`, `viewer` ekle. `has_role` + yeni `has_any_role` helper.
+- RLS: her tablo için published-only anon SELECT, role-bazlı authenticated CRUD. Explicit GRANT'ler.
+- Idempotent seed migration (mevcut statik içerikten): 19 treatment + kategoriler, 5 doctor, 9 blog post (body dahil), 10 research publication, 29 before/after, 10 review, tüm FAQ'lar, site_settings, navigation.
 
-## 3. CMS İçerik Yönetimi (kolay kullanım)
+## Faz 2 — Public Site'i Supabase'e Bağla (Hibrit)
 
-Kullanıcının şikayeti: "makaleler kolay eklenmeli, before/after kolay girilmeli". Şu iyileştirmeler:
+- Her public sayfa için React Query hook'ları (`useTreatments`, `useTreatment(slug)`, `useDoctors`, `usePosts`, `useResearch`, `useBeforeAfter`, `useReviews`, `useFaqs`, `useSiteSettings`).
+- Data yoksa mevcut statik içerik fallback — site asla boş görünmez.
+- Locale routing korunur; slug DB'den okunur, mevcut route yapısı bozulmaz.
+- Home/Treatments/Doctors/Blog/Research/Before-After/Reviews/Our Clinic/Dental Tourism/Contact sırayla bağlanır.
 
-### Blog / Posts
-- **PostEditor**: 
-  - Auto-save (her 10sn taslak olarak)
-  - Slug otomatik başlıktan üretilsin (TR karakter destekli, zaten var → editable toggle)
-  - Featured image için drag & drop
-  - Kategori/tag alanı (basit, virgülle)
-  - Publish / Draft toggle net gözüksün
-  - Dil sekmeleri (EN/TR öncelik, diğerleri opsiyonel)
-  - SEO score paneli sağda sabit
-  - Preview butonu → yeni sekmede public post açar
-- **PostsList**: arama, dil filtresi, status filtresi, hızlı publish/unpublish toggle, bulk delete.
+## Faz 3 — Admin CMS (Content CRUD)
 
-### Before/After
-- Tek formda: önce foto + sonra foto (yan yana drag & drop upload), tedavi seçimi (dropdown), hasta yaşı/notlar, öne çıkar toggle.
-- Grid önizleme (before/after slider component).
+- Mevcut `/admin` layout üzerine kurulur (yeniden yazılmaz).
+- Her entity için: List (arama, filtre, bulk action, drag-drop sort), Editor (locale sekmeleri, draft/publish/schedule, revision history, preview link, SEO paneli, media picker).
+- TipTap editor mevcut; genişlet: image caption, embed, table, code, YouTube.
+- Auto-save (mevcut PostEditor'daki gibi) her editöre yayılır.
+- Media Library: bucket'lar arası, tag, alt text (locale), kopyala-URL, sil.
+- Translation dashboard: eksik çeviriler listesi, translator rolü sadece atanan locale'i düzenler.
 
-### Treatments
-- Featured image + galeri, fiyat aralığı, süre, kısa açıklama + rich text detay, ikon seçimi.
-- Dil sekmeleri.
+## Faz 4 — CRM (Leads + X-Ray Quotes)
 
-### Doctors
-- Foto, isim, unvan, uzmanlık etiketleri, bio (rich text), sıralama.
+- Leads: Kanban (`new → contacted → qualified → won → lost`), tablo görünümü toggle, timeline (notes + status history), WhatsApp/email tek tık, CSV export, source filtre, atama.
+- Bildirim: yeni lead → admin dashboard badge (Supabase Realtime).
+- X-Ray: mevcut annotator korunur; doctor listesinde "pending" default, mobil undo/redo büyütülür, patient shared link WhatsApp CTA güçlendirilir.
 
-### Media Library
-- Grid görünüm, arama, kopyala-URL, sil, klasör (bucket) filtresi.
+## Faz 5 — Users & Roles + Ayarlar
 
-## 4. CRM — Lead Management
+- Users admin: davet et, rol ata, locale ata (translator için), askıya al, sil.
+- Site Settings: brand, iletişim, çalışma saatleri, sosyal, GTM/GA, WhatsApp mesajları (locale bazlı), navigation editor, redirects, JSON-LD şablonları.
+- Audit log görünümü.
 
-- **LeadsAdmin** yeniden tasarım: Kanban görünümü (New → Contacted → Won/Lost) + tablo görünümü toggle.
-- Her lead'de: WhatsApp'a tek tık, email'e tek tık, not ekleme timeline, source tag.
-- CSV export.
-- Bildirim: yeni lead geldiğinde admin dashboard'da badge sayacı.
+## Faz 6 — SEO, Sitemap, Publish
 
-## 5. X-Ray Quote Workflow
+- Dinamik `sitemap.xml` (Edge Function veya build-time) — DB'deki published + slug'lardan üretilir, 8 dil × tüm entity'ler.
+- Per-route `<Helmet>` head (title, description, canonical, hreflang, og, JSON-LD).
+- `robots.txt` güncellenir; `redirects` tablosu 301 için (SPA router + hosting kuralları).
+- Rescan → SEO findings sıfırla.
 
-Mevcut çalışıyor, sadece UX iyileştir:
-- Doctor listesinde "pending review" filtresi default.
-- Annotator'da undo/redo butonlarını mobil için büyüt.
-- Hasta shared link sayfasında WhatsApp CTA daha belirgin.
+## Faz 7 — Uçtan Uca Test
 
-## 6. Admin Dashboard (giriş sayfası)
+- Playwright: login → post yaz → publish → 8 dilde public'te gör → lead gönder → admin'de gör → x-ray upload → doctor quote → patient accept.
+- Console/network temiz. Lighthouse ≥ 90 (mobile).
 
-Şu an boş. Şunları göster:
-- Bu hafta: yeni lead sayısı, yeni x-ray talebi, yayınlanan post sayısı.
-- Son 5 lead (hızlı erişim).
-- Bekleyen x-ray teklifleri.
-- Site ayarları/GTM durumu için hızlı linkler.
+## Teknik Notlar
 
-## 7. Doğrulama
-
-- Playwright ile end-to-end test: login → dashboard → yeni post oluştur → publish → public tarafta gör → yeni lead oluştur (public form) → admin'de gör.
-- Console/network log kontrolü.
-
-## Teknik Notlar (geliştirici için)
-
-- Tek migration: RLS policy fix + duplicate role temizlik + `has_role` GRANT EXECUTE to authenticated + gereksiz trigger drop.
-- Frontend: `src/lib/adminAuth.tsx` içinde loading state refactor.
-- Yeni komponent: `src/components/admin/DashboardStats.tsx`.
-- Post editor auto-save: `useEffect` + debounce (300ms), draft flag ile.
-- Kanban için `@dnd-kit/core` (zaten yoksa kurulacak) veya basit column-based UI (dependency eklemeden).
+- Migration'lar `supabase/migrations/` altında versioned. Her CREATE TABLE → GRANT → RLS → POLICY sırası.
+- Public/protected ayrımı: anon = `status='published' AND deleted_at IS NULL AND (scheduled_at IS NULL OR scheduled_at <= now())`.
+- Reviser/publisher trigger'ları `updated_by = auth.uid()` set eder.
+- Realtime yalnızca `leads` ve `xray_requests` için.
 
 ---
 
-**Onaylarsan** tek seferde tüm bu değişiklikleri hatasız uygularım. Kritik bug fix ilk migration olarak gider, sonra frontend refactor + yeni özellikler paralel dosyalarla yazılır.
+## Şimdi Senden
+
+Bu 7 fazlık plan doğru mu? Onay verirsen **Faz 0 + Faz 1** ile başlıyorum (envanter + delta migration + idempotent seed). Bu iki fazın sonunda public site hâlâ mevcut halinde çalışır olacak ama artık DB'de tüm gerçek içerik durur. Sonra faz faz ilerleriz.
+
+Alternatif: "sadece şu faz(lar)ı yap" dersen ona göre daralttırım.
