@@ -1,6 +1,6 @@
 import {
   useCallbackRef
-} from "./chunk-7L5233Y4.js";
+} from "./chunk-3P4LHPVD.js";
 import {
   useSize
 } from "./chunk-3GNPBQ4M.js";
@@ -10,13 +10,13 @@ import {
 } from "./chunk-ZNGWY2KH.js";
 import {
   Primitive
-} from "./chunk-DHVXUUUN.js";
-import {
-  require_react_dom
-} from "./chunk-233GJPKM.js";
+} from "./chunk-WAOYVO4A.js";
 import {
   useComposedRefs
 } from "./chunk-MW2ZDCKU.js";
+import {
+  require_react_dom
+} from "./chunk-233GJPKM.js";
 import {
   require_jsx_runtime
 } from "./chunk-QKY2CS7C.js";
@@ -2246,4 +2246,4 @@ export {
   VISUALLY_HIDDEN_STYLES,
   Root3 as Root
 };
-//# sourceMappingURL=chunk-KNGU5PBS.js.map
+//# sourceMappingURL=chunk-ECI5MFZL.js.map
