@@ -1,7 +1,8 @@
 "use client";
 import {
   require_react_dom
-} from "./chunk-5UNB55DE.js";
+} from "./chunk-233GJPKM.js";
+import "./chunk-QZQ4WUFM.js";
 import {
   require_react
 } from "./chunk-HQJSOCRU.js";
