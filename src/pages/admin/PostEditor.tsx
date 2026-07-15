@@ -225,9 +225,11 @@ export default function PostEditor() {
               <Label>Keywords (comma separated)</Label>
               <Input value={keywordsText} onChange={e => setKeywordsText(e.target.value)} placeholder="dental, cyprus, veneers" />
             </div>
-            <div className="flex items-center gap-3 pt-2 border-t border-border">
-              <Switch checked={published} onCheckedChange={setPublished} id="pub" />
-              <Label htmlFor="pub" className="cursor-pointer">Published</Label>
+            <div className="flex items-center gap-2 pt-2 border-t border-border text-sm">
+              <span className="text-muted-foreground">Status:</span>
+              {published
+                ? <span className="font-semibold text-emerald-700">Published</span>
+                : <span className="font-semibold text-amber-700">Draft</span>}
             </div>
           </Card>
         </div>
