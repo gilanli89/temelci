@@ -16,10 +16,10 @@ export default function XraySharedPlan() {
   useEffect(() => {
     if (!token) return;
     (async () => {
-      const { data } = await supabase.from('xray_requests').select('*').eq('share_token', token).maybeSingle();
+      const { data } = await supabase.rpc('get_xray_plan', { _token: token });
       if (data) {
-        setReq(data);
-        const { data: its } = await supabase.from('xray_treatment_items').select('*').eq('request_id', data.id).order('sort_order');
+        const { items: its, ...rest } = data as any;
+        setReq(rest);
         setItems(its || []);
       }
       setLoading(false);
@@ -29,10 +29,10 @@ export default function XraySharedPlan() {
   async function respond(accept: boolean) {
     if (!req) return;
     setResponding(true);
-    const { error } = await supabase.from('xray_requests').update({ status: accept ? 'accepted' : 'rejected' }).eq('share_token', token!);
+    const { data, error } = await supabase.rpc('respond_xray_plan', { _token: token!, _accept: accept });
     setResponding(false);
     if (error) toast.error(error.message);
-    else { setReq({ ...req, status: accept ? 'accepted' : 'rejected' }); toast.success(accept ? 'Thank you! We will contact you shortly.' : 'Noted.'); }
+    else { setReq({ ...req, status: (data as string) }); toast.success(accept ? 'Thank you! We will contact you shortly.' : 'Noted.'); }
   }
 
   if (loading) return <div className="min-h-screen grid place-items-center">Loading…</div>;
