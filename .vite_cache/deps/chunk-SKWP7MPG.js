@@ -22,27 +22,39 @@ import {
   __toESM
 } from "./chunk-RDKGUBC5.js";
 
-// node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs
+// node_modules/@radix-ui/react-id/dist/index.mjs
 var React = __toESM(require_react(), 1);
+var useReactId = React[" useId ".trim().toString()] || (() => void 0);
+var count = 0;
+function useId(deterministicId) {
+  const [id, setId] = React.useState(useReactId());
+  useLayoutEffect2(() => {
+    if (!deterministicId) setId((reactId) => reactId ?? String(count++));
+  }, [deterministicId]);
+  return deterministicId || (id ? `radix-${id}` : "");
+}
+
+// node_modules/@radix-ui/react-use-callback-ref/dist/index.mjs
+var React2 = __toESM(require_react(), 1);
 function useCallbackRef(callback) {
-  const callbackRef = React.useRef(callback);
-  React.useEffect(() => {
+  const callbackRef = React2.useRef(callback);
+  React2.useEffect(() => {
     callbackRef.current = callback;
   });
-  return React.useMemo(() => (...args) => {
+  return React2.useMemo(() => (...args) => {
     var _a;
     return (_a = callbackRef.current) == null ? void 0 : _a.call(callbackRef, ...args);
   }, []);
 }
 
 // node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs
-var React3 = __toESM(require_react(), 1);
+var React4 = __toESM(require_react(), 1);
 
 // node_modules/@radix-ui/react-use-escape-keydown/dist/index.mjs
-var React2 = __toESM(require_react(), 1);
+var React3 = __toESM(require_react(), 1);
 function useEscapeKeydown(onEscapeKeyDownProp, ownerDocument = globalThis == null ? void 0 : globalThis.document) {
   const onEscapeKeyDown = useCallbackRef(onEscapeKeyDownProp);
-  React2.useEffect(() => {
+  React3.useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         onEscapeKeyDown(event);
@@ -60,12 +72,12 @@ var CONTEXT_UPDATE = "dismissableLayer.update";
 var POINTER_DOWN_OUTSIDE = "dismissableLayer.pointerDownOutside";
 var FOCUS_OUTSIDE = "dismissableLayer.focusOutside";
 var originalBodyPointerEvents;
-var DismissableLayerContext = React3.createContext({
+var DismissableLayerContext = React4.createContext({
   layers: /* @__PURE__ */ new Set(),
   layersWithOutsidePointerEventsDisabled: /* @__PURE__ */ new Set(),
   branches: /* @__PURE__ */ new Set()
 });
-var DismissableLayer = React3.forwardRef(
+var DismissableLayer = React4.forwardRef(
   (props, forwardedRef) => {
     const {
       disableOutsidePointerEvents = false,
@@ -76,10 +88,10 @@ var DismissableLayer = React3.forwardRef(
       onDismiss,
       ...layerProps
     } = props;
-    const context = React3.useContext(DismissableLayerContext);
-    const [node, setNode] = React3.useState(null);
+    const context = React4.useContext(DismissableLayerContext);
+    const [node, setNode] = React4.useState(null);
     const ownerDocument = (node == null ? void 0 : node.ownerDocument) ?? (globalThis == null ? void 0 : globalThis.document);
-    const [, force] = React3.useState({});
+    const [, force] = React4.useState({});
     const composedRefs = useComposedRefs(forwardedRef, (node2) => setNode(node2));
     const layers = Array.from(context.layers);
     const [highestLayerWithOutsidePointerEventsDisabled] = [...context.layersWithOutsidePointerEventsDisabled].slice(-1);
@@ -112,7 +124,7 @@ var DismissableLayer = React3.forwardRef(
         onDismiss();
       }
     }, ownerDocument);
-    React3.useEffect(() => {
+    React4.useEffect(() => {
       if (!node) return;
       if (disableOutsidePointerEvents) {
         if (context.layersWithOutsidePointerEventsDisabled.size === 0) {
@@ -129,7 +141,7 @@ var DismissableLayer = React3.forwardRef(
         }
       };
     }, [node, ownerDocument, disableOutsidePointerEvents, context]);
-    React3.useEffect(() => {
+    React4.useEffect(() => {
       return () => {
         if (!node) return;
         context.layers.delete(node);
@@ -137,7 +149,7 @@ var DismissableLayer = React3.forwardRef(
         dispatchUpdate();
       };
     }, [node, context]);
-    React3.useEffect(() => {
+    React4.useEffect(() => {
       const handleUpdate = () => force({});
       document.addEventListener(CONTEXT_UPDATE, handleUpdate);
       return () => document.removeEventListener(CONTEXT_UPDATE, handleUpdate);
@@ -163,11 +175,11 @@ var DismissableLayer = React3.forwardRef(
 );
 DismissableLayer.displayName = DISMISSABLE_LAYER_NAME;
 var BRANCH_NAME = "DismissableLayerBranch";
-var DismissableLayerBranch = React3.forwardRef((props, forwardedRef) => {
-  const context = React3.useContext(DismissableLayerContext);
-  const ref = React3.useRef(null);
+var DismissableLayerBranch = React4.forwardRef((props, forwardedRef) => {
+  const context = React4.useContext(DismissableLayerContext);
+  const ref = React4.useRef(null);
   const composedRefs = useComposedRefs(forwardedRef, ref);
-  React3.useEffect(() => {
+  React4.useEffect(() => {
     const node = ref.current;
     if (node) {
       context.branches.add(node);
@@ -181,10 +193,10 @@ var DismissableLayerBranch = React3.forwardRef((props, forwardedRef) => {
 DismissableLayerBranch.displayName = BRANCH_NAME;
 function usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis == null ? void 0 : globalThis.document) {
   const handlePointerDownOutside = useCallbackRef(onPointerDownOutside);
-  const isPointerInsideReactTreeRef = React3.useRef(false);
-  const handleClickRef = React3.useRef(() => {
+  const isPointerInsideReactTreeRef = React4.useRef(false);
+  const handleClickRef = React4.useRef(() => {
   });
-  React3.useEffect(() => {
+  React4.useEffect(() => {
     const handlePointerDown = (event) => {
       if (event.target && !isPointerInsideReactTreeRef.current) {
         let handleAndDispatchPointerDownOutsideEvent2 = function() {
@@ -225,8 +237,8 @@ function usePointerDownOutside(onPointerDownOutside, ownerDocument = globalThis 
 }
 function useFocusOutside(onFocusOutside, ownerDocument = globalThis == null ? void 0 : globalThis.document) {
   const handleFocusOutside = useCallbackRef(onFocusOutside);
-  const isFocusInsideReactTreeRef = React3.useRef(false);
-  React3.useEffect(() => {
+  const isFocusInsideReactTreeRef = React4.useRef(false);
+  React4.useEffect(() => {
     const handleFocus = (event) => {
       if (event.target && !isFocusInsideReactTreeRef.current) {
         const eventDetail = { originalEvent: event };
@@ -258,18 +270,6 @@ function handleAndDispatchCustomEvent(name, handler, detail, { discrete }) {
   }
 }
 
-// node_modules/@radix-ui/react-id/dist/index.mjs
-var React4 = __toESM(require_react(), 1);
-var useReactId = React4[" useId ".trim().toString()] || (() => void 0);
-var count = 0;
-function useId(deterministicId) {
-  const [id, setId] = React4.useState(useReactId());
-  useLayoutEffect2(() => {
-    if (!deterministicId) setId((reactId) => reactId ?? String(count++));
-  }, [deterministicId]);
-  return deterministicId || (id ? `radix-${id}` : "");
-}
-
 // node_modules/@radix-ui/react-portal/dist/index.mjs
 var React5 = __toESM(require_react(), 1);
 var import_react_dom = __toESM(require_react_dom(), 1);
@@ -286,9 +286,9 @@ var Portal = React5.forwardRef((props, forwardedRef) => {
 Portal.displayName = PORTAL_NAME;
 
 export {
+  useId,
   useCallbackRef,
   DismissableLayer,
-  useId,
   Portal
 };
-//# sourceMappingURL=chunk-BRKCTBW6.js.map
+//# sourceMappingURL=chunk-SKWP7MPG.js.map

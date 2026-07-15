@@ -1,12 +1,12 @@
 import {
-  Link
-} from "./chunk-KRS7FTBN.js";
-import {
   Dropcursor,
   Gapcursor,
   TrailingNode,
   UndoRedo
 } from "./chunk-QKSCDDLB.js";
+import {
+  Link
+} from "./chunk-KRS7FTBN.js";
 import {
   Extension,
   Fragment,
