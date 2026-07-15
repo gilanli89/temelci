@@ -26,6 +26,9 @@ export default function PostEditor() {
   const { user } = useAdminAuth();
   const [loading, setLoading] = useState(!isNew);
   const [saving, setSaving] = useState(false);
+  const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
+  const [dirty, setDirty] = useState(false);
+  const currentId = useRef<string | null>(isNew ? null : (id ?? null));
 
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
