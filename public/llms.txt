@@ -12,9 +12,17 @@
 - [Research](https://temelcidentist.com/en/research): Academic publications by the clinical team.
 - [Contact](https://temelcidentist.com/en/contact): Clinic contact and appointment information.
 
+## Preferred primary navigation
+
+- [Treatments](https://temelcidentist.com/en/treatments)
+- [Clinic](https://temelcidentist.com/en/our-clinic)
+- [Dental lab](https://temelcidentist.com/en/lab)
+- [Before and after](https://temelcidentist.com/en/before-after)
+- [Dental tourism](https://temelcidentist.com/en/dental-tourism)
+- [Contact](https://temelcidentist.com/en/contact)
+
 ## Current treatment pages
 
-- [hollywood smile](https://temelcidentist.com/en/hollywood-smile)
 - [veneers](https://temelcidentist.com/en/veneers)
 - [teeth whitening](https://temelcidentist.com/en/teeth-whitening)
 - [dental bonding](https://temelcidentist.com/en/dental-bonding)
@@ -23,7 +31,6 @@
 - [all on 4](https://temelcidentist.com/en/all-on-4)
 - [crowns](https://temelcidentist.com/en/crowns)
 - [zirconia crowns](https://temelcidentist.com/en/zirconia-crowns)
-- [composite fillings](https://temelcidentist.com/en/composite-fillings)
 - [full mouth restoration](https://temelcidentist.com/en/full-mouth-restoration)
 - [root canal treatment](https://temelcidentist.com/en/root-canal-treatment)
 - [wisdom tooth removal](https://temelcidentist.com/en/wisdom-tooth-removal)
@@ -31,8 +38,10 @@
 - [laser gum treatment](https://temelcidentist.com/en/laser-gum-treatment)
 - [bruxism treatment](https://temelcidentist.com/en/bruxism-treatment)
 - [clear aligners](https://temelcidentist.com/en/clear-aligners)
-- [orthodontics](https://temelcidentist.com/en/orthodontics)
 - [preventive dentistry](https://temelcidentist.com/en/preventive-dentistry)
+- [hollywood smile](https://temelcidentist.com/en/hollywood-smile)
+- [composite fillings](https://temelcidentist.com/en/composite-fillings)
+- [orthodontics](https://temelcidentist.com/en/orthodontics)
 
 ## Current articles
 

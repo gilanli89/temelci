@@ -28,7 +28,12 @@
   <url>
     <loc>https://temelcidentist.com/en/our-clinic</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/lab</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/dental-tourism</loc>
@@ -51,17 +56,8 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://temelcidentist.com/en/hollywood-smile</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/hollywood-smile.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://temelcidentist.com/en/veneers</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:37.234Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -70,7 +66,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/teeth-whitening</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:37.428Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -79,7 +75,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/dental-bonding</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:37.615Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -88,7 +84,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/smile-makeover</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:37.797Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -97,7 +93,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/implants</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:37.985Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -106,7 +102,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/all-on-4</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:38.151Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -115,7 +111,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/crowns</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:38.391Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -124,7 +120,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/zirconia-crowns</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:38.562Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -132,17 +128,8 @@
     </image:image>
   </url>
   <url>
-    <loc>https://temelcidentist.com/en/composite-fillings</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/composite-fillings.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://temelcidentist.com/en/full-mouth-restoration</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:39.011Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -151,7 +138,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/root-canal-treatment</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:39.206Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -160,7 +147,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/wisdom-tooth-removal</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:39.417Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -169,7 +156,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/gum-disease-treatment</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:39.651Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -178,7 +165,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/laser-gum-treatment</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:39.868Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -187,7 +174,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/bruxism-treatment</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:40.055Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -196,7 +183,7 @@
   </url>
   <url>
     <loc>https://temelcidentist.com/en/clear-aligners</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:40.205Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -204,21 +191,39 @@
     </image:image>
   </url>
   <url>
-    <loc>https://temelcidentist.com/en/orthodontics</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/orthodontics.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
     <loc>https://temelcidentist.com/en/preventive-dentistry</loc>
-    <lastmod>2026-07-16T12:19:15.732Z</lastmod>
+    <lastmod>2026-07-16T14:26:40.510Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://temelcidentist.com/treatments/preventive-dentistry.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/hollywood-smile</loc>
+    <lastmod>2026-07-16T14:26:37.042Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/hollywood-smile.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/composite-fillings</loc>
+    <lastmod>2026-07-16T14:26:38.789Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/composite-fillings.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/orthodontics</loc>
+    <lastmod>2026-07-16T14:26:40.348Z</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/orthodontics.webp</image:loc>
     </image:image>
   </url>
 </urlset>

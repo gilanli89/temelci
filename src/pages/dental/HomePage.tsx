@@ -5,7 +5,7 @@ import { useSEO } from '@/hooks/useSEO';
 import { useFaqs, useReviews, useSitePage, useSiteSettings, useTreatments } from '@/hooks/useCmsContent';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { QuoteButton } from '@/components/dental/QuoteButton';
-import { Star, Shield, Award, Users, Globe, ChevronRight, Sparkles, Heart, Zap, Crown } from 'lucide-react';
+import { Star, Shield, Award, Users, Globe, ChevronRight, Sparkles, Heart, Zap, Crown, Building2, FlaskConical, Images, Plane, Mail } from 'lucide-react';
 import heroImg from '@/assets/hero-clinic.jpg';
 import implantImg from '@/assets/dental-implant.jpg';
 import veneersImg from '@/assets/veneers.jpg';
@@ -50,6 +50,15 @@ const HomePage = () => {
     { value: 'English', label: 'Patient coordination' },
     { value: 'Digital', label: 'Treatment planning' },
     { value: 'Kyrenia', label: 'North Cyprus' },
+  ];
+
+  const primaryDestinations = [
+    { title: 'Treatments', description: 'Explore cosmetic, implant, restorative and preventive dentistry.', path: `/${t.treatmentsSlug}`, icon: Sparkles },
+    { title: 'Clinic', description: 'Tour our treatment rooms, imaging technology and facilities.', path: `/${t.ourClinicSlug}`, icon: Building2 },
+    { title: 'Dental Lab', description: 'See how our in-house restorative workflow supports patient care.', path: '/lab', icon: FlaskConical },
+    { title: 'Before & After', description: 'View documented patient transformations published with consent.', path: `/${t.beforeAfterSlug}`, icon: Images },
+    { title: 'Dental Tourism', description: 'Plan your dental visit to Kyrenia with personal coordination.', path: `/${t.dentalTourismSlug}`, icon: Plane },
+    { title: 'Contact', description: 'Talk to our patient team about appointments and treatment planning.', path: `/${t.contactSlug}`, icon: Mail },
   ];
 
   const reasons = [
@@ -100,6 +109,22 @@ const HomePage = () => {
               <div className="text-sm text-primary-foreground/70 mt-1">{s.label}</div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* Primary destination links support clear navigation and search sitelinks. */}
+      <section className="border-b bg-card py-8" aria-labelledby="primary-destinations-title">
+        <div className="container-dental px-4">
+          <h2 id="primary-destinations-title" className="sr-only">Explore Temelci Dental</h2>
+          <nav aria-label="Explore Temelci Dental" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {primaryDestinations.map(item => {
+              const Icon = item.icon;
+              return <Link key={item.path} to={localePath(item.path)} className="group flex items-start gap-4 rounded-2xl border bg-background p-5 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10"><Icon className="h-5 w-5 text-primary" /></span>
+                <span><span className="flex items-center gap-1 font-display text-lg font-semibold group-hover:text-primary">{item.title}<ChevronRight className="h-4 w-4" /></span><span className="mt-1 block text-sm leading-relaxed text-muted-foreground">{item.description}</span></span>
+              </Link>;
+            })}
+          </nav>
         </div>
       </section>
 
