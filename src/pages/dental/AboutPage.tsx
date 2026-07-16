@@ -15,6 +15,7 @@ import photoAnna from '@/assets/doctors/anna_zubtcovskaia.jpg';
 
 const doctors = [
   {
+    slug: 'nural-temelci',
     name: 'DT. Nural Temelci',
     title: { en: 'Founder & Aesthetic Dentist', tr: 'Kurucu & Estetik Diş Hekimi', el: 'Ιδρυτής & Αισθητικός Οδοντίατρος', ru: 'Основатель и Эстетический Стоматолог', ar: 'المؤسس وطبيب أسنان تجميلي', he: 'מייסד ורופא שיניים אסתטי', fa: 'بنیانگذار و دندانپزشک زیبایی', de: 'Gründer & Ästhetischer Zahnarzt' },
     experience: '36+',
@@ -27,6 +28,7 @@ const doctors = [
     universityLogo: 'istanbul',
   },
   {
+    slug: 'ali-temelci',
     name: 'DR. Ali Temelci',
     title: { en: 'Oral & Maxillofacial Surgeon', tr: 'Ağız, Diş ve Çene Cerrahisi Uzmanı', el: 'Στοματο-Γναθοπροσωπικός Χειρουργός', ru: 'Челюстно-Лицевой Хирург', ar: 'جراح الوجه والفكين', he: 'מנתח פה ולסת', fa: 'جراح دهان، فک و صورت', de: 'Mund-Kiefer-Gesichtschirurg' },
     experience: '8',
@@ -39,6 +41,7 @@ const doctors = [
     universityLogo: 'neu',
   },
   {
+    slug: 'rasih-denktas-celebi',
     name: 'DT. Rasih Denktaş Çelebi',
     title: { en: 'Senior Endodontist', tr: 'Kıdemli Endodonti Uzmanı', el: 'Ανώτερος Ενδοδοντολόγος', ru: 'Старший Эндодонтист', ar: 'أخصائي علاج جذور أقدم', he: 'אנדודונטיסט בכיר', fa: 'متخصص ارشد اندودنتی', de: 'Senior Endodontologe' },
     experience: '42',
@@ -51,6 +54,7 @@ const doctors = [
     universityLogo: 'hacettepe',
   },
   {
+    slug: 'serife-kole',
     name: 'DR. DT. Şerife Köle',
     title: { en: 'Prosthodontist', tr: 'Protetik Diş Tedavisi Uzmanı', el: 'Προσθετολόγος', ru: 'Стоматолог-Ортопед', ar: 'أخصائية تركيبات الأسنان', he: 'פרוסתודונטית', fa: 'متخصص پروتز دندان', de: 'Prothetik-Spezialistin' },
     experience: '8',
@@ -63,6 +67,7 @@ const doctors = [
     universityLogo: 'gazi',
   },
   {
+    slug: 'anna-zubtcovskaia-derya',
     name: 'DT. Anna Zubtcovskaia-Derya',
     title: { en: 'Endodontist & Preventive Dentist', tr: 'Endodonti & Koruyucu Diş Hekimi', el: 'Ενδοδοντολόγος & Προληπτική Οδοντιατρική', ru: 'Эндодонтист & Превентивный Стоматолог', ar: 'أخصائية علاج جذور وطب أسنان وقائي', he: 'אנדודונטיסטית ורפואת שיניים מונעת', fa: 'متخصص اندودنتی و دندانپزشکی پیشگیری', de: 'Endodontologin & Präventive Zahnärztin' },
     experience: '27+',
