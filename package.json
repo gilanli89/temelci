@@ -8,10 +8,11 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "npm run seo:generate && vite build",
+    "build": "npm run seo:generate && vite build && npm run seo:static",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "seo:generate": "node scripts/generate-seo.mjs",
+    "seo:static": "node scripts/generate-static-routes.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest"

@@ -1,0 +1,22 @@
+{
+  "name": "Temelci Dental Clinic",
+  "short_name": "Temelci Dental",
+  "description": "Dental clinic in Kyrenia, North Cyprus.",
+  "start_url": "/en",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0f766e",
+  "icons": [
+    {
+      "src": "/favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
