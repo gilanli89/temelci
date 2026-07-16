@@ -6,6 +6,7 @@ import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { BookOpen, GraduationCap, ChevronRight, Tag, Calendar, User } from 'lucide-react';
 import { publications } from './ResearchPage';
 import { ARTICLE_CONTENT } from './BlogArticleData';
+import { usePostsFromDb } from '@/hooks/usePostsHybrid';
 import hollywoodSmileImg from '@/assets/hollywood-smile.jpg';
 import implantImg from '@/assets/dental-implant.jpg';
 import veneersImg from '@/assets/veneers.jpg';
@@ -137,11 +138,29 @@ export default function BlogPage() {
   const l = lang === 'tr' ? 'tr' : 'en';
   const [activeTab, setActiveTab] = useState<'articles' | 'research'>('articles');
   const [activeCat, setActiveCat] = useState(0);
+  const { data: dbPosts } = usePostsFromDb();
+
+  // Hybrid: if any posts exist in DB, filter static to only those slugs (deletions respected)
+  // and override title/excerpt/img with DB values for current lang.
+  const dbBySlug = new Map((dbPosts ?? []).map((p) => [p.slug, p]));
+  const articles = (dbPosts && dbPosts.length > 0)
+    ? ARTICLES
+        .filter((a) => dbBySlug.has(a.slug))
+        .map((a) => {
+          const db = dbBySlug.get(a.slug)!;
+          return {
+            ...a,
+            img: db.cover_image || db.featured_image || a.img,
+            title: { ...a.title, [l]: db.title || a.title[l] },
+            excerpt: { ...a.excerpt, [l]: db.excerpt || a.excerpt[l] },
+          };
+        })
+    : ARTICLES;
 
   const cats = l === 'tr' ? CATS_TR : CATS_EN;
   const filteredArticles = activeCat === 0
-    ? ARTICLES
-    : ARTICLES.filter(a => a.category[l] === cats[activeCat]);
+    ? articles
+    : articles.filter(a => a.category[l] === cats[activeCat]);
 
   const fadeUp = (delay = 0) => ({
     initial: { opacity: 0, y: 20 },
