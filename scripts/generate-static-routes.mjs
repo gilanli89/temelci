@@ -181,10 +181,16 @@ for (const page of pages) {
   await writeFile(flatOutputPath, rendered);
 }
 
-const redirectRules = pages.flatMap((page) => [
+const legacyRedirects = [
+  '/ /en 301',
+  '/index.html /en 301',
+  '/landing /en 301',
+  '/landing/ /en 301',
+];
+const routeRewrites = pages.flatMap((page) => [
   `${page.path} ${page.path}.html 200`,
   `${page.path}/ ${page.path}.html 200`,
 ]);
-await writeFile('dist/_redirects', `${redirectRules.join('\n')}\n/* /index.html 200\n`);
+await writeFile('dist/_redirects', `${legacyRedirects.join('\n')}\n${routeRewrites.join('\n')}\n/* /index.html 200\n`);
 
 console.log(`[seo:static] Generated ${pages.length} route-specific HTML entry points and hosting rewrites.`);

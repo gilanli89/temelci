@@ -3,5 +3,10 @@
   "outputDirectory": "dist",
   "framework": "vite",
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/", "destination": "/en", "permanent": true },
+    { "source": "/index.html", "destination": "/en", "permanent": true },
+    { "source": "/landing", "destination": "/en", "permanent": true }
+  ],
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

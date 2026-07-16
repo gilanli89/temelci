@@ -231,6 +231,7 @@ const App = () => (
           <Suspense fallback={<div className="min-h-screen grid place-items-center text-sm text-muted-foreground">Loading…</div>}>
           <Routes>
             <Route path="/" element={<Navigate to="/en" replace />} />
+            <Route path="/landing" element={<Navigate to="/en" replace />} />
             {/* Public patient X-ray form + shared plan */}
             <Route path="/xray-quote" element={<XrayQuoteForm />} />
             <Route path="/quote/:token" element={<XraySharedPlan />} />
