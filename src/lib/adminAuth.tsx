@@ -3,7 +3,7 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import type { Session, User } from '@supabase/supabase-js';
 
-type Role = 'admin' | 'doctor' | null;
+export type Role = 'super_admin' | 'admin' | 'editor' | 'doctor' | 'lead_manager' | 'translator' | 'viewer' | null;
 
 interface Ctx {
   session: Session | null;
@@ -42,9 +42,8 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
 
   async function fetchRole(uid: string) {
     const { data } = await supabase.from('user_roles').select('role').eq('user_id', uid);
-    if (data?.some(r => r.role === 'admin')) setRole('admin');
-    else if (data?.some(r => r.role === 'doctor')) setRole('doctor');
-    else setRole(null);
+    const priority: Exclude<Role, null>[] = ['super_admin', 'admin', 'editor', 'doctor', 'lead_manager', 'translator', 'viewer'];
+    setRole(priority.find(candidate => data?.some(row => row.role === candidate)) ?? null);
     setLoading(false);
   }
 
@@ -61,7 +60,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
 
 export const useAdminAuth = () => useContext(AuthCtx);
 
-export function RequireAdmin({ children, allow = ['admin'] }: { children: ReactNode; allow?: ('admin' | 'doctor')[] }) {
+export function RequireAdmin({ children, allow = ['super_admin', 'admin', 'editor'] }: { children: ReactNode; allow?: Exclude<Role, null>[] }) {
   const { session, role, loading } = useAdminAuth();
   const location = useLocation();
   if (loading) return <div className="min-h-screen grid place-items-center text-muted-foreground">Loading…</div>;

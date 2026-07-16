@@ -1,13 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useSEO } from '@/hooks/useSEO';
 
 const NotFound = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    console.error("404:", location.pathname);
-  }, [location.pathname]);
+  useSEO({ title: 'Page Not Found | Temelci Dental', description: 'The requested page is not available.', canonical: `https://temelcidentist.com${location.pathname}`, robots: 'noindex,follow' });
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">

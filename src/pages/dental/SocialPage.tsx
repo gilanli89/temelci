@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
+import { useSEO } from '@/hooks/useSEO';
 
 const SocialPage = () => {
   const { t } = useLanguage();
+  useSEO({ title: 'Temelci Dental on Social Media', description: 'Follow Temelci Dental Clinic for clinic updates, dental education and patient information.', canonical: 'https://temelcidentist.com/en/social', robots: 'noindex,follow' });
 
   return (
     <>

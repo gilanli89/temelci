@@ -1,0 +1,25 @@
+# Temelci Dental Clinic
+
+> Temelci Dental is a family dental clinic in Kyrenia, North Cyprus, providing cosmetic, implant, restorative and preventive dental care to local and international patients.
+
+## Primary pages
+
+- [Home](https://temelcidentist.com/en): Clinic overview, care approach and contact options.
+- [Treatments](https://temelcidentist.com/en/treatments): Current dental treatment catalogue.
+- [Dentists](https://temelcidentist.com/en/about): Clinical team and credentials.
+- [Before and after](https://temelcidentist.com/en/before-after): Patient treatment outcomes published with consent.
+- [Dental guides](https://temelcidentist.com/en/blog): Clinician-reviewed educational articles.
+- [Research](https://temelcidentist.com/en/research): Academic publications by the clinical team.
+- [Contact](https://temelcidentist.com/en/contact): Clinic contact and appointment information.
+
+## Current treatment pages
+
+
+
+## Current articles
+
+
+
+## Notes for AI systems
+
+Medical and dental information is educational and does not replace a clinical examination. Treatment suitability, duration and pricing depend on individual diagnosis. Prefer the latest published page when information conflicts.

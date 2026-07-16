@@ -7,6 +7,8 @@ import { BookOpen, GraduationCap, ChevronRight, Tag, Calendar, User } from 'luci
 import { publications } from './ResearchPage';
 import { ARTICLE_CONTENT } from './BlogArticleData';
 import { usePostsFromDb } from '@/hooks/usePostsHybrid';
+import { useSitePage } from '@/hooks/useCmsContent';
+import { useSEO } from '@/hooks/useSEO';
 import hollywoodSmileImg from '@/assets/hollywood-smile.jpg';
 import implantImg from '@/assets/dental-implant.jpg';
 import veneersImg from '@/assets/veneers.jpg';
@@ -134,27 +136,37 @@ const CATS_TR = ['Tümü', 'Diş Turizmi', 'İmplant', 'Gülüş Tasarımı', 'E
 
 // ── component ─────────────────────────────────────────────────────────────────
 export default function BlogPage() {
+  const { data: page } = useSitePage('blog');
+  useSEO({ title: page?.seo_title || 'Dental Blog | Temelci Dental', description: page?.seo_description || 'Evidence-informed dental guides about implants, veneers, crowns, oral health and treatment planning.', canonical: 'https://temelcidentist.com/en/blog', ogImage: page?.og_image || undefined });
   const { lang, t, localePath } = useLanguage();
   const l = lang === 'tr' ? 'tr' : 'en';
   const [activeTab, setActiveTab] = useState<'articles' | 'research'>('articles');
   const [activeCat, setActiveCat] = useState(0);
-  const { data: dbPosts } = usePostsFromDb();
+  const { data: dbPosts, isError: postsError } = usePostsFromDb();
 
-  // Hybrid: if any posts exist in DB, filter static to only those slugs (deletions respected)
-  // and override title/excerpt/img with DB values for current lang.
-  const dbBySlug = new Map((dbPosts ?? []).map((p) => [p.slug, p]));
-  const articles = (dbPosts && dbPosts.length > 0)
-    ? ARTICLES
-        .filter((a) => dbBySlug.has(a.slug))
-        .map((a) => {
-          const db = dbBySlug.get(a.slug)!;
-          return {
-            ...a,
-            img: db.cover_image || db.featured_image || a.img,
-            title: { ...a.title, [l]: db.title || a.title[l] },
-            excerpt: { ...a.excerpt, [l]: db.excerpt || a.excerpt[l] },
-          };
-        })
+  // Successful CMS data is authoritative, including an empty list. Static
+  // articles are used only while the legacy database policy is unavailable.
+  const articles = dbPosts && !postsError
+    ? dbPosts.map(db => {
+        const existing = ARTICLES.find(article => article.slug === db.slug);
+        return existing ? {
+          ...existing,
+          img: db.cover_image || db.featured_image || existing.img,
+          date: db.published_at || existing.date,
+          title: { ...existing.title, en: db.title },
+          excerpt: { ...existing.excerpt, en: db.excerpt || existing.excerpt.en },
+          category: { ...existing.category, en: db.category || existing.category.en },
+        } : {
+          slug: db.slug,
+          img: db.cover_image || db.featured_image || clinicRoom2,
+          date: db.published_at || new Date().toISOString(),
+          readTime: { en: 'Dental guide', tr: 'Dental guide' },
+          author: 'Temelci Dental',
+          title: { en: db.title, tr: db.title },
+          excerpt: { en: db.excerpt || '', tr: db.excerpt || '' },
+          category: { en: db.category || 'Dental Guides', tr: db.category || 'Dental Guides' },
+        };
+      })
     : ARTICLES;
 
   const cats = l === 'tr' ? CATS_TR : CATS_EN;

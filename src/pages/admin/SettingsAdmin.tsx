@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import type { Json } from '@/integrations/supabase/types';
 
 interface KV { key: string; label: string; type?: 'text' | 'textarea'; hint?: string; }
 
@@ -20,6 +21,7 @@ const GROUPS: { title: string; items: KV[] }[] = [
     { key: 'phone', label: 'Phone (E.164)', hint: '+905391104212' },
     { key: 'whatsapp', label: 'WhatsApp (E.164)' },
     { key: 'email', label: 'Email' },
+    { key: 'working_hours', label: 'Working hours', type: 'textarea' },
     { key: 'maps_embed_url', label: 'Google Maps embed URL', type: 'textarea' },
   ]},
   { title: 'Social', items: [
@@ -28,13 +30,6 @@ const GROUPS: { title: string; items: KV[] }[] = [
     { key: 'youtube', label: 'YouTube URL' },
     { key: 'tiktok', label: 'TikTok URL' },
     { key: 'google_maps', label: 'Google Maps profile URL' },
-  ]},
-  { title: 'Analytics & Tracking', items: [
-    { key: 'gtm_id', label: 'Google Tag Manager ID', hint: 'GTM-XXXXXXX' },
-    { key: 'ga4_id', label: 'GA4 measurement ID', hint: 'G-XXXXXXX' },
-    { key: 'meta_pixel_id', label: 'Meta Pixel ID' },
-    { key: 'custom_head', label: 'Custom <head> scripts', type: 'textarea', hint: 'Advanced — inserted verbatim in <head>' },
-    { key: 'custom_body_end', label: 'Custom before </body>', type: 'textarea' },
   ]},
   { title: 'SEO defaults', items: [
     { key: 'default_seo_title', label: 'Default site title' },
@@ -50,8 +45,13 @@ export default function SettingsAdmin() {
   useEffect(() => {
     supabase.from('site_settings').select('key,value').then(({ data }) => {
       const v: Record<string, string> = {};
-      (data || []).forEach((r: any) => {
-        v[r.key] = typeof r.value === 'string' ? r.value : (r.value?.value ?? JSON.stringify(r.value ?? ''));
+      (data || []).forEach((r) => {
+        const value = r.value;
+        v[r.key] = typeof value === 'string'
+          ? value
+          : value && typeof value === 'object' && !Array.isArray(value) && typeof value.value === 'string'
+            ? value.value
+            : JSON.stringify(value ?? '');
       });
       setValues(v);
     });
@@ -59,7 +59,7 @@ export default function SettingsAdmin() {
 
   async function save() {
     setSaving(true);
-    const rows = Object.entries(values).map(([key, value]) => ({ key, value: value as any }));
+    const rows = Object.entries(values).map(([key, value]) => ({ key, value: value as Json }));
     const { error } = await supabase.from('site_settings').upsert(rows, { onConflict: 'key' });
     setSaving(false);
     if (error) toast.error(error.message); else toast.success('Settings saved');

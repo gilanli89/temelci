@@ -1,52 +1,66 @@
+import { lazy, Suspense } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate, useLocation, useParams } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import { Layout } from "@/components/dental/Layout";
 import { ScrollToTop } from "@/components/dental/ScrollToTop";
-import HomePage from "./pages/dental/HomePage";
-import TreatmentsPage from "./pages/dental/TreatmentsPage";
-import TreatmentDetailPage from "./pages/dental/TreatmentDetailPage";
-import BeforeAfterPage from "./pages/dental/BeforeAfterPage";
-import ReviewsPage from "./pages/dental/ReviewsPage";
-import SocialPage from "./pages/dental/SocialPage";
-import AboutPage from "./pages/dental/AboutPage";
-import ContactPage from "./pages/dental/ContactPage";
-import LandingPage from "./pages/dental/LandingPage";
-import HollywoodSmileLanding from "./pages/dental/HollywoodSmileLanding";
-import AllOn4Landing from "./pages/dental/AllOn4Landing";
-import DrSerifePage from "./pages/dental/DrSerifePage";
-import OurClinicPage from "./pages/dental/OurClinicPage";
-import BlogPage from "./pages/dental/BlogPage";
-import BlogArticlePage from "./pages/dental/BlogArticlePage";
-import DentalTourismPage from "./pages/dental/DentalTourismPage";
-import ResearchPage from "./pages/dental/ResearchPage";
-import ResearchDetailPage from "./pages/dental/ResearchDetailPage";
-import ImplantPackageLanding from "./pages/dental/ImplantPackageLanding";
-import NotFound from "./pages/NotFound";
-import XrayQuoteForm from "./pages/XrayQuoteForm";
-import XraySharedPlan from "./pages/XraySharedPlan";
 import { AdminAuthProvider, RequireAdmin } from "./lib/adminAuth";
-import AdminLogin from "./pages/admin/AdminLogin";
-import AdminLayout from "./pages/admin/AdminLayout";
-import Dashboard from "./pages/admin/Dashboard";
-import PostsList from "./pages/admin/PostsList";
-import PostEditor from "./pages/admin/PostEditor";
-import TreatmentsAdmin from "./pages/admin/TreatmentsAdmin";
-import DoctorsAdmin from "./pages/admin/DoctorsAdmin";
-import BeforeAfterAdmin from "./pages/admin/BeforeAfterAdmin";
-import LeadsAdmin from "./pages/admin/LeadsAdmin";
-import MediaLibrary from "./pages/admin/MediaLibrary";
-import SettingsAdmin from "./pages/admin/SettingsAdmin";
-import UsersAdmin from "./pages/admin/UsersAdmin";
-import XrayList from "./pages/admin/XrayList";
-import XrayAnnotator from "./pages/admin/XrayAnnotator";
+
+const HomePage = lazy(() => import("./pages/dental/HomePage"));
+const TreatmentsPage = lazy(() => import("./pages/dental/TreatmentsPage"));
+const TreatmentDetailPage = lazy(() => import("./pages/dental/TreatmentDetailPage"));
+const BeforeAfterPage = lazy(() => import("./pages/dental/BeforeAfterPage"));
+const ReviewsPage = lazy(() => import("./pages/dental/ReviewsPage"));
+const SocialPage = lazy(() => import("./pages/dental/SocialPage"));
+const AboutPage = lazy(() => import("./pages/dental/AboutPage"));
+const ContactPage = lazy(() => import("./pages/dental/ContactPage"));
+const LandingPage = lazy(() => import("./pages/dental/LandingPage"));
+const HollywoodSmileLanding = lazy(() => import("./pages/dental/HollywoodSmileLanding"));
+const AllOn4Landing = lazy(() => import("./pages/dental/AllOn4Landing"));
+const DrSerifePage = lazy(() => import("./pages/dental/DrSerifePage"));
+const OurClinicPage = lazy(() => import("./pages/dental/OurClinicPage"));
+const BlogPage = lazy(() => import("./pages/dental/BlogPage"));
+const BlogArticlePage = lazy(() => import("./pages/dental/BlogArticlePage"));
+const DentalTourismPage = lazy(() => import("./pages/dental/DentalTourismPage"));
+const ResearchPage = lazy(() => import("./pages/dental/ResearchPage"));
+const ResearchDetailPage = lazy(() => import("./pages/dental/ResearchDetailPage"));
+const ImplantPackageLanding = lazy(() => import("./pages/dental/ImplantPackageLanding"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const XrayQuoteForm = lazy(() => import("./pages/XrayQuoteForm"));
+const XraySharedPlan = lazy(() => import("./pages/XraySharedPlan"));
+const AdminLogin = lazy(() => import("./pages/admin/AdminLogin"));
+const AdminLayout = lazy(() => import("./pages/admin/AdminLayout"));
+const Dashboard = lazy(() => import("./pages/admin/Dashboard"));
+const PostsList = lazy(() => import("./pages/admin/PostsList"));
+const PostEditor = lazy(() => import("./pages/admin/PostEditor"));
+const TreatmentsAdmin = lazy(() => import("./pages/admin/TreatmentsAdmin"));
+const DoctorsAdmin = lazy(() => import("./pages/admin/DoctorsAdmin"));
+const BeforeAfterAdmin = lazy(() => import("./pages/admin/BeforeAfterAdmin"));
+const LeadsAdmin = lazy(() => import("./pages/admin/LeadsAdmin"));
+const MediaLibrary = lazy(() => import("./pages/admin/MediaLibrary"));
+const SettingsAdmin = lazy(() => import("./pages/admin/SettingsAdmin"));
+const UsersAdmin = lazy(() => import("./pages/admin/UsersAdmin"));
+const XrayList = lazy(() => import("./pages/admin/XrayList"));
+const XrayAnnotator = lazy(() => import("./pages/admin/XrayAnnotator"));
+const PagesAdmin = lazy(() => import("./pages/admin/PagesAdmin"));
+const ReviewsAdmin = lazy(() => import("./pages/admin/ReviewsAdmin"));
+const FaqsAdmin = lazy(() => import("./pages/admin/FaqsAdmin"));
 
 const queryClient = new QueryClient();
 
-const LangRoutes = () => (
-  <LanguageProvider>
+const LangRoutes = () => {
+  const { lang } = useParams<{ lang?: string }>();
+  const location = useLocation();
+
+  if (lang !== 'en') {
+    const rest = location.pathname.split('/').slice(2).join('/');
+    return <Navigate to={`/en${rest ? `/${rest}` : ''}${location.search}${location.hash}`} replace />;
+  }
+
+  return (
+    <LanguageProvider>
       <ScrollToTop />
     <Routes>
       <Route element={<Layout />}>
@@ -204,8 +218,9 @@ const LangRoutes = () => (
         <Route path=":treatmentSlug" element={<TreatmentDetailPage />} />
       </Route>
     </Routes>
-  </LanguageProvider>
-);
+    </LanguageProvider>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -213,6 +228,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter basename="">
         <AdminAuthProvider>
+          <Suspense fallback={<div className="min-h-screen grid place-items-center text-sm text-muted-foreground">Loading…</div>}>
           <Routes>
             <Route path="/" element={<Navigate to="/en" replace />} />
             {/* Public patient X-ray form + shared plan */}
@@ -220,24 +236,28 @@ const App = () => (
             <Route path="/quote/:token" element={<XraySharedPlan />} />
             {/* Admin panel */}
             <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<RequireAdmin allow={['admin','doctor']}><AdminLayout /></RequireAdmin>}>
+            <Route path="/admin" element={<RequireAdmin allow={['super_admin','admin','editor','doctor','lead_manager','translator','viewer']}><AdminLayout /></RequireAdmin>}>
               <Route index element={<Dashboard />} />
+              <Route path="pages" element={<RequireAdmin><PagesAdmin /></RequireAdmin>} />
               <Route path="posts" element={<RequireAdmin><PostsList /></RequireAdmin>} />
               <Route path="posts/:id" element={<RequireAdmin><PostEditor /></RequireAdmin>} />
               <Route path="treatments" element={<RequireAdmin><TreatmentsAdmin /></RequireAdmin>} />
               <Route path="doctors" element={<RequireAdmin><DoctorsAdmin /></RequireAdmin>} />
               <Route path="before-after" element={<RequireAdmin><BeforeAfterAdmin /></RequireAdmin>} />
-              <Route path="xrays" element={<XrayList />} />
-              <Route path="xrays/:id" element={<XrayAnnotator />} />
-              <Route path="leads" element={<RequireAdmin><LeadsAdmin /></RequireAdmin>} />
-              <Route path="media" element={<RequireAdmin><MediaLibrary /></RequireAdmin>} />
-              <Route path="settings" element={<RequireAdmin><SettingsAdmin /></RequireAdmin>} />
-              <Route path="users" element={<RequireAdmin><UsersAdmin /></RequireAdmin>} />
+              <Route path="reviews" element={<RequireAdmin><ReviewsAdmin /></RequireAdmin>} />
+              <Route path="faqs" element={<RequireAdmin><FaqsAdmin /></RequireAdmin>} />
+              <Route path="xrays" element={<RequireAdmin allow={['super_admin','admin','doctor']}><XrayList /></RequireAdmin>} />
+              <Route path="xrays/:id" element={<RequireAdmin allow={['super_admin','admin','doctor']}><XrayAnnotator /></RequireAdmin>} />
+              <Route path="leads" element={<RequireAdmin allow={['super_admin','admin','lead_manager']}><LeadsAdmin /></RequireAdmin>} />
+              <Route path="media" element={<RequireAdmin allow={['super_admin','admin','editor']}><MediaLibrary /></RequireAdmin>} />
+              <Route path="settings" element={<RequireAdmin allow={['super_admin','admin']}><SettingsAdmin /></RequireAdmin>} />
+              <Route path="users" element={<RequireAdmin allow={['super_admin','admin']}><UsersAdmin /></RequireAdmin>} />
             </Route>
             {/* Localized public site */}
             <Route path="/:lang/*" element={<LangRoutes />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </Suspense>
         </AdminAuthProvider>
       </BrowserRouter>
     </TooltipProvider>

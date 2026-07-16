@@ -34,10 +34,11 @@ export default function XrayAnnotator() {
   const [notes, setNotes] = useState('');
   const [currency, setCurrency] = useState('EUR');
   const [saving, setSaving] = useState(false);
+  const [sourceUrl, setSourceUrl] = useState('');
   const containerRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<any>(null);
 
-  const [img] = useImg(req?.xray_image_url || '');
+  const [img] = useImg(sourceUrl);
 
   useEffect(() => {
     if (!id) return;
@@ -45,6 +46,12 @@ export default function XrayAnnotator() {
       const { data } = await supabase.from('xray_requests').select('*').eq('id', id).maybeSingle();
       if (!data) { toast.error('Not found'); nav('/admin/xrays'); return; }
       setReq(data);
+      if (/^https?:\/\//.test(data.xray_image_url)) setSourceUrl(data.xray_image_url);
+      else {
+        const { data: signed, error } = await supabase.storage.from('xrays').createSignedUrl(data.xray_image_url, 3600);
+        if (error) toast.error('The private X-ray image could not be opened.');
+        else setSourceUrl(signed.signedUrl);
+      }
       setMarkers((data.annotations as any) || []);
       setNotes(data.doctor_notes || '');
       setCurrency(data.currency || 'EUR');
@@ -113,11 +120,11 @@ export default function XrayAnnotator() {
       if (stageRef.current) {
         const dataUrl = stageRef.current.toDataURL({ pixelRatio: 2 });
         const uploaded = await uploadDataUrl('xrays', dataUrl, `annotated-${id}.png`, `annotated/${id}`);
-        annotatedUrl = uploaded.url;
+        annotatedUrl = uploaded.path;
       }
     } catch (e) { console.warn('annotation snapshot failed', e); }
 
-    const status = sendQuote ? 'quoted' : (req.status === 'new' ? 'in_review' : req.status);
+    const status = sendQuote ? 'quoted' : (req.status === 'new' ? 'reviewed' : req.status);
     const { error } = await supabase.from('xray_requests').update({
       annotations: markers as any,
       annotated_image_url: annotatedUrl,

@@ -8,11 +8,17 @@ import { Label } from '@/components/ui/label';
 import { Card } from '@/components/ui/card';
 import { toast } from 'sonner';
 import { Lock } from 'lucide-react';
+import { useSEO } from '@/hooks/useSEO';
 
 export default function AdminLogin() {
+  useSEO({
+    title: 'Temelci CMS sign in',
+    description: 'Private content management access.',
+    canonical: 'https://temelcidentist.com/admin/login',
+    robots: 'noindex,nofollow,noarchive',
+  });
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [loading, setLoading] = useState(false);
   const [params] = useSearchParams();
   const nav = useNavigate();
@@ -30,19 +36,9 @@ export default function AdminLogin() {
     e.preventDefault();
     setLoading(true);
     try {
-      if (mode === 'signup') {
-        const { error } = await supabase.auth.signUp({
-          email, password,
-          options: { emailRedirectTo: `${window.location.origin}/admin` }
-        });
-        if (error) throw error;
-        toast.success('Account created — you can sign in now.');
-        setMode('signin');
-      } else {
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        toast.success('Welcome back.');
-      }
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) throw error;
+      toast.success('Welcome back.');
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Auth failed');
     } finally { setLoading(false); }
@@ -68,15 +64,11 @@ export default function AdminLogin() {
             <Input type="password" required minLength={6} value={password} onChange={e => setPassword(e.target.value)} />
           </div>
           <Button type="submit" disabled={loading} className="w-full">
-            {loading ? '…' : (mode === 'signin' ? 'Sign in' : 'Create account')}
+            {loading ? '…' : 'Sign in'}
           </Button>
-          <button type="button" onClick={() => setMode(mode === 'signin' ? 'signup' : 'signin')}
-            className="text-xs text-muted-foreground hover:text-foreground underline w-full text-center">
-            {mode === 'signin' ? 'First time? Create the first admin account' : 'Have an account? Sign in'}
-          </button>
         </form>
         <p className="text-[11px] text-muted-foreground mt-6 text-center">
-          The first registered account automatically becomes admin. Additional accounts are doctors by default.
+          Access is invitation-only. Ask the clinic owner to add your account.
         </p>
       </Card>
     </div>

@@ -1,1 +1,4 @@
 project_id = "jaoswtwmftesqrwsojus"
+
+[functions.xray-plan]
+verify_jwt = false

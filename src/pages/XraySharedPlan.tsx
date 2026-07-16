@@ -16,7 +16,7 @@ export default function XraySharedPlan() {
   useEffect(() => {
     if (!token) return;
     (async () => {
-      const { data } = await supabase.rpc('get_xray_plan', { _token: token });
+      const { data } = await supabase.functions.invoke('xray-plan', { body: { token } });
       if (data) {
         const { items: its, ...rest } = data as any;
         setReq(rest);

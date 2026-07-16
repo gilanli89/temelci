@@ -1,15 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronDown, Globe } from 'lucide-react';
+import { Menu, X, ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { QuoteModal } from './QuoteModal';
 
 export const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
 
 export const Navbar = () => {
-  const { t, lang, setLang, languages, localePath } = useLanguage();
+  const { t, lang, localePath } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
@@ -25,17 +24,14 @@ export const Navbar = () => {
     if (!path.includes('#')) scrollToTop();
     setOpenDropdown(null);
     setIsOpen(false);
-    setLangOpen(false);
   };
 
-  const currentLang = languages.find(l => l.code === lang);
   const isTr = lang === 'tr';
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (navRef.current && !navRef.current.contains(e.target as Node)) {
         setOpenDropdown(null);
-        setLangOpen(false);
       }
     };
     document.addEventListener('mousedown', handler);
@@ -153,30 +149,8 @@ export const Navbar = () => {
             ))}
           </div>
 
-          {/* Desktop right: lang + CTA */}
+          {/* Desktop right: CTA */}
           <div className="hidden lg:flex items-center gap-2 shrink-0 ml-2">
-            <div className="relative">
-              <button onClick={() => setLangOpen(!langOpen)}
-                className="flex items-center gap-1.5 px-2.5 py-2 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
-                <span className="text-base">{currentLang?.flag}</span>
-                <span className="font-medium text-xs">{currentLang?.code.toUpperCase()}</span>
-                <ChevronDown className={`h-3 w-3 transition-transform ${langOpen ? 'rotate-180' : ''}`} />
-              </button>
-              {langOpen && (
-                <div className="absolute top-full right-0 mt-2 bg-card border border-border rounded-2xl shadow-2xl py-2 z-50 min-w-[160px]">
-                  {languages.map(l => (
-                    <button key={l.code} onClick={() => { setLang(l.code); setLangOpen(false); }}
-                      className={`flex items-center gap-2.5 w-full px-4 py-2.5 text-sm hover:bg-secondary transition-colors ${
-                        l.code === lang ? 'text-primary font-semibold' : 'text-foreground'
-                      }`}>
-                      <span className="text-base">{l.flag}</span>
-                      <span>{l.label}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
             <button onClick={() => setQuoteOpen(true)}
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-bold hover:bg-primary/90 transition-all shadow-sm hover:shadow-md whitespace-nowrap">
               <span className="leading-none">✦</span>
@@ -184,44 +158,14 @@ export const Navbar = () => {
             </button>
           </div>
 
-          {/* Mobile: lang pill + hamburger */}
+          {/* Mobile hamburger */}
           <div className="lg:hidden flex items-center gap-2">
-            <button onClick={() => { setLangOpen(!langOpen); setIsOpen(false); }}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-full border border-border text-xs font-semibold text-foreground bg-card hover:bg-secondary transition-colors">
-              <Globe className="h-3.5 w-3.5 text-muted-foreground" />
-              <span>{currentLang?.flag}</span>
-              <span className="font-bold">{currentLang?.code.toUpperCase()}</span>
-            </button>
-            <button onClick={() => { setIsOpen(!isOpen); setLangOpen(false); }}
+            <button onClick={() => setIsOpen(!isOpen)}
               className="p-2 text-foreground hover:text-primary transition-colors" aria-label="Menu">
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
-
-        {/* Mobile language panel */}
-        {langOpen && (
-          <div className="lg:hidden bg-card border-b border-border shadow-lg">
-            <div className="container-dental px-4 py-4">
-              <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">
-                {isTr ? 'Dil Seç' : 'Select Language'}
-              </p>
-              <div className="grid grid-cols-4 gap-2">
-                {languages.map(l => (
-                  <button key={l.code} onClick={() => { setLang(l.code); setLangOpen(false); }}
-                    className={`flex flex-col items-center gap-1 py-2.5 rounded-xl text-xs font-medium transition-colors ${
-                      l.code === lang
-                        ? 'bg-primary text-primary-foreground shadow-sm'
-                        : 'bg-secondary text-foreground hover:bg-secondary/70'
-                    }`}>
-                    <span className="text-2xl">{l.flag}</span>
-                    <span className="text-[10px] font-bold">{l.code.toUpperCase()}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Mobile menu */}
         {isOpen && (

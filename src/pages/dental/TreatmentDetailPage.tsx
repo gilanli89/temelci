@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { QuoteButton } from '@/components/dental/QuoteButton';
+import { useFaqs, useTreatment } from '@/hooks/useCmsContent';
+import { useSEO } from '@/hooks/useSEO';
 import { ChevronRight, ChevronLeft, Check } from 'lucide-react';
 import implantImg from '@/assets/dental-implant.jpg';
 import veneersImg from '@/assets/veneers.jpg';
@@ -1736,8 +1738,37 @@ const TreatmentDetailPage = () => {
   // Fall back to reading the last segment of the URL path
   const slugFromPath = location.pathname.split('/').filter(Boolean).pop() || '';
   const slug = treatmentSlug || slugFromPath;
+  const canonicalSlug = SLUG_TO_EN[slug] || slug;
 
-  const treatment = getTreatmentData(slug, t, lang);
+  const staticTreatment = getTreatmentData(slug, t, lang);
+  const { data: dbTreatment, isLoading, isError: treatmentError } = useTreatment(canonicalSlug);
+  const { data: dbFaqs } = useFaqs('treatment', canonicalSlug);
+
+  const treatment: TreatmentData | null = dbTreatment
+    ? {
+        titleKey: '',
+        descKey: '',
+        img: dbTreatment.featured_image || staticTreatment?.img || hollywoodSmileImg,
+        benefits: dbTreatment.benefits.length ? dbTreatment.benefits : staticTreatment?.benefits || [],
+        forWhom: dbTreatment.suitable_for.length ? dbTreatment.suitable_for : staticTreatment?.forWhom || [],
+        process: dbTreatment.process_steps.length ? dbTreatment.process_steps : staticTreatment?.process || [],
+        results: dbTreatment.expected_results.length ? dbTreatment.expected_results : staticTreatment?.results || [],
+        faq: dbFaqs?.length ? dbFaqs.map(item => ({ q: item.question, a: item.answer })) : staticTreatment?.faq || [],
+      }
+    : (isLoading || treatmentError ? staticTreatment : null);
+
+  const title = dbTreatment?.title || (treatment ? (t as Record<string, string>)[treatment.titleKey] || treatment.titleKey : 'Treatment');
+  const desc = dbTreatment?.description || (treatment ? (t as Record<string, string>)[treatment.descKey] || treatment.descKey : '');
+
+  useSEO({
+    title: !isLoading && !treatment ? 'Treatment Not Found | Temelci Dental' : dbTreatment?.seo_title || `${title} in North Cyprus | Temelci Dental`,
+    description: !isLoading && !treatment ? 'The requested treatment page is not available.' : dbTreatment?.seo_description || desc,
+    canonical: `https://temelcidentist.com/en/${canonicalSlug}`,
+    ogImage: dbTreatment?.og_image || dbTreatment?.featured_image || undefined,
+    robots: !isLoading && !treatment ? 'noindex,follow' : undefined,
+  });
+
+  if (isLoading && !staticTreatment) return <div className="min-h-[60vh] grid place-items-center text-sm text-muted-foreground">Loading treatment…</div>;
 
   if (!treatment) {
     return (
@@ -1748,14 +1779,6 @@ const TreatmentDetailPage = () => {
         </button>
       </div>
     );
-  }
-
-  const title = (t as any)[treatment.titleKey] || treatment.titleKey;
-  const desc = (t as any)[treatment.descKey] || treatment.descKey;
-
-  // Update page title
-  if (typeof document !== 'undefined') {
-    document.title = `${title} in North Cyprus | Temelci Dental`;
   }
 
   return (
@@ -1791,6 +1814,12 @@ const TreatmentDetailPage = () => {
           <WhatsAppButton text={t.sendSmilePhotos} variant="outline" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground" />
         </div>
       </section>
+
+      {dbTreatment?.content && (
+        <section className="section-padding bg-background">
+          <article className="container-dental max-w-4xl prose prose-neutral" dangerouslySetInnerHTML={{ __html: dbTreatment.content }} />
+        </section>
+      )}
 
       {/* Benefits */}
       <section className="section-padding bg-background">
@@ -1877,6 +1906,20 @@ const TreatmentDetailPage = () => {
           <WhatsAppButton text={t.freeConsultation} variant="hero" />
         </div>
       </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'MedicalProcedure',
+        name: title,
+        description: desc,
+        image: treatment.img,
+        procedureType: 'https://schema.org/DentalProcedure',
+        provider: { '@type': 'Dentist', name: 'Temelci Dental Clinic', url: 'https://temelcidentist.com/en' },
+      }) }} />
+      {treatment.faq.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: treatment.faq.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })),
+      }) }} />}
     </>
   );
 };

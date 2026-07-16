@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import "./LandingPage.css";
+import { useSEO } from '@/hooks/useSEO';
 
 const WHATSAPP_NUMBER = "905338229445";
 
@@ -129,6 +130,7 @@ const copy = {
 };
 
 export default function LandingPage() {
+  useSEO({ title: 'Request a Personal Dental Treatment Plan | Temelci Dental', description: 'Tell our patient team about your treatment goals and request a personal dental consultation in Kyrenia.', canonical: 'https://temelcidentist.com/en/landing', robots: 'noindex,follow' });
   const { lang, setLang, languages } = useLanguage();
   const isEn = lang !== "tr";
   const c = isEn ? copy.en : copy.tr;

@@ -1,6 +1,5 @@
-import React, { createContext, useContext, useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Language, RTL_LANGUAGES, translations, TranslationKeys, LANGUAGES } from './translations';
+import React, { createContext, useContext } from 'react';
+import { Language, translations, TranslationKeys, LANGUAGES } from './translations';
 
 type LanguageContextType = {
   lang: Language;
@@ -14,37 +13,12 @@ type LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const params = useParams<{ lang?: string }>();
-  const navigate = useNavigate();
-  
-  const lang = (params.lang && Object.keys(translations).includes(params.lang) 
-    ? params.lang 
-    : 'en') as Language;
-  
-  const t = translations[lang];
-  const isRtl = RTL_LANGUAGES.includes(lang);
-
-  const setLang = (newLang: Language) => {
-    const currentPath = window.location.pathname;
-    const basePath = import.meta.env.PROD ? '/clinics/temelci' : '';
-    const routeWithoutBase = currentPath.replace(basePath + '/', '/');
-    
-    const pathParts = routeWithoutBase.split('/').filter(Boolean);
-    
-    if (pathParts.length > 0 && Object.keys(translations).includes(pathParts[0])) {
-      pathParts[0] = newLang;
-    } else {
-      pathParts.unshift(newLang);
-    }
-    
-    navigate('/' + pathParts.join('/'));
-  };
-
-  const localePath = (path: string) => `/${lang}${path}`;
-
-  const value = useMemo(() => ({
-    lang, t, isRtl, setLang, languages: LANGUAGES, localePath
-  }), [lang]);
+  const lang: Language = 'en';
+  const t = translations.en;
+  const isRtl = false;
+  const setLang = () => undefined;
+  const localePath = (path: string) => `/en${path}`;
+  const value = { lang, t, isRtl, setLang, languages: LANGUAGES.filter(language => language.code === 'en'), localePath };
 
   return (
     <LanguageContext.Provider value={value}>

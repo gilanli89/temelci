@@ -1,12 +1,18 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from './WhatsAppButton';
-import { MapPin, Phone, Mail, Star, Clock, Shield } from 'lucide-react';
+import { MapPin, Phone, Mail, Languages, Clock, HeartHandshake } from 'lucide-react';
+import { useSiteSettings } from '@/hooks/useCmsContent';
 
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
 
 export const Footer = () => {
   const { t, lang, localePath } = useLanguage();
+  const { data: settings } = useSiteSettings();
+  const brandName = settings?.brand_name || 'Temelci Dental Clinic';
+  const address = settings?.address || t.contactAddress;
+  const phone = settings?.phone || t.contactPhone;
+  const email = settings?.email || t.contactEmail;
 
   const linkClass = "block text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all duration-200 py-0.5";
   const headingClass = "text-xs font-bold uppercase tracking-widest opacity-40 mb-4";
@@ -18,10 +24,10 @@ export const Footer = () => {
       <div className="border-b border-background/10">
         <div className="container-dental px-4 py-5">
           <div className="flex flex-wrap items-center justify-center gap-6 md:gap-12 text-xs opacity-60">
-            <span className="flex items-center gap-2"><Star className="h-3.5 w-3.5 fill-current text-amber-400 opacity-100" /> 4.9/5 · 150+ Reviews</span>
-            <span className="flex items-center gap-2"><Shield className="h-3.5 w-3.5" /> Written Treatment Guarantee</span>
-            <span className="flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> Est. 1990 · 180 Yrs Combined Exp.</span>
-            <span className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> Kyrenia, North Cyprus</span>
+            <span className="flex items-center gap-2"><Languages className="h-3.5 w-3.5" /> English-speaking care team</span>
+            <span className="flex items-center gap-2"><HeartHandshake className="h-3.5 w-3.5" /> Personal treatment coordination</span>
+            <span className="flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> Established family clinic</span>
+            <span className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> {address}</span>
           </div>
         </div>
       </div>
@@ -33,8 +39,7 @@ export const Footer = () => {
           {/* Brand col */}
           <div className="col-span-2 md:col-span-3 lg:col-span-2">
             <Link to={localePath('')} onClick={scrollToTop} className="inline-flex items-baseline gap-2 mb-4">
-              <span className="text-2xl font-display font-black text-background">Temelci</span>
-              <span className="text-xs font-body opacity-40 uppercase tracking-widest">Dental</span>
+              <span className="text-2xl font-display font-black text-background">{brandName}</span>
             </Link>
             <p className="text-sm opacity-60 leading-relaxed max-w-xs mb-6">
               {t.heroDescription}
@@ -47,17 +52,17 @@ export const Footer = () => {
                 className="flex items-start gap-2.5 text-sm opacity-60 hover:opacity-100 transition-opacity"
               >
                 <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
-                <span>{t.contactAddress}</span>
+                <span>{address}</span>
               </a>
-              <a href={`tel:${t.contactPhone.replace(/\s/g,'')}`}
+              <a href={`tel:${phone.replace(/\D/g,'')}`}
                 className="flex items-center gap-2.5 text-sm opacity-60 hover:opacity-100 transition-opacity">
                 <Phone className="h-4 w-4 shrink-0" />
-                <span>{t.contactPhone}</span>
+                <span>{phone}</span>
               </a>
-              <a href={`mailto:${t.contactEmail}`}
+              <a href={`mailto:${email}`}
                 className="flex items-center gap-2.5 text-sm opacity-60 hover:opacity-100 transition-opacity">
                 <Mail className="h-4 w-4 shrink-0" />
-                <span>{t.contactEmail}</span>
+                <span>{email}</span>
               </a>
             </address>
             <WhatsAppButton text={t.bookWhatsApp} />
@@ -65,7 +70,7 @@ export const Footer = () => {
             {/* Social media icons */}
             <div className="flex items-center gap-3 mt-5">
               <a
-                href="https://www.instagram.com/dentaltemelci/"
+                href={settings?.instagram || 'https://www.instagram.com/dentaltemelci/'}
                 target="_blank" rel="noopener noreferrer"
                 aria-label="Temelci Dental Instagram"
                 className="w-9 h-9 rounded-full bg-background/10 hover:bg-pink-500 flex items-center justify-center transition-colors group"
@@ -76,7 +81,7 @@ export const Footer = () => {
                 </svg>
               </a>
               <a
-                href="https://www.facebook.com/p/Temelci-61577466848604/"
+                href={settings?.facebook || 'https://www.facebook.com/p/Temelci-61577466848604/'}
                 target="_blank" rel="noopener noreferrer"
                 aria-label="Temelci Dental Facebook"
                 className="w-9 h-9 rounded-full bg-background/10 hover:bg-blue-600 flex items-center justify-center transition-colors group"
@@ -169,11 +174,11 @@ export const Footer = () => {
         {/* ── Bottom bar ── */}
         <div className="container-dental mt-14 pt-8 border-t border-background/10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs opacity-40">
-            <p>© {new Date().getFullYear()} Temelci Dental Clinic. {t.footerRights}</p>
+            <p>© {new Date().getFullYear()} {brandName}. {t.footerRights}</p>
             <div className="flex flex-wrap gap-4 justify-center">
               <span>Kyrenia (Girne), North Cyprus</span>
               <span>·</span>
-              <a href="mailto:info@temelcidentist.com" className="hover:opacity-80 transition-opacity">info@temelcidentist.com</a>
+              <a href={`mailto:${email}`} className="hover:opacity-80 transition-opacity">{email}</a>
               <span>·</span>
               <span>{t.privacyPolicy}</span>
             </div>

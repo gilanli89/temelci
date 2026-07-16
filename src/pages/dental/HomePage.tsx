@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { useSEO } from '@/hooks/useSEO';
+import { useFaqs, useReviews, useSitePage, useSiteSettings, useTreatments } from '@/hooks/useCmsContent';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { QuoteButton } from '@/components/dental/QuoteButton';
 import { Star, Shield, Award, Users, Globe, ChevronRight, Sparkles, Heart, Zap, Crown } from 'lucide-react';
@@ -19,14 +20,20 @@ const fadeInUp = {
 
 const HomePage = () => {
   const { t, localePath } = useLanguage();
+  const { data: page } = useSitePage('home');
+  const { data: dbTreatments, isError: treatmentsError } = useTreatments();
+  const { data: dbReviews } = useReviews(4, true);
+  const { data: dbFaqs, isError: faqsError } = useFaqs('global');
+  const { data: settings } = useSiteSettings();
 
   useSEO({
-    title: "Temelci Dental Kyrenia | Dental Tourism North Cyprus | Since 1990",
-    description: "Premier dental clinic in Kyrenia, North Cyprus. Dental implants, Hollywood smile, veneers, All-on-4/6. In-house lab, 180 years combined experience, EU-grade materials. Save 60-70% vs UK.",
+    title: page?.seo_title || "Temelci Dental Kyrenia | Dental Tourism North Cyprus | Since 1990",
+    description: page?.seo_description || "Premier dental clinic in Kyrenia, North Cyprus. Dental implants, Hollywood smile, veneers, All-on-4/6. In-house lab and personal support for international patients.",
     canonical: "https://temelcidentist.com/en",
+    ogImage: page?.og_image || page?.hero_image || undefined,
   });
 
-  const treatments = [
+  const fallbackTreatments = [
     { name: t.hollywoodSmile, desc: t.hollywoodSmileDesc, slug: t.hollywoodSmileSlug, img: veneersImg, icon: Sparkles },
     { name: t.dentalImplants, desc: t.dentalImplantsDesc, slug: t.implantsSlug, img: implantImg, icon: Shield },
     { name: t.veneers, desc: t.veneersDesc, slug: t.veneersSlug, img: veneersImg, icon: Star },
@@ -36,12 +43,13 @@ const HomePage = () => {
     { name: t.smileMakeover, desc: t.smileMakeoverDesc, slug: t.smileMakeoverSlug, img: veneersImg, icon: Heart },
     { name: t.fullMouthRestoration, desc: t.fullMouthRestorationDesc, slug: t.fullMouthRestorationSlug, img: implantImg, icon: Shield },
   ];
+  const treatments = dbTreatments && !treatmentsError ? dbTreatments.slice(0, 8).map(treatment => ({ name: treatment.title, desc: treatment.description || '', slug: treatment.slug, img: treatment.featured_image || implantImg, icon: Sparkles })) : fallbackTreatments;
 
   const stats = [
-    { value: '35+', label: t.yearsExperience },
-    { value: '10,000+', label: t.happyPatients },
-    { value: '15,000+', label: t.treatments_count },
-    { value: '20+', label: t.countriesServed },
+    { value: 'Since 1990', label: 'Established family clinic' },
+    { value: 'English', label: 'Patient coordination' },
+    { value: 'Digital', label: 'Treatment planning' },
+    { value: 'Kyrenia', label: 'North Cyprus' },
   ];
 
   const reasons = [
@@ -51,20 +59,16 @@ const HomePage = () => {
     { title: t.whyReason4Title, desc: t.whyReason4Desc, icon: Heart },
   ];
 
-  const reviews = [
-    { name: 'Sarah M.', country: '🇬🇧 UK', text: 'Dr. Temelci transformed my smile completely. The Hollywood Smile treatment was painless and the results are stunning!', rating: 5 },
-    { name: 'Ahmed K.', country: '🇸🇦 Saudi Arabia', text: 'I traveled from Riyadh for dental implants. Best decision ever. Professional clinic, amazing results.', rating: 5 },
-    { name: 'Hans W.', country: '🇩🇪 Germany', text: 'Incredible quality at a fraction of German prices. My zirconia crowns look perfectly natural.', rating: 5 },
-    { name: 'Elena P.', country: '🇷🇺 Russia', text: 'Полностью доволна результатом. Виниры выглядят потрясающе. Рекомендую всем!', rating: 5 },
-  ];
+  const reviews = (dbReviews || []).map(review => ({ name: review.patient_name, country: `${review.country_flag || ''} ${review.country || ''}`.trim(), text: review.content, rating: review.rating }));
 
-  const faqs = [
+  const fallbackFaqs = [
     { q: t.faq1Q, a: t.faq1A },
     { q: t.faq2Q, a: t.faq2A },
     { q: t.faq3Q, a: t.faq3A },
     { q: t.faq4Q, a: t.faq4A },
     { q: t.faq5Q, a: t.faq5A },
   ];
+  const faqs = dbFaqs && !faqsError ? dbFaqs.map(faq => ({ q: faq.question, a: faq.answer })) : fallbackFaqs;
 
   return (
     <>
@@ -76,9 +80,9 @@ const HomePage = () => {
         </div>
         <div className="relative container-dental section-padding">
           <motion.div className="max-w-2xl" {...fadeInUp}>
-            <span className="trust-badge mb-6 inline-block">{t.heroSubtitle}</span>
-            <h1 className="heading-display text-background mb-6">{t.heroTitle}</h1>
-            <p className="text-lg text-background/80 mb-8 leading-relaxed">{t.heroDescription}</p>
+            <span className="trust-badge mb-6 inline-block">{page?.eyebrow || t.heroSubtitle}</span>
+            <h1 className="heading-display text-background mb-6">{page?.hero_title || t.heroTitle}</h1>
+            <p className="text-lg text-background/80 mb-8 leading-relaxed">{page?.hero_description || t.heroDescription}</p>
             <div className="flex flex-wrap gap-4">
               <QuoteButton text={t.freeConsultation || 'Get Free Quote'} variant="hero" />
               <WhatsAppButton text={t.bookWhatsApp} variant="outline" className="border-background/30 text-background hover:bg-background/10 hover:text-background" />
@@ -171,8 +175,8 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Reviews */}
-      <section className="section-padding bg-secondary/50">
+      {/* Reviews are shown only when verified content exists in the CMS. */}
+      {reviews.length > 0 && <section className="section-padding bg-secondary/50">
         <div className="container-dental">
           <motion.div className="text-center mb-10" {...fadeInUp}>
             <h2 className="heading-section mb-3">{t.reviewsTitle}</h2>
@@ -203,32 +207,32 @@ const HomePage = () => {
             </Link>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* Instagram Proof */}
       <section className="section-padding bg-background">
         <div className="container-dental text-center">
           <motion.h2 className="heading-section mb-8" {...fadeInUp}>{t.socialTitle}</motion.h2>
           <div className="flex flex-wrap justify-center gap-4 mb-6">
-            <a href="https://www.instagram.com/dentaltemelci/" target="_blank" rel="noopener noreferrer" className="trust-badge hover:bg-primary hover:text-primary-foreground transition-colors">📸 {t.followInstagram}</a>
-            <a href="https://www.facebook.com/p/Temelci-61577466848604/" target="_blank" rel="noopener noreferrer" className="trust-badge hover:bg-primary hover:text-primary-foreground transition-colors">📘 {t.followFacebook}</a>
+            <a href={settings?.instagram || 'https://www.instagram.com/dentaltemelci/'} target="_blank" rel="noopener noreferrer" className="trust-badge hover:bg-primary hover:text-primary-foreground transition-colors">📸 {t.followInstagram}</a>
+            <a href={settings?.facebook || 'https://www.facebook.com/p/Temelci-61577466848604/'} target="_blank" rel="noopener noreferrer" className="trust-badge hover:bg-primary hover:text-primary-foreground transition-colors">📘 {t.followFacebook}</a>
           </div>
         </div>
       </section>
 
       {/* Location */}
-      <section className="section-padding bg-secondary/50">
+      {settings?.maps_embed_url && <section className="section-padding bg-secondary/50">
         <div className="container-dental">
           <motion.h2 className="heading-section text-center mb-8" {...fadeInUp}>{t.ourLocation}</motion.h2>
           <div className="rounded-2xl overflow-hidden border border-border">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3260.5!2d33.3417!3d35.3406!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14de6b6a6b6b6b6b%3A0x6b6b6b6b6b6b6b6b!2sKyrenia%2C%20Northern%20Cyprus!5e0!3m2!1sen!2s!4v1"
+              src={settings.maps_embed_url}
               width="100%" height="400" style={{ border: 0 }} allowFullScreen loading="lazy"
               title="Temelci Dental Clinic Location" />
           </div>
           <p className="text-center text-muted-foreground mt-4">{t.clinicLocation}</p>
         </div>
-      </section>
+      </section>}
 
       {/* FAQ */}
       <section className="section-padding bg-background">
@@ -258,6 +262,11 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map(faq => ({ '@type': 'Question', name: faq.q, acceptedAnswer: { '@type': 'Answer', text: faq.a } })),
+      }) }} />
     </>
   );
 };

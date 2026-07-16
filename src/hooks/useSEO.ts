@@ -5,84 +5,54 @@ interface SEOProps {
   description: string;
   canonical?: string;
   ogImage?: string;
+  type?: 'website' | 'article';
+  robots?: string;
+  publishedTime?: string;
+  modifiedTime?: string;
 }
 
-/**
- * Sets <title> and essential meta tags for a page.
- * Cleans up on unmount (restores defaults).
- */
-export const useSEO = ({ title, description, canonical, ogImage }: SEOProps) => {
+const setMeta = (selector: string, attribute: 'name' | 'property', key: string, content: string) => {
+  let element = document.head.querySelector<HTMLMetaElement>(selector);
+  if (!element) {
+    element = document.createElement('meta');
+    element.setAttribute(attribute, key);
+    document.head.appendChild(element);
+  }
+  element.content = content;
+};
+export const useSEO = ({ title, description, canonical, ogImage, type = 'website', robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1', publishedTime, modifiedTime }: SEOProps) => {
   useEffect(() => {
-    const originalTitle = document.title;
+    document.documentElement.lang = 'en';
+    document.documentElement.dir = 'ltr';
     document.title = title;
 
-    // Meta description
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement('meta');
-      metaDesc.setAttribute('name', 'description');
-      document.head.appendChild(metaDesc);
-    }
-    const originalDesc = metaDesc.getAttribute('content') || '';
-    metaDesc.setAttribute('content', description);
+    setMeta('meta[name="description"]', 'name', 'description', description);
+    setMeta('meta[name="robots"]', 'name', 'robots', robots);
+    setMeta('meta[name="googlebot"]', 'name', 'googlebot', robots);
+    setMeta('meta[property="og:title"]', 'property', 'og:title', title);
+    setMeta('meta[property="og:description"]', 'property', 'og:description', description);
+    setMeta('meta[property="og:type"]', 'property', 'og:type', type);
+    setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
+    setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
+    setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
 
-    // OG title
-    let ogTitle = document.querySelector('meta[property="og:title"]');
-    if (!ogTitle) {
-      ogTitle = document.createElement('meta');
-      ogTitle.setAttribute('property', 'og:title');
-      document.head.appendChild(ogTitle);
+    const resolvedCanonical = canonical || `${window.location.origin}${window.location.pathname}`;
+    let canonicalLink = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!canonicalLink) {
+      canonicalLink = document.createElement('link');
+      canonicalLink.rel = 'canonical';
+      document.head.appendChild(canonicalLink);
     }
-    const originalOgTitle = ogTitle.getAttribute('content') || '';
-    ogTitle.setAttribute('content', title);
+    canonicalLink.href = resolvedCanonical;
+    setMeta('meta[property="og:url"]', 'property', 'og:url', resolvedCanonical);
 
-    // OG description
-    let ogDesc = document.querySelector('meta[property="og:description"]');
-    if (!ogDesc) {
-      ogDesc = document.createElement('meta');
-      ogDesc.setAttribute('property', 'og:description');
-      document.head.appendChild(ogDesc);
-    }
-    const originalOgDesc = ogDesc.getAttribute('content') || '';
-    ogDesc.setAttribute('content', description);
-
-    // Twitter title
-    let twTitle = document.querySelector('meta[name="twitter:title"]');
-    if (!twTitle) {
-      twTitle = document.createElement('meta');
-      twTitle.setAttribute('name', 'twitter:title');
-      document.head.appendChild(twTitle);
-    }
-    const originalTwTitle = twTitle.getAttribute('content') || '';
-    twTitle.setAttribute('content', title);
-
-    // Canonical
-    let canonicalLink = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
-    const originalCanonical = canonicalLink?.href || '';
-    if (canonical) {
-      if (!canonicalLink) {
-        canonicalLink = document.createElement('link');
-        canonicalLink.setAttribute('rel', 'canonical');
-        document.head.appendChild(canonicalLink);
-      }
-      canonicalLink.setAttribute('href', canonical);
+    if (ogImage) {
+      const absoluteImage = new URL(ogImage, window.location.origin).href;
+      setMeta('meta[property="og:image"]', 'property', 'og:image', absoluteImage);
+      setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', absoluteImage);
     }
 
-    // OG Image
-    let ogImageMeta = document.querySelector('meta[property="og:image"]');
-    const originalOgImage = ogImageMeta?.getAttribute('content') || '';
-    if (ogImage && ogImageMeta) {
-      ogImageMeta.setAttribute('content', ogImage);
-    }
-
-    return () => {
-      document.title = originalTitle;
-      if (metaDesc) metaDesc.setAttribute('content', originalDesc);
-      if (ogTitle) ogTitle.setAttribute('content', originalOgTitle);
-      if (ogDesc) ogDesc.setAttribute('content', originalOgDesc);
-      if (twTitle) twTitle.setAttribute('content', originalTwTitle);
-      if (canonicalLink && originalCanonical) canonicalLink.setAttribute('href', originalCanonical);
-      if (ogImageMeta && originalOgImage) ogImageMeta.setAttribute('content', originalOgImage);
-    };
-  }, [title, description, canonical, ogImage]);
+    if (publishedTime) setMeta('meta[property="article:published_time"]', 'property', 'article:published_time', publishedTime);
+    if (modifiedTime) setMeta('meta[property="article:modified_time"]', 'property', 'article:modified_time', modifiedTime);
+  }, [canonical, description, modifiedTime, ogImage, publishedTime, robots, title, type]);
 };

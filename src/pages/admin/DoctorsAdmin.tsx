@@ -17,14 +17,14 @@ export default function DoctorsAdmin() {
   const [editing, setEditing] = useState<any | null>(null);
   const [open, setOpen] = useState(false);
   async function load() {
-    const { data } = await supabase.from('doctors').select('*').order('sort_order');
+    const { data } = await supabase.from('doctors').select('*').is('deleted_at', null).order('sort_order');
     setItems(data || []);
   }
   useEffect(() => { load(); }, []);
 
   async function del(id: string) {
     if (!confirm('Delete?')) return;
-    const { error } = await supabase.from('doctors').delete().eq('id', id);
+    const { error } = await supabase.from('doctors').update({ deleted_at: new Date().toISOString(), active: false, content_status: 'archived' }).eq('id', id);
     if (error) toast.error(error.message); else { toast.success('Deleted'); load(); }
   }
 
