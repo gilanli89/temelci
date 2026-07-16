@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://temelcidentist.com/en</loc>
     <changefreq>weekly</changefreq>
@@ -55,113 +55,170 @@
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/hollywood-smile.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/veneers</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/veneers.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/teeth-whitening</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/teeth-whitening.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/dental-bonding</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/dental-bonding.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/smile-makeover</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/smile-makeover.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/implants</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/implants.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/all-on-4</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/all-on-4.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/crowns</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/crowns.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/zirconia-crowns</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/zirconia-crowns.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/composite-fillings</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/composite-fillings.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/full-mouth-restoration</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/full-mouth-restoration.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/root-canal-treatment</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/root-canal-treatment.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/wisdom-tooth-removal</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/wisdom-tooth-removal.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/gum-disease-treatment</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/gum-disease-treatment.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/laser-gum-treatment</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/laser-gum-treatment.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/bruxism-treatment</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/bruxism-treatment.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/clear-aligners</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/clear-aligners.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/orthodontics</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/orthodontics.webp</image:loc>
+    </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/preventive-dentistry</loc>
     <lastmod>2026-07-16T12:19:15.732Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/treatments/preventive-dentistry.webp</image:loc>
+    </image:image>
   </url>
 </urlset>
