@@ -94,7 +94,7 @@ const pages = [
     path: `/en/${item.slug}`,
     title: item.seo_title || `${item.title} in Kyrenia | Temelci Dental`,
     description: item.seo_description || item.description || `Learn about ${item.title} treatment at Temelci Dental Clinic in Kyrenia, North Cyprus.`,
-    image: item.og_image || item.featured_image,
+    image: `/treatments/${item.slug}.webp`,
   })),
   ...posts.map((item) => ({
     path: `/en/blog/${item.slug}`,
@@ -150,12 +150,20 @@ function renderStaticHead(page) {
   html = replaceOrInsert(html, /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:url" content="${canonical}">`);
   html = replaceOrInsert(html, /<meta\s+property="og:type"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:type" content="${type}">`);
   html = replaceOrInsert(html, /<meta\s+property="og:image"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:image" content="${image}">`);
+  html = replaceOrInsert(html, /<meta\s+property="og:image:alt"\s+content="[^"]*"\s*\/?>/i, `<meta property="og:image:alt" content="${title}">`);
   html = replaceOrInsert(html, /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/i, `<meta name="twitter:title" content="${title}">`);
   html = replaceOrInsert(html, /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/i, `<meta name="twitter:description" content="${description}">`);
   html = replaceOrInsert(html, /<meta\s+name="twitter:image"\s+content="[^"]*"\s*\/?>/i, `<meta name="twitter:image" content="${image}">`);
+  html = replaceOrInsert(html, /<meta\s+name="twitter:image:alt"\s+content="[^"]*"\s*\/?>/i, `<meta name="twitter:image:alt" content="${title}">`);
   html = replaceOrInsert(html, /<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/i, '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">');
   html = replaceOrInsert(html, /<link\s+rel="alternate"\s+hreflang="en"\s+href="[^"]*"\s*\/?>/i, `<link rel="alternate" hreflang="en" href="${canonical}">`);
 
+  const primaryImage = page.image ? {
+    '@type': 'ImageObject',
+    url: absoluteUrl(page.image),
+    contentUrl: absoluteUrl(page.image),
+    caption: page.title,
+  } : undefined;
   const webPageSchema = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': type === 'article' ? 'Article' : 'WebPage',
@@ -164,6 +172,7 @@ function renderStaticHead(page) {
     url: canonical,
     isPartOf: { '@id': `${SITE_URL}/#website` },
     about: { '@id': `${SITE_URL}/#clinic` },
+    ...(primaryImage ? { image: primaryImage, primaryImageOfPage: primaryImage } : {}),
   }).replaceAll('<', '\\u003c');
   html = html.replace('</head>', `    <script type="application/ld+json" data-seo-route>${webPageSchema}</script>\n  </head>`);
 

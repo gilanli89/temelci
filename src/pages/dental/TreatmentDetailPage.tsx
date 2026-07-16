@@ -1765,6 +1765,7 @@ const TreatmentDetailPage = () => {
     description: !isLoading && !treatment ? 'The requested treatment page is not available.' : dbTreatment?.seo_description || desc,
     canonical: `https://temelcidentist.com/en/${canonicalSlug}`,
     ogImage: dbTreatment?.og_image || dbTreatment?.featured_image || undefined,
+    ogImageAlt: `${title} treatment at Temelci Dental Clinic`,
     robots: !isLoading && !treatment ? 'noindex,follow' : undefined,
   });
 
@@ -1796,7 +1797,7 @@ const TreatmentDetailPage = () => {
       {/* Hero */}
       <section className="relative">
         <div className="aspect-[21/9] max-h-[400px] overflow-hidden">
-          <img src={treatment.img} alt={title} className="w-full h-full object-cover" />
+          <img src={treatment.img} alt={`${title} treatment at Temelci Dental Clinic`} width="1672" height="941" fetchPriority="high" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 to-transparent" />
         </div>
         <div className="absolute bottom-0 left-0 right-0 section-padding pb-8">

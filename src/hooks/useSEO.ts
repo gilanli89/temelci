@@ -5,6 +5,7 @@ interface SEOProps {
   description: string;
   canonical?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   type?: 'website' | 'article';
   robots?: string;
   publishedTime?: string;
@@ -20,7 +21,7 @@ const setMeta = (selector: string, attribute: 'name' | 'property', key: string, 
   }
   element.content = content;
 };
-export const useSEO = ({ title, description, canonical, ogImage, type = 'website', robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1', publishedTime, modifiedTime }: SEOProps) => {
+export const useSEO = ({ title, description, canonical, ogImage, ogImageAlt, type = 'website', robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1', publishedTime, modifiedTime }: SEOProps) => {
   useEffect(() => {
     document.documentElement.lang = 'en';
     document.documentElement.dir = 'ltr';
@@ -49,11 +50,14 @@ export const useSEO = ({ title, description, canonical, ogImage, type = 'website
 
     if (ogImage) {
       const absoluteImage = new URL(ogImage, window.location.origin).href;
+      const imageAlt = ogImageAlt || title;
       setMeta('meta[property="og:image"]', 'property', 'og:image', absoluteImage);
+      setMeta('meta[property="og:image:alt"]', 'property', 'og:image:alt', imageAlt);
       setMeta('meta[name="twitter:image"]', 'name', 'twitter:image', absoluteImage);
+      setMeta('meta[name="twitter:image:alt"]', 'name', 'twitter:image:alt', imageAlt);
     }
 
     if (publishedTime) setMeta('meta[property="article:published_time"]', 'property', 'article:published_time', publishedTime);
     if (modifiedTime) setMeta('meta[property="article:modified_time"]', 'property', 'article:modified_time', modifiedTime);
-  }, [canonical, description, modifiedTime, ogImage, publishedTime, robots, title, type]);
+  }, [canonical, description, modifiedTime, ogImage, ogImageAlt, publishedTime, robots, title, type]);
 };
