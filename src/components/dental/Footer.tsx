@@ -118,6 +118,7 @@ export const Footer = () => {
             <p className={headingClass}>{lang === 'tr' ? 'Klinik' : 'Clinic'}</p>
             <nav aria-label="Clinic pages">
               <Link to={localePath(`/${t.ourClinicSlug}`)}       onClick={scrollToTop} className={linkClass}>{t.ourClinic}</Link>
+              <Link to={localePath('/lab')}                      onClick={scrollToTop} className={linkClass}>Dental Lab</Link>
               <Link to={localePath(`/${t.aboutSlug}#doctors`)}   className={linkClass}>{t.ourTeam}</Link>
               <Link to={localePath(`/${t.beforeAfterSlug}`)}     onClick={scrollToTop} className={linkClass}>{t.beforeAfter}</Link>
               <Link to={localePath(`/${t.reviewsSlug}`)}         onClick={scrollToTop} className={linkClass}>{t.reviews}</Link>

@@ -21,6 +21,7 @@ const HollywoodSmileLanding = lazy(() => import("./pages/dental/HollywoodSmileLa
 const AllOn4Landing = lazy(() => import("./pages/dental/AllOn4Landing"));
 const DrSerifePage = lazy(() => import("./pages/dental/DrSerifePage"));
 const OurClinicPage = lazy(() => import("./pages/dental/OurClinicPage"));
+const LabPage = lazy(() => import("./pages/dental/LabPage"));
 const BlogPage = lazy(() => import("./pages/dental/BlogPage"));
 const BlogArticlePage = lazy(() => import("./pages/dental/BlogArticlePage"));
 const DentalTourismPage = lazy(() => import("./pages/dental/DentalTourismPage"));
@@ -112,6 +113,7 @@ const LangRoutes = () => {
         <Route path="ueber-uns" element={<AboutPage />} />
         <Route path="darbare" element={<AboutPage />} />
         <Route path="our-clinic" element={<OurClinicPage />} />
+        <Route path="lab" element={<LabPage />} />
         <Route path="kliniğimiz" element={<OurClinicPage />} />
         <Route path="i-kliniki-mas" element={<OurClinicPage />} />
         <Route path="nasha-klinika" element={<OurClinicPage />} />

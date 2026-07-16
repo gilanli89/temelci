@@ -61,6 +61,12 @@ const staticPages = [
     description: 'Explore Temelci Dental Clinic, its treatment rooms, digital imaging and in-house clinical facilities in Kyrenia.',
   },
   {
+    path: '/en/lab',
+    title: 'In-House Dental Laboratory in Kyrenia | Temelci Dental',
+    description: 'Discover Temelci Dental’s in-house dental laboratory and digital restorative workflow for crowns, veneers, bridges and implant-supported restorations.',
+    image: '/treatments/zirconia-crowns.webp',
+  },
+  {
     path: '/en/dental-tourism',
     title: 'Dental Tourism in North Cyprus | Temelci Dental',
     description: 'Plan dental treatment in Kyrenia with clear timelines, travel guidance and personal patient coordination.',
@@ -176,7 +182,7 @@ function renderStaticHead(page) {
   }).replaceAll('<', '\\u003c');
   html = html.replace('</head>', `    <script type="application/ld+json" data-seo-route>${webPageSchema}</script>\n  </head>`);
 
-  const fallback = `<noscript><main><h1>${title}</h1><p>${description}</p><p><a href="${SITE_URL}/en/treatments">View dental treatments</a> · <a href="${SITE_URL}/en/contact">Contact Temelci Dental Clinic</a></p></main></noscript>`;
+  const fallback = `<noscript><main><h1>${title}</h1><p>${description}</p><nav aria-label="Primary navigation"><a href="${SITE_URL}/en/treatments">Treatments</a> · <a href="${SITE_URL}/en/our-clinic">Clinic</a> · <a href="${SITE_URL}/en/lab">Dental Lab</a> · <a href="${SITE_URL}/en/before-after">Before &amp; After</a> · <a href="${SITE_URL}/en/dental-tourism">Dental Tourism</a> · <a href="${SITE_URL}/en/contact">Contact</a></nav></main></noscript>`;
   html = html.replace('<div id="root"></div>', `<div id="root">${fallback}</div>`);
   return html;
 }

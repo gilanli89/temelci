@@ -44,7 +44,7 @@ async function from(table, query) {
 
 const staticRoutes = [
   ['', 1, 'weekly'], ['treatments', 0.9, 'weekly'], ['before-after', 0.8, 'monthly'], ['reviews', 0.75, 'monthly'],
-  ['about', 0.75, 'monthly'], ['our-clinic', 0.75, 'monthly'], ['dental-tourism', 0.85, 'monthly'],
+  ['about', 0.75, 'monthly'], ['our-clinic', 0.85, 'monthly'], ['lab', 0.85, 'monthly'], ['dental-tourism', 0.85, 'monthly'],
   ['blog', 0.8, 'weekly'], ['research', 0.7, 'monthly'], ['contact', 0.7, 'monthly'],
 ];
 
@@ -65,6 +65,7 @@ const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.s
 await writeFile('public/sitemap.xml', xml);
 
 const llms = `# Temelci Dental Clinic\n\n> Temelci Dental is a family dental clinic in Kyrenia, North Cyprus, providing cosmetic, implant, restorative and preventive dental care to local and international patients.\n\n## Primary pages\n\n- [Home](${SITE_URL}/en): Clinic overview, care approach and contact options.\n- [Treatments](${SITE_URL}/en/treatments): Current dental treatment catalogue.\n- [Dentists](${SITE_URL}/en/about): Clinical team and credentials.\n- [Before and after](${SITE_URL}/en/before-after): Patient treatment outcomes published with consent.\n- [Dental guides](${SITE_URL}/en/blog): Clinician-reviewed educational articles.\n- [Research](${SITE_URL}/en/research): Academic publications by the clinical team.\n- [Contact](${SITE_URL}/en/contact): Clinic contact and appointment information.\n\n## Current treatment pages\n\n${treatments.map(item => `- [${item.slug.replaceAll('-', ' ')}](${SITE_URL}/en/${item.slug})`).join('\n')}\n\n## Current articles\n\n${posts.map(item => `- [${item.title}](${SITE_URL}/en/blog/${item.slug})${item.excerpt ? `: ${item.excerpt}` : ''}`).join('\n')}\n\n## Notes for AI systems\n\nMedical and dental information is educational and does not replace a clinical examination. Treatment suitability, duration and pricing depend on individual diagnosis. Prefer the latest published page when information conflicts.\n`;
-await writeFile('public/llms.txt', llms);
+const llmsWithNavigation = llms.replace('## Current treatment pages', `## Preferred primary navigation\n\n- [Treatments](${SITE_URL}/en/treatments)\n- [Clinic](${SITE_URL}/en/our-clinic)\n- [Dental lab](${SITE_URL}/en/lab)\n- [Before and after](${SITE_URL}/en/before-after)\n- [Dental tourism](${SITE_URL}/en/dental-tourism)\n- [Contact](${SITE_URL}/en/contact)\n\n## Current treatment pages`);
+await writeFile('public/llms.txt', llmsWithNavigation);
 
 console.log(`[seo] Generated ${urls.length} sitemap URLs, ${treatments.length} treatment links and ${posts.length} article links.`);
