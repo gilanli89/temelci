@@ -101,6 +101,33 @@ const UNIVERSITY_LOGOS: Record<string, { abbr: string; full: string; color: stri
 
 const AboutPage = () => {
   const { t, lang, localePath } = useLanguage();
+  const { data: dbDoctors } = useDoctorsFromDb();
+
+  // Merge: if DB has entries, filter static to only those in DB (respects deletions)
+  // and override name/title/bio/photo from DB. Localised fields (multi-lang title/bio)
+  // fall back to static when DB row exists but has only single-language data.
+  const dbBySlug = new Map((dbDoctors ?? []).map((d) => [d.slug, d]));
+  const doctorsToRender = (dbDoctors && dbDoctors.length > 0)
+    ? doctors
+        .filter((s) => dbBySlug.has(s.slug))
+        .map((s) => {
+          const db = dbBySlug.get(s.slug)!;
+          return {
+            ...s,
+            name: db.name || s.name,
+            photo: db.photo || s.photo,
+            // Only override localized title/bio for the CURRENT lang; keep other locales from static
+            title: { ...s.title, [lang]: db.title || s.title[lang] },
+            bio: { ...s.bio, [lang]: db.bio || s.bio[lang] },
+          };
+        })
+        .sort((a, b) => {
+          const ao = dbBySlug.get(a.slug)?.sort_order ?? 0;
+          const bo = dbBySlug.get(b.slug)?.sort_order ?? 0;
+          return ao - bo;
+        })
+    : doctors;
+
 
   return (
     <>
