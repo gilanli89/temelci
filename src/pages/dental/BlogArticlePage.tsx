@@ -4,16 +4,20 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { ChevronLeft, Clock, User, Calendar, Tag } from 'lucide-react';
 import { ARTICLE_CONTENT } from './BlogArticleData';
+import { usePostFromDb } from '@/hooks/usePostsHybrid';
 import implantImg from '@/assets/dental-implant.jpg';
 
 export default function BlogArticlePage() {
   const { slug } = useParams<{ slug: string }>();
   const { lang, localePath, t } = useLanguage();
   const l = lang === 'tr' ? 'tr' : 'en';
+  const { data: dbPost, isLoading } = usePostFromDb(slug);
 
-  const article = slug ? ARTICLE_CONTENT[slug] : null;
+  const staticArticle = slug ? ARTICLE_CONTENT[slug] : null;
+  const article = staticArticle;
 
-  if (!article) {
+  // If we have neither DB post nor static article and finished loading, show 404
+  if (!isLoading && !dbPost && !article) {
     return (
       <div className="section-padding container-dental text-center">
         <h1 className="heading-display mb-4">Article Not Found</h1>
@@ -21,6 +25,58 @@ export default function BlogArticlePage() {
       </div>
     );
   }
+
+  // DB-only article (no static fallback): render from DB HTML content directly
+  if (dbPost && !article) {
+    return (
+      <>
+        <section className="relative">
+          <div className="h-64 md:h-80 overflow-hidden">
+            <img src={dbPost.cover_image || dbPost.featured_image || implantImg} alt={dbPost.title} className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-transparent" />
+          </div>
+          <div className="absolute bottom-0 left-0 right-0 section-padding pb-8">
+            <div className="container-dental max-w-3xl">
+              {dbPost.category && (
+                <span className="inline-flex items-center gap-1 text-xs font-bold bg-primary text-primary-foreground px-3 py-1 rounded-full mb-3">
+                  <Tag className="h-3 w-3" />{dbPost.category}
+                </span>
+              )}
+              <h1 className="text-2xl md:text-4xl font-display font-black text-white leading-tight">{dbPost.title}</h1>
+            </div>
+          </div>
+        </section>
+        <section className="bg-secondary/30 border-b border-border">
+          <div className="container-dental max-w-3xl px-4 py-4">
+            <Link to={localePath('/blog')} className="flex items-center gap-1 hover:text-primary transition-colors font-medium text-xs text-muted-foreground">
+              <ChevronLeft className="h-3.5 w-3.5" />
+              {l === 'tr' ? "Blog'a Dön" : 'Back to Blog'}
+            </Link>
+          </div>
+        </section>
+        <article className="section-padding bg-background">
+          <div className="container-dental max-w-3xl">
+            {dbPost.excerpt && (
+              <p className="text-lg md:text-xl text-foreground/80 leading-relaxed mb-10 font-medium border-l-4 border-primary pl-5">
+                {dbPost.excerpt}
+              </p>
+            )}
+            <div className="prose-like text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: dbPost.content || '' }} />
+          </div>
+        </article>
+        <section className="section-padding bg-primary text-center">
+          <div className="container-dental px-4">
+            <h2 className="text-2xl md:text-3xl font-display font-black text-primary-foreground mb-3">
+              {l === 'tr' ? 'Tedavinizi Planlamaya Hazır Mısınız?' : 'Ready to Plan Your Treatment?'}
+            </h2>
+            <WhatsAppButton text={l === 'tr' ? "WhatsApp'tan Yazın" : 'Message Us on WhatsApp'} variant="hero" message={`Hi, I read your article "${dbPost.title}" and I'd like to find out more about treatment at Temelci Dental.`} />
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  if (!article) return null;
 
   // Render markdown-style bold text
   const renderBody = (text: string) => {
