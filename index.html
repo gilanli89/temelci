@@ -2,9 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.svg">
-    <link rel="shortcut icon" href="/favicon.svg">
+    <link rel="icon" href="/favicon-48x48.png" type="image/png" sizes="48x48" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0f766e" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Temelci Dental Clinic | Dentist in Kyrenia, North Cyprus</title>
     <meta name="description" content="Dental implants, veneers, crowns and restorative dentistry with personal treatment planning at Temelci Dental Clinic in Kyrenia, North Cyprus.">
@@ -14,15 +17,33 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Dentist",
-      "name": "Temelci Dental Clinic",
-      "url": "https://temelcidentist.com",
-      "telephone": "+905338229445",
-      "address": { "@type": "PostalAddress", "streetAddress": "Salih Miroğlu Caddesi No:14, Ersoy Apt. D:4", "addressLocality": "Kyrenia", "addressRegion": "North Cyprus", "addressCountry": "CY", "postalCode": "99300" },
-      "priceRange": "$$"
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://temelcidentist.com/#website",
+          "url": "https://temelcidentist.com/",
+          "name": "Temelci Dental Clinic",
+          "alternateName": ["Temelci Dental", "temelcidentist.com"],
+          "inLanguage": "en"
+        },
+        {
+          "@type": "Dentist",
+          "@id": "https://temelcidentist.com/#clinic",
+          "name": "Temelci Dental Clinic",
+          "url": "https://temelcidentist.com/en",
+          "logo": "https://temelcidentist.com/favicon-512x512.png",
+          "image": "https://temelcidentist.com/blog/clinic_room2.jpg",
+          "telephone": "+905338229445",
+          "email": "info@temelcidentist.com",
+          "address": { "@type": "PostalAddress", "streetAddress": "Salih Miroğlu Caddesi No:14, Ersoy Apt. D:4", "addressLocality": "Kyrenia", "addressRegion": "North Cyprus", "addressCountry": "CY", "postalCode": "99300" },
+          "sameAs": ["https://www.instagram.com/dentaltemelci/", "https://www.facebook.com/p/Temelci-61577466848604/"],
+          "priceRange": "$$"
+        }
+      ]
     }
     </script>
     <meta property="og:title" content="Temelci Dental Clinic | Dentist in Kyrenia, North Cyprus">
+    <meta property="og:site_name" content="Temelci Dental Clinic">
     <meta name="twitter:title" content="Temelci Dental Clinic | Dentist in Kyrenia, North Cyprus">
     <meta property="og:description" content="Dental implants, veneers, crowns and restorative dentistry with personal treatment planning in Kyrenia, North Cyprus.">
     <meta name="twitter:description" content="Dental implants, veneers, crowns and restorative dentistry with personal treatment planning in Kyrenia, North Cyprus.">
