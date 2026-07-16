@@ -1,81 +1,59 @@
-# Temelci Dental — Full CMS Migration Plan
+## Amaç
 
-Bu iş tek turda güvenli şekilde bitmez. Mevcut tasarım/içerik bozulmadan, gerçek Supabase backend'e bağlı, uçtan uca çalışan bir CMS için **fazlı** ilerleyeceğim. Her faz kendi başına test edilebilir ve deploy edilebilir olacak. Her faz sonunda sana onay için döneceğim.
+Admin panelindeki Doctors, Blog Posts, Treatments, Before/After, Reviews, Research, FAQs listeleri şu an boş. Sitedeki mevcut statik içerikleri Supabase'e **birebir** taşıyıp admin'de görünür, editlenebilir ve silinebilir hâle getireceğim. Public site aynı içeriği DB'den okuyacak (yoksa mevcut statik fallback devam eder — hiçbir noktada site boşalmaz).
 
-## Genel Prensipler
+## Kapsam (Bu turda)
 
-- Mevcut public site tasarımı, route'ları, çevirileri, görselleri, slug'ları **korunacak** — sadece veri kaynağı statik dosyalardan Supabase'e taşınacak.
-- Her migration **idempotent** (yeniden çalıştırılabilir), her seed mevcut kaydı `ON CONFLICT` ile korur.
-- Public sayfalar önce statik fallback + Supabase okuma **hibrit** modda çalışacak; kayıt varsa DB'den, yoksa mevcut statik içerikten. Bu sayede hiçbir noktada site boşalmaz.
-- Uydurma içerik yok. Eksik çeviri → EN fallback + admin'de "translation incomplete" işareti.
-- Tüm tablolar RLS + explicit GRANT ile korunur. Anonymous sadece `published` içerik okur; `leads`/`xray_*` okuyamaz.
+Mevcut frontend içeriğini bire bir DB'ye seed'lemek + admin listelerinin bu kayıtları göstermesi + public sayfaların DB'den okuması.
 
-## Faz 0 — Denetim ve Temizlik (bu tur)
+### 1. İçerik Envanteri → Seed
 
-1. Mevcut auth bug'ının (rol yüklenmesi) tam kapandığını doğrula (Playwright ile `demo@temelci.com` login → `/admin` erişimi).
-2. Mevcut statik içerik envanterini çıkar: `src/pages/dental/*`, `src/i18n/translations.ts`, `BlogArticleData.tsx`, treatment/doctor/review dizileri. Her birinin nerede tanımlı olduğunu belgele.
-3. Mevcut Supabase şemasını (`treatments`, `doctors`, `posts`, `before_after`, `leads`, `xray_*`, `site_settings` + translation tabloları) mevcut kolonlarıyla listele → nelerin eksik olduğunu belirle.
-4. Çıktı: kısa envanter raporu + Faz 1 için delta migration taslağı.
+Statik dosyalardan çıkarılıp `INSERT ... ON CONFLICT DO NOTHING` ile tabloya yazılacak (tekrar çalıştırılabilir, mevcut kaydı bozmaz):
 
-## Faz 1 — Şema Tamamlama + Seed Altyapısı
+| İçerik | Kaynak dosya | Hedef tablo | Adet |
+|---|---|---|---|
+| Doktorlar | `src/pages/dental/AboutPage.tsx` (team array) | `doctors` (+ `doctor_translations` tr/en) | 4 |
+| Blog yazıları | `src/pages/dental/BlogArticleData.tsx` (ARTICLE_CONTENT) | `posts` (+ `post_translations` tr/en, gövde dahil) | 9 |
+| Tedaviler | `src/pages/dental/TreatmentsPage.tsx` + `TreatmentDetailPage.tsx` | `treatments` (+ `treatment_translations`) | mevcut kaç varsa (19'a kadar) |
+| Tedavi kategorileri | Yukarıdakinden türetilir | `treatment_categories` | 4 |
+| Before/After vakalar | `src/pages/dental/BeforeAfterPage.tsx` | `before_after` (+ `before_after_translations`) | mevcut adet |
+| Reviews | `src/pages/dental/ReviewsPage.tsx` | `reviews` (+ `review_translations`) | mevcut adet |
+| Research publications | `src/pages/dental/ResearchPage.tsx` | `research_publications` | mevcut adet |
+| FAQs | `translations.ts` (faq1..faq6) | `faqs` (+ translations) | 6 |
 
-- Eksik tablolar: `locales`, `treatment_categories`, `blog_categories`, `research_publications` (+translations), `reviews` (+translations), `faqs` (+translations), `navigation_items`, `page_sections`, `redirects`, `content_revisions`, `audit_logs`, `lead_notes`, `lead_status_history`.
-- Mevcut tablolara eksik kolonlar: `status` enum (`draft|in_review|scheduled|published|archived`), `sort_order`, `published_at`, `scheduled_at`, `deleted_at`, `created_by`, `updated_by`.
-- Roles: mevcut `app_role` enum'a `super_admin`, `editor`, `translator`, `lead_manager`, `viewer` ekle. `has_role` + yeni `has_any_role` helper.
-- RLS: her tablo için published-only anon SELECT, role-bazlı authenticated CRUD. Explicit GRANT'ler.
-- Idempotent seed migration (mevcut statik içerikten): 19 treatment + kategoriler, 5 doctor, 9 blog post (body dahil), 10 research publication, 29 before/after, 10 review, tüm FAQ'lar, site_settings, navigation.
+Her kayıt `status='published'`, `sort_order` orijinal sırayı korur, mevcut görsel URL'leri (asset importları) `photo`/`image_url` kolonlarına yazılır.
 
-## Faz 2 — Public Site'i Supabase'e Bağla (Hibrit)
+### 2. Admin Panelleri
 
-- Her public sayfa için React Query hook'ları (`useTreatments`, `useTreatment(slug)`, `useDoctors`, `usePosts`, `useResearch`, `useBeforeAfter`, `useReviews`, `useFaqs`, `useSiteSettings`).
-- Data yoksa mevcut statik içerik fallback — site asla boş görünmez.
-- Locale routing korunur; slug DB'den okunur, mevcut route yapısı bozulmaz.
-- Home/Treatments/Doctors/Blog/Research/Before-After/Reviews/Our Clinic/Dental Tourism/Contact sırayla bağlanır.
+Mevcut admin sayfaları (`DoctorsAdmin`, `PostsList`, `TreatmentsAdmin`, `BeforeAfterAdmin`) zaten Supabase'e bağlı — seed sonrası kayıtlar otomatik görünecek. Eksik olan sayfaları ekleyeceğim:
+- `ReviewsAdmin.tsx` — liste + create/edit/delete
+- `FaqsAdmin.tsx` — liste + create/edit/delete
+- `ResearchAdmin.tsx` — liste + create/edit/delete
+- Sidebar'a bu 3 giriş eklenir
 
-## Faz 3 — Admin CMS (Content CRUD)
+### 3. Public Site Hibrit Bağlama
 
-- Mevcut `/admin` layout üzerine kurulur (yeniden yazılmaz).
-- Her entity için: List (arama, filtre, bulk action, drag-drop sort), Editor (locale sekmeleri, draft/publish/schedule, revision history, preview link, SEO paneli, media picker).
-- TipTap editor mevcut; genişlet: image caption, embed, table, code, YouTube.
-- Auto-save (mevcut PostEditor'daki gibi) her editöre yayılır.
-- Media Library: bucket'lar arası, tag, alt text (locale), kopyala-URL, sil.
-- Translation dashboard: eksik çeviriler listesi, translator rolü sadece atanan locale'i düzenler.
+React Query hook'ları eklenecek: `useDoctors`, `usePosts`, `useTreatments`, `useBeforeAfter`, `useReviews`, `useResearch`, `useFaqs`. Her hook: DB'den `status='published'` kayıtları çeker, boş dönerse mevcut statik içerik fallback. Şu sayfalar bu hook'lara geçer: `AboutPage`, `BlogPage`, `BlogArticlePage`, `TreatmentsPage`, `TreatmentDetailPage`, `BeforeAfterPage`, `ReviewsPage`, `ResearchPage`, `HomePage` (FAQ + featured bölümleri).
 
-## Faz 4 — CRM (Leads + X-Ray Quotes)
+## Kapsam Dışı (Sonraki turda)
 
-- Leads: Kanban (`new → contacted → qualified → won → lost`), tablo görünümü toggle, timeline (notes + status history), WhatsApp/email tek tık, CSV export, source filtre, atama.
-- Bildirim: yeni lead → admin dashboard badge (Supabase Realtime).
-- X-Ray: mevcut annotator korunur; doctor listesinde "pending" default, mobil undo/redo büyütülür, patient shared link WhatsApp CTA güçlendirilir.
-
-## Faz 5 — Users & Roles + Ayarlar
-
-- Users admin: davet et, rol ata, locale ata (translator için), askıya al, sil.
-- Site Settings: brand, iletişim, çalışma saatleri, sosyal, GTM/GA, WhatsApp mesajları (locale bazlı), navigation editor, redirects, JSON-LD şablonları.
-- Audit log görünümü.
-
-## Faz 6 — SEO, Sitemap, Publish
-
-- Dinamik `sitemap.xml` (Edge Function veya build-time) — DB'deki published + slug'lardan üretilir, 8 dil × tüm entity'ler.
-- Per-route `<Helmet>` head (title, description, canonical, hreflang, og, JSON-LD).
-- `robots.txt` güncellenir; `redirects` tablosu 301 için (SPA router + hosting kuralları).
-- Rescan → SEO findings sıfırla.
-
-## Faz 7 — Uçtan Uca Test
-
-- Playwright: login → post yaz → publish → 8 dilde public'te gör → lead gönder → admin'de gör → x-ray upload → doctor quote → patient accept.
-- Console/network temiz. Lighthouse ≥ 90 (mobile).
+- Multi-locale editör sekmeleri (şu an tr+en seed'lenecek, diğer 5 dil EN fallback ile çalışır)
+- Kanban CRM, users admin, sitemap otomasyonu (Faz 4-6)
+- Revision history / audit log UI
 
 ## Teknik Notlar
 
-- Migration'lar `supabase/migrations/` altında versioned. Her CREATE TABLE → GRANT → RLS → POLICY sırası.
-- Public/protected ayrımı: anon = `status='published' AND deleted_at IS NULL AND (scheduled_at IS NULL OR scheduled_at <= now())`.
-- Reviser/publisher trigger'ları `updated_by = auth.uid()` set eder.
-- Realtime yalnızca `leads` ve `xray_requests` için.
+- Seed **tek bir `supabase--insert` çağrısı** ile — schema değişmediği için migration değil.
+- Görsel URL'leri: import edilmiş assetler için hashed build path bilinemez, o yüzden `/src/assets/xxx.jpg` referansı yerine `photo` kolonuna **existing asset yolu string** yazılır; frontend hook'u DB'den gelirse `<img src={row.photo}>` doğrudan render eder (assetler `/assets/` altına build edilecek şekilde `public/` referansına gerek yok — mevcut render zaten import yoluyla çalışıyor, hybrid hook DB kaydı yokken import edilmiş fallback'i döner).
+- FK yok — mevcut şema kullanılıyor; sadece INSERT.
+- Idempotent: her seed satırında `ON CONFLICT (slug) DO NOTHING` veya benzeri; tekrar çalıştırılabilir.
 
----
+## Doğrulama
 
-## Şimdi Senden
+1. Admin'de Doctors listesinde 4 doktor görünür, birini editleyip Save → yenile → değişiklik kalır.
+2. Admin'de Posts listesinde 9 makale görünür, biri "Published" durumda.
+3. Public `/en/about` sayfasında aynı 4 doktor DB'den render olur.
+4. Public `/en/blog` listesinde 9 makale DB'den render olur.
+5. Admin'de bir doktoru silince public `/en/about` sayfasından da kalkar.
 
-Bu 7 fazlık plan doğru mu? Onay verirsen **Faz 0 + Faz 1** ile başlıyorum (envanter + delta migration + idempotent seed). Bu iki fazın sonunda public site hâlâ mevcut halinde çalışır olacak ama artık DB'de tüm gerçek içerik durur. Sonra faz faz ilerleriz.
-
-Alternatif: "sadece şu faz(lar)ı yap" dersen ona göre daralttırım.
+Onaylarsan build mode'a geç, uygulayayım.

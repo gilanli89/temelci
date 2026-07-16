@@ -4,6 +4,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { QuoteButton } from '@/components/dental/QuoteButton';
 import { Award, GraduationCap, Globe, Heart, MapPin, Smile, Clock, Users } from 'lucide-react';
+import { useDoctorsFromDb } from '@/hooks/useDoctorsHybrid';
 import heroImg from '@/assets/hero-clinic.jpg';
 import photoNural from '@/assets/doctors/nural_temelci.jpg';
 import photoAli from '@/assets/doctors/ali_temelci.jpg';
@@ -14,6 +15,7 @@ import photoAnna from '@/assets/doctors/anna_zubtcovskaia.jpg';
 
 const doctors = [
   {
+    slug: 'nural-temelci',
     name: 'DT. Nural Temelci',
     title: { en: 'Founder & Aesthetic Dentist', tr: 'Kurucu & Estetik Diş Hekimi', el: 'Ιδρυτής & Αισθητικός Οδοντίατρος', ru: 'Основатель и Эстетический Стоматолог', ar: 'المؤسس وطبيب أسنان تجميلي', he: 'מייסד ורופא שיניים אסתטי', fa: 'بنیانگذار و دندانپزشک زیبایی', de: 'Gründer & Ästhetischer Zahnarzt' },
     experience: '36+',
@@ -26,6 +28,7 @@ const doctors = [
     universityLogo: 'istanbul',
   },
   {
+    slug: 'ali-temelci',
     name: 'DR. Ali Temelci',
     title: { en: 'Oral & Maxillofacial Surgeon', tr: 'Ağız, Diş ve Çene Cerrahisi Uzmanı', el: 'Στοματο-Γναθοπροσωπικός Χειρουργός', ru: 'Челюстно-Лицевой Хирург', ar: 'جراح الوجه والفكين', he: 'מנתח פה ולסת', fa: 'جراح دهان، فک و صورت', de: 'Mund-Kiefer-Gesichtschirurg' },
     experience: '8',
@@ -38,6 +41,7 @@ const doctors = [
     universityLogo: 'neu',
   },
   {
+    slug: 'rasih-denktas-celebi',
     name: 'DT. Rasih Denktaş Çelebi',
     title: { en: 'Senior Endodontist', tr: 'Kıdemli Endodonti Uzmanı', el: 'Ανώτερος Ενδοδοντολόγος', ru: 'Старший Эндодонтист', ar: 'أخصائي علاج جذور أقدم', he: 'אנדודונטיסט בכיר', fa: 'متخصص ارشد اندودنتی', de: 'Senior Endodontologe' },
     experience: '42',
@@ -50,6 +54,7 @@ const doctors = [
     universityLogo: 'hacettepe',
   },
   {
+    slug: 'serife-kole',
     name: 'DR. DT. Şerife Köle',
     title: { en: 'Prosthodontist', tr: 'Protetik Diş Tedavisi Uzmanı', el: 'Προσθετολόγος', ru: 'Стоматолог-Ортопед', ar: 'أخصائية تركيبات الأسنان', he: 'פרוסתודונטית', fa: 'متخصص پروتز دندان', de: 'Prothetik-Spezialistin' },
     experience: '8',
@@ -62,6 +67,7 @@ const doctors = [
     universityLogo: 'gazi',
   },
   {
+    slug: 'anna-zubtcovskaia-derya',
     name: 'DT. Anna Zubtcovskaia-Derya',
     title: { en: 'Endodontist & Preventive Dentist', tr: 'Endodonti & Koruyucu Diş Hekimi', el: 'Ενδοδοντολόγος & Προληπτική Οδοντιατρική', ru: 'Эндодонтист & Превентивный Стоматолог', ar: 'أخصائية علاج جذور وطب أسنان وقائي', he: 'אנדודונטיסטית ורפואת שיניים מונעת', fa: 'متخصص اندودنتی و دندانپزشکی پیشگیری', de: 'Endodontologin & Präventive Zahnärztin' },
     experience: '27+',
@@ -95,6 +101,33 @@ const UNIVERSITY_LOGOS: Record<string, { abbr: string; full: string; color: stri
 
 const AboutPage = () => {
   const { t, lang, localePath } = useLanguage();
+  const { data: dbDoctors } = useDoctorsFromDb();
+
+  // Merge: if DB has entries, filter static to only those in DB (respects deletions)
+  // and override name/title/bio/photo from DB. Localised fields (multi-lang title/bio)
+  // fall back to static when DB row exists but has only single-language data.
+  const dbBySlug = new Map((dbDoctors ?? []).map((d) => [d.slug, d]));
+  const doctorsToRender = (dbDoctors && dbDoctors.length > 0)
+    ? doctors
+        .filter((s) => dbBySlug.has(s.slug))
+        .map((s) => {
+          const db = dbBySlug.get(s.slug)!;
+          return {
+            ...s,
+            name: db.name || s.name,
+            photo: db.photo || s.photo,
+            // Only override localized title/bio for the CURRENT lang; keep other locales from static
+            title: { ...s.title, [lang]: db.title || s.title[lang] },
+            bio: { ...s.bio, [lang]: db.bio || s.bio[lang] },
+          };
+        })
+        .sort((a, b) => {
+          const ao = dbBySlug.get(a.slug)?.sort_order ?? 0;
+          const bo = dbBySlug.get(b.slug)?.sort_order ?? 0;
+          return ao - bo;
+        })
+    : doctors;
+
 
   return (
     <>
@@ -160,7 +193,7 @@ const AboutPage = () => {
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {doctors.map((doc, i) => (
+            {doctorsToRender.map((doc, i) => (
               <motion.div
                 key={i}
                 className="bg-card rounded-2xl border border-border overflow-hidden hover:shadow-lg transition-shadow"
