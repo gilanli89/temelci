@@ -3,44 +3,46 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { QuoteButton } from '@/components/dental/QuoteButton';
 import { Star } from 'lucide-react';
+import { useReviews, useSitePage, useSiteSettings } from '@/hooks/useCmsContent';
+import { useSEO } from '@/hooks/useSEO';
 
 const ReviewsPage = () => {
   const { t } = useLanguage();
+  const { data: dbReviews } = useReviews();
+  const { data: page } = useSitePage('reviews');
+  const { data: settings } = useSiteSettings();
 
-  const reviews = [
-    { name: 'Sarah M.', country: '🇬🇧 UK', text: 'Dr. Temelci transformed my smile completely. The Hollywood Smile treatment was painless and the results are stunning! I couldn\'t be happier with my new smile.', rating: 5 },
-    { name: 'Ahmed K.', country: '🇸🇦 Saudi Arabia', text: 'I traveled from Riyadh for dental implants. Best decision ever. Professional clinic, amazing results, and the VIP treatment was incredible.', rating: 5 },
-    { name: 'Hans W.', country: '🇩🇪 Germany', text: 'Incredible quality at a fraction of German prices. My zirconia crowns look perfectly natural. The whole team was professional and caring.', rating: 5 },
-    { name: 'Elena P.', country: '🇷🇺 Russia', text: 'Полностью довольна результатом. Виниры выглядят потрясающе. Доктор Темельджи — настоящий профессионал. Рекомендую всем!', rating: 5 },
-    { name: 'Maria G.', country: '🇬🇷 Greece', text: 'Εξαιρετική εμπειρία! Ο Δρ. Τεμελτζί είναι εξαιρετικός επαγγελματίας. Το αποτέλεσμα ξεπέρασε τις προσδοκίες μου.', rating: 5 },
-    { name: 'David L.', country: '🇮🇱 Israel', text: 'הטיפול היה מצוין. ד"ר טמלג\'י הוא רופא שיניים מעולה. התוצאות מדהימות והמחירים הרבה יותר טובים מישראל.', rating: 5 },
-    { name: 'Fatima A.', country: '🇦🇪 UAE', text: 'Amazing experience from start to finish. The clinic is modern, clean, and the staff speaks multiple languages. My smile has never looked better!', rating: 5 },
-    { name: 'Michael B.', country: '🇬🇧 UK', text: 'Had 20 veneers done and the result is absolutely perfect. The digital smile design was spot on. Worth every penny of the flight!', rating: 5 },
-    { name: 'Olga S.', country: '🇷🇺 Russia', text: 'Прилетела из Москвы специально для лечения. Клиника на высшем уровне, результат превзошёл все ожидания.', rating: 5 },
-    { name: 'Mehmet Y.', country: '🇹🇷 Turkey', text: 'Kıbrıs\'ın en iyi diş hekimi. Hollywood Smile yaptırdım, sonuç mükemmel. Herkese tavsiye ederim.', rating: 5 },
-  ];
+  useSEO({
+    title: page?.seo_title || 'Patient Reviews | Temelci Dental North Cyprus',
+    description: page?.seo_description || 'Read patient reviews of dental treatment, dental tourism and aftercare at Temelci Dental.',
+    canonical: 'https://temelcidentist.com/en/reviews',
+    ogImage: page?.og_image || undefined,
+  });
+
+  const reviews = (dbReviews || []).map(review => ({ name: review.patient_name, country: `${review.country_flag || ''} ${review.country || ''}`.trim(), text: review.content, rating: review.rating }));
+  const averageRating = reviews.length ? reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length : null;
 
   return (
     <>
       <section className="section-padding bg-secondary/30">
         <div className="container-dental text-center">
-          <h1 className="heading-display mb-4">{t.reviewsTitle}</h1>
-          <p className="text-body max-w-2xl mx-auto">{t.reviewsSubtitle}</p>
-          <div className="flex items-center justify-center gap-2 mt-6">
+          <h1 className="heading-display mb-4">{page?.hero_title || t.reviewsTitle}</h1>
+          <p className="text-body max-w-2xl mx-auto">{page?.hero_description || t.reviewsSubtitle}</p>
+          {averageRating !== null && <div className="flex items-center justify-center gap-2 mt-6">
             <div className="flex gap-0.5">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} className="h-6 w-6 fill-gold text-gold" />
               ))}
             </div>
-            <span className="text-lg font-bold">4.9/5</span>
-            <span className="text-muted-foreground text-sm">Google Reviews</span>
-          </div>
+            <span className="text-lg font-bold">{averageRating.toFixed(1)}/5</span>
+            <span className="text-muted-foreground text-sm">from {reviews.length} published {reviews.length === 1 ? 'review' : 'reviews'}</span>
+          </div>}
         </div>
       </section>
 
       <section className="section-padding bg-background">
         <div className="container-dental">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {reviews.length === 0 ? <div className="rounded-2xl border bg-card p-10 text-center"><h2 className="font-display text-2xl font-semibold">Verified reviews are being prepared</h2><p className="text-muted-foreground mt-2">Reviews will appear here after their source and publication permission have been checked.</p></div> : <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {reviews.map((r, i) => (
               <motion.div key={i} className="bg-card rounded-2xl p-6 border border-border" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}>
                 <div className="flex gap-1 mb-3">
@@ -58,21 +60,21 @@ const ReviewsPage = () => {
                 </div>
               </motion.div>
             ))}
-          </div>
+          </div>}
         </div>
       </section>
 
-      {/* Google Maps Reviews Embed */}
-      <section className="section-padding bg-secondary/30">
+      {/* Optional location/review profile configured by the clinic owner. */}
+      {settings?.maps_embed_url && <section className="section-padding bg-secondary/30">
         <div className="container-dental max-w-4xl text-center">
           <h2 className="heading-section mb-6">{t.findOnMaps}</h2>
           <div className="rounded-2xl overflow-hidden border border-border">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3260.5!2d33.36!3d35.19!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzXCsDExJzI0LjAiTiAzM8KwMjEnMzYuMCJF!5e0!3m2!1sen!2s!4v1"
+              src={settings.maps_embed_url}
               width="100%" height="350" style={{ border: 0 }} allowFullScreen loading="lazy" title="Google Maps" />
           </div>
         </div>
-      </section>
+      </section>}
 
       <section className="section-padding bg-primary text-center">
         <div className="container-dental">
@@ -80,6 +82,13 @@ const ReviewsPage = () => {
           <WhatsAppButton text={t.freeConsultation} variant="hero" />
         </div>
       </section>
+      {reviews.length > 0 && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Dentist',
+        name: 'Temelci Dental Clinic',
+        url: 'https://temelcidentist.com/en',
+        review: reviews.map(review => ({ '@type': 'Review', author: { '@type': 'Person', name: review.name }, reviewRating: { '@type': 'Rating', ratingValue: review.rating, bestRating: 5 }, reviewBody: review.text })),
+      }) }} />}
     </>
   );
 };

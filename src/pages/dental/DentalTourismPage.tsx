@@ -9,6 +9,7 @@ import heroImg from '@/assets/hero-clinic.jpg';
 import hollywoodImg from '@/assets/hollywood-smile.jpg';
 import implantImg from '@/assets/dental-implant.jpg';
 import veneersImg from '@/assets/veneers.jpg';
+import { useSEO } from '@/hooks/useSEO';
 
 // ── copy ──────────────────────────────────────────────────────────────────────
 const copy = {
@@ -174,6 +175,7 @@ const FAQS = [
 
 // ── component ──────────────────────────────────────────────────────────────────
 export default function DentalTourismPage() {
+  useSEO({ title: 'Dental Tourism in North Cyprus | Temelci Dental', description: 'Plan dental treatment in Kyrenia with clear timelines, travel guidance and personal patient coordination.', canonical: 'https://temelcidentist.com/en/dental-tourism', ogImage: heroImg });
   const { lang, t, localePath } = useLanguage();
   const l = lang === 'tr' ? 'tr' : 'en';
   const c = copy[l];

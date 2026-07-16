@@ -1,5 +1,6 @@
 import { MessageCircle } from 'lucide-react';
 import { forwardRef } from 'react';
+import { useSiteSettings } from '@/hooks/useCmsContent';
 
 const WHATSAPP_NUMBER = '905338229445';
 
@@ -12,7 +13,9 @@ type WhatsAppButtonProps = {
 
 export const WhatsAppButton = forwardRef<HTMLAnchorElement, WhatsAppButtonProps>(
   ({ text, message = 'Hello, I would like to get information about dental treatments.', variant = 'default', className = '' }, ref) => {
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    const { data: settings } = useSiteSettings();
+    const number = (settings?.whatsapp || WHATSAPP_NUMBER).replace(/\D/g, '');
+    const url = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 
     if (variant === 'sticky') {
       return (

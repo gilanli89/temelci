@@ -11,6 +11,7 @@ import room4 from '@/assets/clinic/clinic_room4.jpg';
 import ctScan from '@/assets/clinic/clinic_ct.jpg';
 import heroImg from '@/assets/hero-clinic.jpg';
 import doctorPortrait from '@/assets/doctor-portrait.jpg';
+import { useSEO } from '@/hooks/useSEO';
 
 const GALLERY = [
   { src: room1, label: { en: 'Treatment Suite 1', tr: 'Muayene Odası 1', el: 'Αίθουσα Θεραπείας 1', ru: 'Кабинет 1', ar: 'غرفة العلاج 1', he: 'חדר טיפולים 1', de: 'Behandlungszimmer 1', fa: 'اتاق درمان ۱' } },
@@ -39,6 +40,7 @@ const STATS = [
 type LangKey = 'en' | 'tr' | 'el' | 'ru' | 'ar' | 'he' | 'de' | 'fa';
 
 const OurClinicPage = () => {
+  useSEO({ title: 'Our Dental Clinic in Kyrenia | Temelci Dental', description: 'Explore Temelci Dental Clinic, its treatment rooms, digital imaging and in-house clinical facilities in Kyrenia.', canonical: 'https://temelcidentist.com/en/our-clinic', ogImage: heroImg });
   const { t, lang, localePath } = useLanguage();
   const l = (lang as LangKey) in GALLERY[0].label ? (lang as LangKey) : 'en';
   const [lightbox, setLightbox] = useState<number | null>(null);

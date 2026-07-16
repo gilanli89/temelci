@@ -5,8 +5,9 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { Upload, Copy, Trash2 } from 'lucide-react';
 import { uploadToBucket } from '@/lib/mediaUpload';
+import type { Tables } from '@/integrations/supabase/types';
 
-interface Item { id: string; url: string; path: string; alt: string | null; folder: string | null; created_at: string; size_bytes?: number | null; }
+type Item = Tables<'media'>;
 
 export default function MediaLibrary() {
   const [items, setItems] = useState<Item[]>([]);
@@ -14,7 +15,7 @@ export default function MediaLibrary() {
 
   async function load() {
     const { data } = await supabase.from('media').select('*').order('created_at', { ascending: false }).limit(200);
-    setItems((data || []) as any);
+    setItems(data || []);
   }
   useEffect(() => { load(); }, []);
 
@@ -23,8 +24,9 @@ export default function MediaLibrary() {
     for (const f of files) {
       try {
         const { url, path } = await uploadToBucket('media', f, 'library');
-        await supabase.from('media').insert({ url, alt: f.name, folder: 'library', size_bytes: f.size, mime_type: f.type, path } as any);
-      } catch (err) { toast.error(`Upload failed: ${f.name}`); }
+        const { error } = await supabase.from('media').insert({ url, alt: f.name, folder: 'library', size_bytes: f.size, mime_type: f.type, path });
+        if (error) throw error;
+      } catch (error) { toast.error(`${f.name}: ${error instanceof Error ? error.message : 'upload failed'}`); }
     }
     toast.success(`${files.length} file(s) uploaded`);
     if (fileRef.current) fileRef.current.value = '';
@@ -33,7 +35,11 @@ export default function MediaLibrary() {
 
   async function del(item: Item) {
     if (!confirm('Delete this file?')) return;
-    await supabase.from('media').delete().eq('id', item.id);
+    const { error: storageError } = await supabase.storage.from('media').remove([item.path]);
+    if (storageError) return toast.error(storageError.message);
+    const { error } = await supabase.from('media').delete().eq('id', item.id);
+    if (error) return toast.error(error.message);
+    toast.success('File deleted');
     load();
   }
 
@@ -43,7 +49,7 @@ export default function MediaLibrary() {
         <h1 className="font-display text-2xl font-bold">Media Library</h1>
         <label className="inline-flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-md cursor-pointer hover:opacity-90">
           <Upload className="w-4 h-4" /> Upload files
-          <input ref={fileRef} type="file" multiple accept="image/*,video/*,application/pdf" className="hidden" onChange={upload} />
+          <input ref={fileRef} type="file" multiple accept="image/jpeg,image/png,image/webp,image/avif" className="hidden" onChange={upload} />
         </label>
       </div>
       <div className="grid gap-3 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">

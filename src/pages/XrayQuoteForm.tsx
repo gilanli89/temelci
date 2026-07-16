@@ -30,9 +30,9 @@ export default function XrayQuoteForm() {
     if (!file) { toast.error('Please attach your X-ray image'); return; }
     setSubmitting(true);
     try {
-      const { url } = await uploadToBucket('xrays', file, 'requests');
+      const { path } = await uploadToBucket('xrays', file, 'requests');
       const { error } = await supabase.from('xray_requests').insert({
-        ...form, xray_image_url: url, status: 'new',
+        ...form, xray_image_url: path, status: 'new',
       });
       if (error) throw error;
       setDone(true);

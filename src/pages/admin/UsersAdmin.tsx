@@ -4,7 +4,10 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { useAdminAuth } from '@/lib/adminAuth';
+import { useAdminAuth, type Role } from '@/lib/adminAuth';
+
+type AssignableRole = Exclude<Role, null>;
+const ASSIGNABLE_ROLES: AssignableRole[] = ['super_admin', 'admin', 'editor', 'doctor', 'lead_manager', 'viewer'];
 
 export default function UsersAdmin() {
   const [rows, setRows] = useState<any[]>([]);
@@ -24,7 +27,7 @@ export default function UsersAdmin() {
   }
   useEffect(() => { load(); }, []);
 
-  async function setRole(userId: string, role: 'admin' | 'doctor') {
+  async function setRole(userId: string, role: AssignableRole) {
     await supabase.from('user_roles').delete().eq('user_id', userId);
     const { error } = await supabase.from('user_roles').insert({ user_id: userId, role });
     if (error) toast.error(error.message); else { toast.success('Role updated'); load(); }
@@ -34,7 +37,7 @@ export default function UsersAdmin() {
     <div>
       <h1 className="font-display text-2xl font-bold mb-6">Users & Roles</h1>
       <p className="text-sm text-muted-foreground mb-4">
-        New accounts can register from the login page. Assign roles here. Admins have full CMS access, doctors can only review X-ray requests.
+        Invite named users from Supabase Authentication, then assign the minimum role they need here. Public self-registration is disabled.
       </p>
       <Card className="divide-y">
         {rows.length === 0 && <div className="p-6 text-center text-muted-foreground text-sm">No users yet.</div>}
@@ -49,11 +52,10 @@ export default function UsersAdmin() {
               </div>
             </div>
             {r.id !== me?.id && (
-              <Select value={r.roles[0] || ''} onValueChange={v => setRole(r.id, v as any)}>
-                <SelectTrigger className="w-32"><SelectValue placeholder="Assign…" /></SelectTrigger>
+              <Select value={r.roles[0] || ''} onValueChange={v => setRole(r.id, v as AssignableRole)}>
+                <SelectTrigger className="w-40"><SelectValue placeholder="Assign…" /></SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="admin">Admin</SelectItem>
-                  <SelectItem value="doctor">Doctor</SelectItem>
+                  {ASSIGNABLE_ROLES.map(role => <SelectItem key={role} value={role}>{role.replaceAll('_', ' ')}</SelectItem>)}
                 </SelectContent>
               </Select>
             )}

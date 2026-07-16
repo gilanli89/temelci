@@ -6,6 +6,7 @@ import { ChevronLeft, Clock, User, Calendar, Tag } from 'lucide-react';
 import { ARTICLE_CONTENT } from './BlogArticleData';
 import { usePostFromDb } from '@/hooks/usePostsHybrid';
 import implantImg from '@/assets/dental-implant.jpg';
+import { useSEO } from '@/hooks/useSEO';
 
 export default function BlogArticlePage() {
   const { slug } = useParams<{ slug: string }>();
@@ -15,6 +16,9 @@ export default function BlogArticlePage() {
 
   const staticArticle = slug ? ARTICLE_CONTENT[slug] : null;
   const article = staticArticle;
+  const seoTitle = dbPost?.seo_title || article?.seoTitle || dbPost?.title || article?.title?.en || 'Dental guide | Temelci Dental';
+  const seoDescription = dbPost?.seo_description || article?.seoDescription || dbPost?.excerpt || article?.excerpt?.en || 'Dental information from Temelci Dental Clinic.';
+  useSEO({ title: seoTitle, description: seoDescription, canonical: `https://temelcidentist.com/en/blog/${slug || ''}`, ogImage: dbPost?.cover_image || dbPost?.featured_image || article?.img, type: 'article', robots: !isLoading && !dbPost && !article ? 'noindex,follow' : undefined, publishedTime: dbPost?.published_at || article?.date, modifiedTime: dbPost?.updated_at });
 
   // If we have neither DB post nor static article and finished loading, show 404
   if (!isLoading && !dbPost && !article) {

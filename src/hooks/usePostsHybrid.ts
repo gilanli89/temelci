@@ -25,6 +25,7 @@ export function usePostsFromDb() {
       const { data, error } = await supabase
         .from('posts')
         .select('id,slug,title,excerpt,content,category,cover_image,featured_image,seo_title,seo_description,keywords,tags,published_at,language')
+        .eq('language', 'en')
         .eq('status', 'published')
         .is('deleted_at', null)
         .order('published_at', { ascending: false });
@@ -45,6 +46,7 @@ export function usePostFromDb(slug: string | undefined) {
         .from('posts')
         .select('id,slug,title,excerpt,content,category,cover_image,featured_image,seo_title,seo_description,keywords,tags,published_at,language')
         .eq('slug', slug)
+        .eq('language', 'en')
         .eq('status', 'published')
         .is('deleted_at', null)
         .maybeSingle();

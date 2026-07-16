@@ -10,6 +10,7 @@ export type DoctorRow = {
   photo: string | null;
   specialties: string[] | null;
   sort_order: number | null;
+  content_status: 'draft' | 'in_review' | 'scheduled' | 'published' | 'archived';
 };
 
 export function useDoctorsFromDb() {
@@ -18,8 +19,9 @@ export function useDoctorsFromDb() {
     queryFn: async (): Promise<DoctorRow[]> => {
       const { data, error } = await supabase
         .from('doctors')
-        .select('id,slug,name,title,bio,photo,specialties,sort_order')
+        .select('id,slug,name,title,bio,photo,specialties,sort_order,content_status')
         .eq('active', true)
+        .eq('content_status', 'published')
         .is('deleted_at', null)
         .order('sort_order', { ascending: true });
       if (error) throw error;

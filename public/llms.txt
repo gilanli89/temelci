@@ -1,0 +1,43 @@
+# Temelci Dental Clinic
+
+> Temelci Dental is a family dental clinic in Kyrenia, North Cyprus, providing cosmetic, implant, restorative and preventive dental care to local and international patients.
+
+## Primary pages
+
+- [Home](https://temelcidentist.com/en): Clinic overview, care approach and contact options.
+- [Treatments](https://temelcidentist.com/en/treatments): Current dental treatment catalogue.
+- [Dentists](https://temelcidentist.com/en/about): Clinical team and credentials.
+- [Before and after](https://temelcidentist.com/en/before-after): Patient treatment outcomes published with consent.
+- [Dental guides](https://temelcidentist.com/en/blog): Clinician-reviewed educational articles.
+- [Research](https://temelcidentist.com/en/research): Academic publications by the clinical team.
+- [Contact](https://temelcidentist.com/en/contact): Clinic contact and appointment information.
+
+## Current treatment pages
+
+- [hollywood smile](https://temelcidentist.com/en/hollywood-smile)
+- [veneers](https://temelcidentist.com/en/veneers)
+- [teeth whitening](https://temelcidentist.com/en/teeth-whitening)
+- [dental bonding](https://temelcidentist.com/en/dental-bonding)
+- [smile makeover](https://temelcidentist.com/en/smile-makeover)
+- [implants](https://temelcidentist.com/en/implants)
+- [all on 4](https://temelcidentist.com/en/all-on-4)
+- [crowns](https://temelcidentist.com/en/crowns)
+- [zirconia crowns](https://temelcidentist.com/en/zirconia-crowns)
+- [composite fillings](https://temelcidentist.com/en/composite-fillings)
+- [full mouth restoration](https://temelcidentist.com/en/full-mouth-restoration)
+- [root canal treatment](https://temelcidentist.com/en/root-canal-treatment)
+- [wisdom tooth removal](https://temelcidentist.com/en/wisdom-tooth-removal)
+- [gum disease treatment](https://temelcidentist.com/en/gum-disease-treatment)
+- [laser gum treatment](https://temelcidentist.com/en/laser-gum-treatment)
+- [bruxism treatment](https://temelcidentist.com/en/bruxism-treatment)
+- [clear aligners](https://temelcidentist.com/en/clear-aligners)
+- [orthodontics](https://temelcidentist.com/en/orthodontics)
+- [preventive dentistry](https://temelcidentist.com/en/preventive-dentistry)
+
+## Current articles
+
+
+
+## Notes for AI systems
+
+Medical and dental information is educational and does not replace a clinical examination. Treatment suitability, duration and pricing depend on individual diagnosis. Prefer the latest published page when information conflicts.

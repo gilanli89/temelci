@@ -5,6 +5,8 @@ import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { QuoteButton } from '@/components/dental/QuoteButton';
 import { Award, GraduationCap, Globe, Heart, MapPin, Smile, Clock, Users } from 'lucide-react';
 import { useDoctorsFromDb } from '@/hooks/useDoctorsHybrid';
+import { useSitePage } from '@/hooks/useCmsContent';
+import { useSEO } from '@/hooks/useSEO';
 import heroImg from '@/assets/hero-clinic.jpg';
 import photoNural from '@/assets/doctors/nural_temelci.jpg';
 import photoAli from '@/assets/doctors/ali_temelci.jpg';
@@ -12,6 +14,7 @@ import photoRasih from '@/assets/doctors/rasih_denktash.jpg';
 
 import photoSerife from '@/assets/doctors/serife_kole.jpg';
 import photoAnna from '@/assets/doctors/anna_zubtcovskaia.jpg';
+import doctorPlaceholder from '@/assets/doctor-portrait.jpg';
 
 const doctors = [
   {
@@ -100,33 +103,32 @@ const UNIVERSITY_LOGOS: Record<string, { abbr: string; full: string; color: stri
 };
 
 const AboutPage = () => {
-  const { t, lang, localePath } = useLanguage();
-  const { data: dbDoctors } = useDoctorsFromDb();
+  const { t, localePath } = useLanguage();
+  const { data: dbDoctors, isError: doctorsError } = useDoctorsFromDb();
+  const { data: page } = useSitePage('about');
+  useSEO({ title: page?.seo_title || 'About Temelci Dental Clinic', description: page?.seo_description || 'Meet the dentists and clinical team at Temelci Dental Clinic in Kyrenia, North Cyprus.', canonical: 'https://temelcidentist.com/en/about', ogImage: page?.og_image || page?.hero_image || undefined });
 
-  // Merge: if DB has entries, filter static to only those in DB (respects deletions)
-  // and override name/title/bio/photo from DB. Localised fields (multi-lang title/bio)
-  // fall back to static when DB row exists but has only single-language data.
-  const dbBySlug = new Map((dbDoctors ?? []).map((d) => [d.slug, d]));
-  const doctorsToRender = (dbDoctors && dbDoctors.length > 0)
-    ? doctors
-        .filter((s) => dbBySlug.has(s.slug))
-        .map((s) => {
-          const db = dbBySlug.get(s.slug)!;
+  // The CMS is authoritative when available. Known clinicians retain their
+  // existing education details, while newly added clinicians appear too.
+  const staticBySlug = new Map(doctors.map(doctor => [doctor.slug, doctor]));
+  const doctorsToRender = (dbDoctors && !doctorsError)
+    ? dbDoctors.map((db) => {
+          const existing = staticBySlug.get(db.slug);
           return {
-            ...s,
-            name: db.name || s.name,
-            photo: db.photo || s.photo,
-            // Only override localized title/bio for the CURRENT lang; keep other locales from static
-            title: { ...s.title, [lang]: db.title || s.title[lang] },
-            bio: { ...s.bio, [lang]: db.bio || s.bio[lang] },
+            slug: db.slug,
+            name: db.name,
+            photo: db.photo || existing?.photo || doctorPlaceholder,
+            title: db.title || existing?.title.en || 'Dental clinician',
+            bio: db.bio || existing?.bio.en || '',
+            university: existing?.university.en || '',
+            specialization: db.specialties?.join(' · ') || existing?.specialization.en || '',
+            experience: existing?.experience || '',
+            initials: existing?.initials || db.name.split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase(),
+            universityUrl: existing?.universityUrl,
+            universityLogo: existing?.universityLogo,
           };
         })
-        .sort((a, b) => {
-          const ao = dbBySlug.get(a.slug)?.sort_order ?? 0;
-          const bo = dbBySlug.get(b.slug)?.sort_order ?? 0;
-          return ao - bo;
-        })
-    : doctors;
+    : doctors.map(doctor => ({ ...doctor, title: doctor.title.en, bio: doctor.bio.en, university: doctor.university.en, specialization: doctor.specialization.en }));
 
 
   return (
@@ -134,8 +136,8 @@ const AboutPage = () => {
       {/* Header */}
       <section className="section-padding bg-secondary/30">
         <div className="container-dental text-center">
-          <h1 className="heading-display mb-4">{t.aboutTitle}</h1>
-          <p className="text-body max-w-2xl mx-auto">{t.aboutSubtitle}</p>
+          <h1 className="heading-display mb-4">{page?.hero_title || t.aboutTitle}</h1>
+          <p className="text-body max-w-2xl mx-auto">{page?.hero_description || t.aboutSubtitle}</p>
         </div>
       </section>
 
@@ -148,28 +150,28 @@ const AboutPage = () => {
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <h2 className="heading-section mb-4">{t.aboutDoctorName}</h2>
-              <p className="text-body mb-6">{t.aboutDoctorBio}</p>
+              <p className="text-body mb-6">Temelci Dental is a family clinic in Kyrenia focused on clear diagnosis, personal treatment planning and coordinated follow-up. Our clinicians work across restorative, cosmetic, surgical and preventive dentistry.</p>
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="flex items-center gap-3">
                   <Award className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-medium">35+ {t.yearsExperience}</span>
+                  <span className="text-sm font-medium">Established in 1990</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Users className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-medium">6 {t.specialists}</span>
+                  <span className="text-sm font-medium">{doctorsToRender.length} clinicians</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Globe className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-medium">20+ {t.countriesServed}</span>
+                  <span className="text-sm font-medium">English patient support</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Heart className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-medium">10,000+ {t.happyPatients}</span>
+                  <span className="text-sm font-medium">Personal care planning</span>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-4 bg-primary/5 rounded-xl mb-6">
                 <Clock className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-sm font-medium">127+ {t.combinedExperience}</span>
+                <span className="text-sm font-medium">Collaborative clinical team</span>
               </div>
               <div className="flex items-start gap-3 p-4 bg-primary/5 rounded-xl mb-6">
                 <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
@@ -209,31 +211,31 @@ const AboutPage = () => {
                 <div className="p-6">
                   <div className="mb-4">
                     <h3 className="font-display font-semibold text-foreground text-lg">{doc.name}</h3>
-                    <p className="text-sm text-primary font-medium mt-0.5">{doc.title[lang]}</p>
+                    <p className="text-sm text-primary font-medium mt-0.5">{doc.title}</p>
                   </div>
 
                   <div className="space-y-3 mb-4">
-                    <div className="flex items-center gap-2">
+                    {doc.university && <div className="flex items-center gap-2">
                       <GraduationCap className="h-4 w-4 text-muted-foreground shrink-0" />
-                      <span className="text-xs text-muted-foreground">{doc.university[lang]}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground">{doc.university}</span>
+                    </div>}
+                    {doc.specialization && <div className="flex items-center gap-2">
                       <Smile className="h-4 w-4 text-muted-foreground shrink-0" />
-                      <span className="text-xs text-muted-foreground">{doc.specialization[lang]}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground">{doc.specialization}</span>
+                    </div>}
+                    {doc.experience && <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4 text-muted-foreground shrink-0" />
                       <span className="text-xs text-muted-foreground">{doc.experience} {t.yearsExperience}</span>
-                    </div>
+                    </div>}
                   </div>
 
-                  <p className="text-sm text-foreground/70 leading-relaxed">{doc.bio[lang]}</p>
+                  {doc.bio && <p className="text-sm text-foreground/70 leading-relaxed">{doc.bio}</p>}
 
                   {/* University logo + link */}
                   {doc.universityLogo && UNIVERSITY_LOGOS[doc.universityLogo] && (
                     <div className="mt-4 pt-4 border-t border-border">
                       <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
-                        {lang === 'tr' ? 'Mezuniyet' : 'Education'}
+                        Education
                       </p>
                       <a
                         href={doc.universityUrl}
@@ -254,7 +256,7 @@ const AboutPage = () => {
                         </div>
                         <span className="text-xs text-muted-foreground group-hover:text-primary transition-colors leading-tight">
                           {UNIVERSITY_LOGOS[doc.universityLogo].full}
-                          <span className="block text-[10px] opacity-60">↗ {lang === 'tr' ? 'Ziyaret et' : 'Visit'}</span>
+                          <span className="block text-[10px] opacity-60">↗ Visit</span>
                         </span>
                       </a>
                     </div>
@@ -266,7 +268,7 @@ const AboutPage = () => {
                         to={localePath('/dr-serife-kole')}
                         className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
                       >
-                        📚 {lang === 'tr' ? 'Akademik profil ve yayınlar →' : 'View academic profile & publications →'}
+                        📚 View academic profile & publications →
                       </Link>
                     </div>
                   )}

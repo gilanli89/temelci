@@ -13,7 +13,7 @@ interface Post {
   published: boolean; created_at: string; excerpt: string | null;
 }
 
-const LANGS = ['all', 'en', 'tr', 'el', 'ru', 'ar', 'he', 'de'];
+const LANGS = ['all', 'en'];
 
 export default function PostsList() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -27,6 +27,8 @@ export default function PostsList() {
     const { data } = await supabase
       .from('posts')
       .select('id,title,slug,language,published,created_at,excerpt')
+      .eq('language', 'en')
+      .is('deleted_at', null)
       .order('created_at', { ascending: false });
     setPosts(data || []);
     setLoading(false);
@@ -35,7 +37,7 @@ export default function PostsList() {
 
   async function del(id: string, title: string) {
     if (!confirm(`Delete "${title}"?`)) return;
-    const { error } = await supabase.from('posts').delete().eq('id', id);
+    const { error } = await supabase.from('posts').update({ deleted_at: new Date().toISOString(), published: false, status: 'draft', content_status: 'archived' }).eq('id', id);
     if (error) toast.error(error.message);
     else { toast.success('Deleted'); load(); }
   }
@@ -45,6 +47,7 @@ export default function PostsList() {
     const { error } = await supabase.from('posts').update({
       published: next,
       status: next ? 'published' : 'draft',
+      content_status: next ? 'published' : 'draft',
       published_at: next ? new Date().toISOString() : null,
     }).eq('id', p.id);
     if (error) toast.error(error.message);

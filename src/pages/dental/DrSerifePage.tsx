@@ -4,6 +4,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { QuoteButton } from '@/components/dental/QuoteButton';
 import { BookOpen, Award, GraduationCap, Globe, ExternalLink, FlaskConical } from 'lucide-react';
+import { useSEO } from '@/hooks/useSEO';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const _unused_motion = motion;
@@ -127,6 +128,7 @@ const typeConfig: Record<string, { label: string; labelTr: string; color: string
 };
 
 const DrSerifePage = () => {
+  useSEO({ title: 'Dr. Şerife Köle | Prosthodontist at Temelci Dental', description: 'Clinical profile, education and academic publications of prosthodontist Dr. Şerife Köle.', canonical: 'https://temelcidentist.com/en/dr-serife-kole' });
   const { t, lang, localePath } = useLanguage();
   const isTr = lang === 'tr';
 

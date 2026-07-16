@@ -6,18 +6,12 @@ import { Card } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { TipTapEditor } from '@/components/admin/TipTapEditor';
 import { SeoScore, slugify } from '@/components/admin/SeoScore';
 import { useAdminAuth } from '@/lib/adminAuth';
 import { uploadToBucket } from '@/lib/mediaUpload';
 import { toast } from 'sonner';
 import { Save, ArrowLeft, Upload, ExternalLink, Eye, EyeOff, CheckCircle2, Loader2 } from 'lucide-react';
-
-const LANGS = [
-  { c: 'en', l: 'English' }, { c: 'tr', l: 'Türkçe' }, { c: 'el', l: 'Ελληνικά' },
-  { c: 'ru', l: 'Русский' }, { c: 'ar', l: 'العربية' }, { c: 'he', l: 'עברית' }, { c: 'de', l: 'Deutsch' },
-];
 
 export default function PostEditor() {
   const { id } = useParams();
@@ -33,7 +27,7 @@ export default function PostEditor() {
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
   const [slugTouched, setSlugTouched] = useState(false);
-  const [language, setLanguage] = useState('en');
+  const language = 'en';
   const [excerpt, setExcerpt] = useState('');
   const [content, setContent] = useState('');
   const [coverImage, setCoverImage] = useState('');
@@ -48,7 +42,7 @@ export default function PostEditor() {
     supabase.from('posts').select('*').eq('id', id!).maybeSingle().then(({ data, error }) => {
       if (error || !data) { toast.error('Post not found'); nav('/admin/posts'); return; }
       setTitle(data.title); setSlug(data.slug); setSlugTouched(true);
-      setLanguage(data.language); setExcerpt(data.excerpt || '');
+      setExcerpt(data.excerpt || '');
       setContent(data.content || ''); setCoverImage(data.cover_image || '');
       setSeoTitle(data.seo_title || ''); setSeoDescription(data.seo_description || '');
       setFocusKeyword(data.focus_keyword || '');
@@ -89,12 +83,13 @@ export default function PostEditor() {
     setSaving(true);
     const nextPublished = publish ?? published;
     const payload = {
-      title, slug: finalSlug, language, excerpt, content,
+      title, slug: finalSlug, language: 'en', excerpt, content,
       cover_image: coverImage || null,
       seo_title: seoTitle || title, seo_description: seoDescription, focus_keyword: focusKeyword,
       keywords: keywordsText.split(',').map(k => k.trim()).filter(Boolean),
       published: nextPublished,
       status: nextPublished ? 'published' : 'draft',
+      content_status: nextPublished ? 'published' : 'draft',
       published_at: nextPublished ? new Date().toISOString() : null,
       author_id: user?.id,
     };
@@ -180,10 +175,7 @@ export default function PostEditor() {
               </div>
               <div>
                 <Label>Language</Label>
-                <Select value={language} onValueChange={setLanguage}>
-                  <SelectTrigger><SelectValue /></SelectTrigger>
-                  <SelectContent>{LANGS.map(l => <SelectItem key={l.c} value={l.c}>{l.l}</SelectItem>)}</SelectContent>
-                </Select>
+                <Input value="English" disabled />
               </div>
             </div>
             <div>

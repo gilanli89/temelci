@@ -1,5 +1,7 @@
 User-agent: *
 Allow: /
-Disallow: /landing/
+Disallow: /admin/
+Disallow: /quote/
+Disallow: /xray-quote
 
 Sitemap: https://temelcidentist.com/sitemap.xml
