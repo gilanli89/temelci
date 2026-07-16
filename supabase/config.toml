@@ -1,4 +1,28 @@
-project_id = "jaoswtwmftesqrwsojus"
+project_id = "zxmhbbcutyapmmuowpmt"
+
+[auth]
+site_url = "https://temelcidentist.com"
+additional_redirect_urls = ["https://temelcidentist.com/admin/login?mode=reset"]
+enable_signup = false
+enable_anonymous_sign_ins = false
+minimum_password_length = 10
+password_requirements = "lower_upper_letters_digits_symbols"
+
+[auth.email]
+enable_signup = false
+double_confirm_changes = true
+enable_confirmations = true
+secure_password_change = true
+max_frequency = "1m"
+otp_length = 8
+otp_expiry = 3600
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+[storage.vector]
+enabled = false
 
 [functions.xray-plan]
 verify_jwt = false
