@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { ACTIVE_LANGUAGES, isActiveLanguage, localizedPathFor, useOptionalLanguage } from '@/i18n/LanguageContext';
 
 interface SEOProps {
   title: string;
@@ -22,23 +23,41 @@ const setMeta = (selector: string, attribute: 'name' | 'property', key: string, 
   element.content = content;
 };
 export const useSEO = ({ title, description, canonical, ogImage, ogImageAlt, type = 'website', robots = 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1', publishedTime, modifiedTime }: SEOProps) => {
+  const languageContext = useOptionalLanguage();
+  const routeLanguage = typeof window === 'undefined' ? undefined : window.location.pathname.split('/').filter(Boolean)[0];
+  const lang = languageContext?.lang || (isActiveLanguage(routeLanguage) ? routeLanguage : 'en');
+  const isRtl = languageContext?.isRtl || lang === 'he';
+
   useEffect(() => {
-    document.documentElement.lang = 'en';
-    document.documentElement.dir = 'ltr';
+    const firstSegment = window.location.pathname.split('/').filter(Boolean)[1] || '';
+    const indexableLocalizedSegments = {
+      de: new Set(['', 'behandlungen', 'blog']),
+      tr: new Set(['', 'tedaviler', 'blog']),
+      he: new Set(['', 'tipulim', 'blog']),
+      ru: new Set(['', 'lechenie', 'blog']),
+    } as const;
+    const localizedContentReady = lang === 'en' || indexableLocalizedSegments[lang]?.has(firstSegment);
+    const effectiveRobots = localizedContentReady ? robots : 'noindex,follow';
+    document.documentElement.lang = lang;
+    document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
     document.title = title;
 
     setMeta('meta[name="description"]', 'name', 'description', description);
-    setMeta('meta[name="robots"]', 'name', 'robots', robots);
-    setMeta('meta[name="googlebot"]', 'name', 'googlebot', robots);
+    setMeta('meta[name="robots"]', 'name', 'robots', effectiveRobots);
+    setMeta('meta[name="googlebot"]', 'name', 'googlebot', effectiveRobots);
     setMeta('meta[property="og:title"]', 'property', 'og:title', title);
     setMeta('meta[property="og:description"]', 'property', 'og:description', description);
     setMeta('meta[property="og:type"]', 'property', 'og:type', type);
     setMeta('meta[property="og:site_name"]', 'property', 'og:site_name', 'Temelci Dental Clinic');
+    setMeta('meta[property="og:locale"]', 'property', 'og:locale', ({ en: 'en_GB', de: 'de_DE', tr: 'tr_TR', he: 'he_IL', ru: 'ru_RU' } as const)[lang]);
     setMeta('meta[name="twitter:title"]', 'name', 'twitter:title', title);
     setMeta('meta[name="twitter:description"]', 'name', 'twitter:description', description);
     setMeta('meta[name="twitter:card"]', 'name', 'twitter:card', 'summary_large_image');
 
-    const resolvedCanonical = canonical || `${window.location.origin}${window.location.pathname}`;
+    const requestedCanonical = canonical ? new URL(canonical, window.location.origin) : null;
+    const resolvedCanonical = languageContext
+      ? `${requestedCanonical?.origin || window.location.origin}${window.location.pathname}`
+      : requestedCanonical?.href || window.location.href;
     let canonicalLink = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!canonicalLink) {
       canonicalLink = document.createElement('link');
@@ -47,6 +66,20 @@ export const useSEO = ({ title, description, canonical, ogImage, ogImageAlt, typ
     }
     canonicalLink.href = resolvedCanonical;
     setMeta('meta[property="og:url"]', 'property', 'og:url', resolvedCanonical);
+
+    document.head.querySelectorAll('link[rel="alternate"][hreflang]').forEach(element => element.remove());
+    for (const alternateLanguage of ACTIVE_LANGUAGES) {
+      const alternate = document.createElement('link');
+      alternate.rel = 'alternate';
+      alternate.hreflang = alternateLanguage;
+      alternate.href = `${window.location.origin}${localizedPathFor(window.location.pathname, alternateLanguage)}`;
+      document.head.appendChild(alternate);
+    }
+    const defaultAlternate = document.createElement('link');
+    defaultAlternate.rel = 'alternate';
+    defaultAlternate.hreflang = 'x-default';
+    defaultAlternate.href = `${window.location.origin}${localizedPathFor(window.location.pathname, 'en')}`;
+    document.head.appendChild(defaultAlternate);
 
     if (ogImage) {
       const absoluteImage = new URL(ogImage, window.location.origin).href;
@@ -59,5 +92,5 @@ export const useSEO = ({ title, description, canonical, ogImage, ogImageAlt, typ
 
     if (publishedTime) setMeta('meta[property="article:published_time"]', 'property', 'article:published_time', publishedTime);
     if (modifiedTime) setMeta('meta[property="article:modified_time"]', 'property', 'article:modified_time', modifiedTime);
-  }, [canonical, description, modifiedTime, ogImage, ogImageAlt, publishedTime, robots, title, type]);
+  }, [canonical, description, isRtl, lang, languageContext, modifiedTime, ogImage, ogImageAlt, publishedTime, robots, title, type]);
 };

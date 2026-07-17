@@ -419,7 +419,13 @@ export type Database = {
           meta_title: string | null
           og_image: string | null
           post_id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          source_updated_at: string | null
           title: string
+          translated_at: string | null
+          translation_model: string | null
+          translation_status: string
         }
         Insert: {
           body?: string | null
@@ -431,7 +437,13 @@ export type Database = {
           meta_title?: string | null
           og_image?: string | null
           post_id: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          source_updated_at?: string | null
           title: string
+          translated_at?: string | null
+          translation_model?: string | null
+          translation_status?: string
         }
         Update: {
           body?: string | null
@@ -443,7 +455,13 @@ export type Database = {
           meta_title?: string | null
           og_image?: string | null
           post_id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          source_updated_at?: string | null
           title?: string
+          translated_at?: string | null
+          translation_model?: string | null
+          translation_status?: string
         }
         Relationships: [
           {
