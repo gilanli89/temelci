@@ -1060,17 +1060,29 @@ export type Database = {
         Row: {
           annotated_image_url: string | null
           annotations: Json | null
+          assigned_at: string | null
           created_at: string
           currency: string | null
+          delivery_channel: string | null
+          delivery_error: string | null
+          delivery_status: string
           doctor_id: string | null
           doctor_notes: string | null
           email: string | null
           id: string
           lang: string | null
           message: string | null
+          opened_at: string | null
           patient_name: string
+          patient_consent_at: string | null
+          patient_viewed_at: string | null
           phone: string
+          plan_expires_at: string | null
+          plan_version: number
           price_total: number | null
+          ready_at: string | null
+          responded_at: string | null
+          sent_at: string | null
           share_token: string
           status: string
           updated_at: string
@@ -1079,17 +1091,29 @@ export type Database = {
         Insert: {
           annotated_image_url?: string | null
           annotations?: Json | null
+          assigned_at?: string | null
           created_at?: string
           currency?: string | null
+          delivery_channel?: string | null
+          delivery_error?: string | null
+          delivery_status?: string
           doctor_id?: string | null
           doctor_notes?: string | null
           email?: string | null
           id?: string
           lang?: string | null
           message?: string | null
+          opened_at?: string | null
           patient_name: string
+          patient_consent_at?: string | null
+          patient_viewed_at?: string | null
           phone: string
+          plan_expires_at?: string | null
+          plan_version?: number
           price_total?: number | null
+          ready_at?: string | null
+          responded_at?: string | null
+          sent_at?: string | null
           share_token?: string
           status?: string
           updated_at?: string
@@ -1098,23 +1122,70 @@ export type Database = {
         Update: {
           annotated_image_url?: string | null
           annotations?: Json | null
+          assigned_at?: string | null
           created_at?: string
           currency?: string | null
+          delivery_channel?: string | null
+          delivery_error?: string | null
+          delivery_status?: string
           doctor_id?: string | null
           doctor_notes?: string | null
           email?: string | null
           id?: string
           lang?: string | null
           message?: string | null
+          opened_at?: string | null
           patient_name?: string
+          patient_consent_at?: string | null
+          patient_viewed_at?: string | null
           phone?: string
+          plan_expires_at?: string | null
+          plan_version?: number
           price_total?: number | null
+          ready_at?: string | null
+          responded_at?: string | null
+          sent_at?: string | null
           share_token?: string
           status?: string
           updated_at?: string
           xray_image_url?: string
         }
         Relationships: []
+      }
+      xray_plan_events: {
+        Row: {
+          actor_id: string | null
+          created_at: string
+          event_type: string
+          id: string
+          metadata: Json
+          request_id: string
+        }
+        Insert: {
+          actor_id?: string | null
+          created_at?: string
+          event_type: string
+          id?: string
+          metadata?: Json
+          request_id: string
+        }
+        Update: {
+          actor_id?: string | null
+          created_at?: string
+          event_type?: string
+          id?: string
+          metadata?: Json
+          request_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "xray_plan_events_request_id_fkey"
+            columns: ["request_id"]
+            isOneToOne: false
+            referencedRelation: "xray_requests"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       xray_treatment_items: {
         Row: {
@@ -1162,6 +1233,11 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      archive_xray_request: { Args: { _request_id: string }; Returns: undefined }
+      claim_xray_request: {
+        Args: { _request_id: string }
+        Returns: Database["public"]["Tables"]["xray_requests"]["Row"]
+      }
       get_xray_plan: { Args: { _token: string }; Returns: Json }
       has_any_role: {
         Args: {
@@ -1180,6 +1256,18 @@ export type Database = {
       respond_xray_plan: {
         Args: { _accept: boolean; _token: string }
         Returns: string
+      }
+      save_xray_plan: {
+        Args: {
+          _annotated_image_url: string
+          _annotations: Json
+          _currency: string
+          _doctor_notes: string
+          _items: Json
+          _mark_ready?: boolean
+          _request_id: string
+        }
+        Returns: Database["public"]["Tables"]["xray_requests"]["Row"]
       }
     }
     Enums: {
