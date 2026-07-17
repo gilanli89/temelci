@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, XCircle, MessageCircle } from 'lucide-react';
+import { CheckCircle2, XCircle, MessageCircle, ShieldCheck, Clock3 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function XraySharedPlan() {
@@ -16,7 +16,8 @@ export default function XraySharedPlan() {
   useEffect(() => {
     if (!token) return;
     (async () => {
-      const { data } = await supabase.functions.invoke('xray-plan', { body: { token } });
+      const { data, error } = await supabase.functions.invoke('xray-plan', { body: { token } });
+      if (error) toast.error('This secure plan is unavailable or has expired.');
       if (data) {
         const { items: its, ...rest } = data as any;
         setReq(rest);
@@ -47,6 +48,11 @@ export default function XraySharedPlan() {
           <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold uppercase tracking-wider mb-2">Temelci Dental Clinic</div>
           <h1 className="font-display text-3xl font-bold">Hi {req.patient_name},</h1>
           <p className="text-muted-foreground mt-2">Here is your personalized treatment plan.</p>
+          <div className="mt-3 flex items-center justify-center gap-3 text-xs text-muted-foreground flex-wrap">
+            <span className="inline-flex items-center gap-1"><ShieldCheck className="w-3 h-3" /> Secure private link</span>
+            {req.plan_version && <span>Plan version {req.plan_version}</span>}
+            {req.plan_expires_at && <span className="inline-flex items-center gap-1"><Clock3 className="w-3 h-3" /> Available until {new Date(req.plan_expires_at).toLocaleDateString()}</span>}
+          </div>
         </div>
 
         {(req.annotated_image_url || req.xray_image_url) && (
@@ -81,6 +87,10 @@ export default function XraySharedPlan() {
               <strong>Doctor's notes: </strong>{req.doctor_notes}
             </div>
           )}
+        </Card>
+
+        <Card className="p-4 text-xs leading-relaxed text-muted-foreground border-amber-200 bg-amber-50/60">
+          <strong className="text-foreground">Important clinical notice:</strong> This is a preliminary remote assessment based on the image you supplied. It is not a final diagnosis or surgical guide. Implant placement, extraction decisions and final fees must be confirmed after an in-person examination and any required CBCT/3D imaging.
         </Card>
 
         <Card className="p-6">

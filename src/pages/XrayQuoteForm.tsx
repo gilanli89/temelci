@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 import { Upload, CheckCircle2, Scan } from 'lucide-react';
 import { uploadToBucket } from '@/lib/mediaUpload';
@@ -15,6 +16,7 @@ export default function XrayQuoteForm() {
   const [preview, setPreview] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
+  const [consent, setConsent] = useState(false);
   const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
 
   function pickFile(e: React.ChangeEvent<HTMLInputElement>) {
@@ -28,11 +30,12 @@ export default function XrayQuoteForm() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!file) { toast.error('Please attach your X-ray image'); return; }
+    if (!consent) { toast.error('Please confirm the clinical data consent'); return; }
     setSubmitting(true);
     try {
       const { path } = await uploadToBucket('xrays', file, 'requests');
       const { error } = await supabase.from('xray_requests').insert({
-        ...form, xray_image_url: path, status: 'new',
+        ...form, xray_image_url: path, status: 'new', patient_consent_at: new Date().toISOString(),
       });
       if (error) throw error;
       setDone(true);
@@ -90,7 +93,11 @@ export default function XrayQuoteForm() {
               <Label>Message (concerns, symptoms)</Label>
               <Textarea rows={3} value={form.message} onChange={e => set('message', e.target.value)} maxLength={5000} />
             </div>
-            <Button type="submit" className="w-full" size="lg" disabled={submitting}>
+            <label className="flex items-start gap-3 rounded-lg border border-border p-3 text-xs leading-relaxed cursor-pointer">
+              <Checkbox checked={consent} onCheckedChange={value => setConsent(value === true)} aria-label="Clinical data consent" />
+              <span>I consent to Temelci Dental Clinic securely processing this X-ray and my contact details for a preliminary clinical review and treatment-plan response. I understand that an online review does not replace an in-person examination.</span>
+            </label>
+            <Button type="submit" className="w-full" size="lg" disabled={submitting || !consent}>
               {submitting ? 'Sending…' : 'Get my free treatment plan'}
             </Button>
             <p className="text-[11px] text-muted-foreground text-center">Your data is confidential and only used by our medical team for this consultation.</p>

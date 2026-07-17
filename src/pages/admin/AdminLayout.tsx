@@ -13,7 +13,7 @@ const nav = [
   { to: '/admin/before-after', icon: ImagePlus, label: 'Before / After', roles: ['super_admin', 'admin', 'editor'] },
   { to: '/admin/reviews', icon: Star, label: 'Reviews', roles: ['super_admin', 'admin', 'editor'] },
   { to: '/admin/faqs', icon: CircleHelp, label: 'FAQs', roles: ['super_admin', 'admin', 'editor'] },
-  { to: '/admin/xrays', icon: Scan, label: 'X-Ray Quotes', roles: ['super_admin', 'admin', 'doctor'] },
+  { to: '/admin/xrays', icon: Scan, label: 'X-Ray Planning', roles: ['super_admin', 'admin', 'doctor'] },
   { to: '/admin/leads', icon: MessageSquare, label: 'Leads', roles: ['super_admin', 'admin', 'lead_manager'] },
   { to: '/admin/media', icon: ImgIcon, label: 'Media', roles: ['super_admin', 'admin', 'editor'] },
   { to: '/admin/users', icon: UserCog, label: 'Users & Roles', roles: ['super_admin', 'admin'] },

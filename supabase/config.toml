@@ -28,3 +28,6 @@ enabled = false
 
 [functions.xray-plan]
 verify_jwt = false
+
+[functions.send-xray-plan]
+verify_jwt = true
