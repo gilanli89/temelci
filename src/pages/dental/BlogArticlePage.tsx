@@ -12,20 +12,27 @@ export default function BlogArticlePage() {
   const { slug } = useParams<{ slug: string }>();
   const { lang, localePath, t } = useLanguage();
   const l = lang === 'tr' ? 'tr' : 'en';
+  const ui = {
+    en: { back: 'Back to Blog', ready: 'Ready to Plan Your Treatment?', more: 'More Articles', cta: 'Send your smile photo or X-ray on WhatsApp for a personal assessment.' },
+    de: { back: 'Zurück zum Blog', ready: 'Bereit, Ihre Behandlung zu planen?', more: 'Weitere Artikel', cta: 'Senden Sie Ihr Lächelnfoto oder Röntgenbild über WhatsApp für eine persönliche Einschätzung.' },
+    tr: { back: "Blog'a Dön", ready: 'Tedavinizi Planlamaya Hazır Mısınız?', more: 'Diğer Makaleler', cta: 'Kişisel değerlendirme için gülüş fotoğrafınızı veya röntgeninizi WhatsApp üzerinden gönderin.' },
+    he: { back: 'חזרה לבלוג', ready: 'מוכנים לתכנן את הטיפול?', more: 'מאמרים נוספים', cta: 'שלחו צילום חיוך או צילום רנטגן ב-WhatsApp לצורך הערכה אישית.' },
+    ru: { back: 'Назад в блог', ready: 'Готовы спланировать лечение?', more: 'Другие статьи', cta: 'Отправьте фотографию улыбки или рентген в WhatsApp для персональной оценки.' },
+  }[lang];
   const { data: dbPost, isLoading } = usePostFromDb(slug);
 
-  const staticArticle = slug ? ARTICLE_CONTENT[slug] : null;
+  const staticArticle = slug && (lang === 'en' || lang === 'tr') ? ARTICLE_CONTENT[slug] : null;
   const article = staticArticle;
   const seoTitle = dbPost?.seo_title || article?.seoTitle || dbPost?.title || article?.title?.en || 'Dental guide | Temelci Dental';
   const seoDescription = dbPost?.seo_description || article?.seoDescription || dbPost?.excerpt || article?.excerpt?.en || 'Dental information from Temelci Dental Clinic.';
-  useSEO({ title: seoTitle, description: seoDescription, canonical: `https://temelcidentist.com/en/blog/${slug || ''}`, ogImage: dbPost?.cover_image || dbPost?.featured_image || article?.img, type: 'article', robots: !isLoading && !dbPost && !article ? 'noindex,follow' : undefined, publishedTime: dbPost?.published_at || article?.date, modifiedTime: dbPost?.updated_at });
+  useSEO({ title: seoTitle, description: seoDescription, canonical: `https://temelcidentist.com/${lang}/blog/${slug || ''}`, ogImage: dbPost?.cover_image || dbPost?.featured_image || article?.img, type: 'article', robots: !isLoading && !dbPost && !article ? 'noindex,follow' : undefined, publishedTime: dbPost?.published_at || article?.date, modifiedTime: dbPost?.updated_at });
 
   // If we have neither DB post nor static article and finished loading, show 404
   if (!isLoading && !dbPost && !article) {
     return (
       <div className="section-padding container-dental text-center">
         <h1 className="heading-display mb-4">Article Not Found</h1>
-        <Link to={localePath('/blog')} className="text-primary hover:underline">← Back to Blog</Link>
+        <Link to={localePath('/blog')} className="text-primary hover:underline">← {ui.back}</Link>
       </div>
     );
   }
@@ -54,7 +61,7 @@ export default function BlogArticlePage() {
           <div className="container-dental max-w-3xl px-4 py-4">
             <Link to={localePath('/blog')} className="flex items-center gap-1 hover:text-primary transition-colors font-medium text-xs text-muted-foreground">
               <ChevronLeft className="h-3.5 w-3.5" />
-              {l === 'tr' ? "Blog'a Dön" : 'Back to Blog'}
+              {ui.back}
             </Link>
           </div>
         </section>
@@ -71,9 +78,9 @@ export default function BlogArticlePage() {
         <section className="section-padding bg-primary text-center">
           <div className="container-dental px-4">
             <h2 className="text-2xl md:text-3xl font-display font-black text-primary-foreground mb-3">
-              {l === 'tr' ? 'Tedavinizi Planlamaya Hazır Mısınız?' : 'Ready to Plan Your Treatment?'}
+              {ui.ready}
             </h2>
-            <WhatsAppButton text={l === 'tr' ? "WhatsApp'tan Yazın" : 'Message Us on WhatsApp'} variant="hero" message={`Hi, I read your article "${dbPost.title}" and I'd like to find out more about treatment at Temelci Dental.`} />
+            <WhatsAppButton text={t.bookWhatsApp} variant="hero" message={`Hi, I read your article "${dbPost.title}" and I'd like to find out more about treatment at Temelci Dental.`} />
           </div>
         </section>
       </>
@@ -138,7 +145,7 @@ export default function BlogArticlePage() {
           <div className="flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
             <Link to={localePath('/blog')} className="flex items-center gap-1 hover:text-primary transition-colors font-medium">
               <ChevronLeft className="h-3.5 w-3.5" />
-              {l === 'tr' ? 'Blog\'a Dön' : 'Back to Blog'}
+              {ui.back}
             </Link>
             <span className="w-px h-3 bg-border" />
             <span className="flex items-center gap-1"><User className="h-3.5 w-3.5" />{article.author}</span>
@@ -200,15 +207,13 @@ export default function BlogArticlePage() {
         <div className="container-dental px-4">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-2xl md:text-3xl font-display font-black text-primary-foreground mb-3">
-              {l === 'tr' ? 'Tedavinizi Planlamaya Hazır Mısınız?' : 'Ready to Plan Your Treatment?'}
+              {ui.ready}
             </h2>
             <p className="text-primary-foreground/75 mb-6 max-w-lg mx-auto">
-              {l === 'tr'
-                ? 'WhatsApp\'ta gülüş fotoğrafınızı veya röntgeninizi gönderin — 24 saat içinde kişisel plan hazırlayalım.'
-                : 'Send your smile photo or X-ray on WhatsApp — we\'ll have your personalised plan ready within 24 hours.'}
+              {ui.cta}
             </p>
             <WhatsAppButton
-              text={l === 'tr' ? 'WhatsApp\'tan Yazın' : 'Message Us on WhatsApp'}
+              text={t.bookWhatsApp}
               variant="hero"
               message={`Hi, I read your article "${article.title.en}" and I'd like to find out more about treatment at Temelci Dental.`}
             />
@@ -220,7 +225,7 @@ export default function BlogArticlePage() {
       <section className="section-padding bg-background">
         <div className="container-dental max-w-3xl">
           <h3 className="font-display font-bold text-foreground mb-6">
-            {l === 'tr' ? 'Diğer Makaleler' : 'More Articles'}
+            {ui.more}
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {Object.values(ARTICLE_CONTENT)

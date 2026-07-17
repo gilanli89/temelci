@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Languages, Menu, X } from 'lucide-react';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { QuoteModal } from './QuoteModal';
 
 export const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
 
 export const Navbar = () => {
-  const { t, lang, localePath } = useLanguage();
+  const { t, lang, localePath, languages, setLang } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const [quoteOpen, setQuoteOpen] = useState(false);
   const location = useLocation();
@@ -23,12 +23,12 @@ export const Navbar = () => {
     setIsOpen(false);
   };
 
-  const isTr = lang === 'tr';
+  const labLabels = { en: 'Lab', de: 'Labor', tr: 'Laboratuvar', he: 'מעבדה', ru: 'Лаборатория' } as const;
 
   const primaryLinks = [
-    { label: isTr ? 'Tedaviler' : 'Treatments', path: `/${t.treatmentsSlug}` },
-    { label: isTr ? 'Klinik' : 'Clinic', path: `/${t.ourClinicSlug}` },
-    { label: isTr ? 'Laboratuvar' : 'Lab', path: '/lab' },
+    { label: t.treatments, path: `/${t.treatmentsSlug}` },
+    { label: t.ourClinic, path: `/${t.ourClinicSlug}` },
+    { label: labLabels[lang], path: '/lab' },
     { label: t.beforeAfter, path: `/${t.beforeAfterSlug}` },
     { label: t.dentalTourism, path: `/${t.dentalTourismSlug}` },
     { label: t.contact, path: `/${t.contactSlug}` },
@@ -59,12 +59,24 @@ export const Navbar = () => {
             ))}
           </div>
 
-          {/* Desktop right: CTA */}
+          {/* Desktop right: language and CTA */}
           <div className="hidden lg:flex items-center gap-2 shrink-0 ml-2">
+            <label className="relative flex items-center" title="Language">
+              <Languages className="pointer-events-none absolute left-2.5 h-4 w-4 text-muted-foreground" />
+              <span className="sr-only">Language</span>
+              <select
+                value={lang}
+                onChange={event => setLang(event.target.value as typeof lang)}
+                className="h-10 rounded-full border border-border bg-card pl-8 pr-2 text-xs font-semibold text-foreground outline-none focus:border-primary"
+                aria-label="Language"
+              >
+                {languages.map(language => <option key={language.code} value={language.code}>{language.flag} {language.code.toUpperCase()}</option>)}
+              </select>
+            </label>
             <button onClick={() => setQuoteOpen(true)}
               className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-bold hover:bg-primary/90 transition-all shadow-sm hover:shadow-md whitespace-nowrap">
               <span className="leading-none">✦</span>
-              {isTr ? 'Ücretsiz Teklif Al' : 'Free Quote'}
+              {t.freeConsultation}
             </button>
           </div>
 
@@ -81,6 +93,18 @@ export const Navbar = () => {
         {isOpen && (
           <div className="lg:hidden bg-card border-b border-border max-h-[80vh] overflow-y-auto">
             <div className="px-4 py-3 space-y-1">
+              <label className="mb-3 flex items-center gap-2 rounded-xl border border-border px-3 py-2 text-sm">
+                <Languages className="h-4 w-4 text-primary" />
+                <span className="sr-only">Language</span>
+                <select
+                  value={lang}
+                  onChange={event => { setIsOpen(false); setLang(event.target.value as typeof lang); }}
+                  className="w-full bg-transparent font-semibold outline-none"
+                  aria-label="Language"
+                >
+                  {languages.map(language => <option key={language.code} value={language.code}>{language.flag} {language.label}</option>)}
+                </select>
+              </label>
               <div aria-label="Primary navigation links">
                 {primaryLinks.map(link => (
                   <Link key={link.path} to={localePath(link.path)}
@@ -94,7 +118,7 @@ export const Navbar = () => {
               <div className="pt-2 pb-1">
                 <button onClick={() => { setIsOpen(false); setQuoteOpen(true); }}
                   className="w-full py-3.5 rounded-xl bg-primary text-primary-foreground font-bold text-sm hover:bg-primary/90 transition-colors">
-                  ✦ {isTr ? 'Ücretsiz Teklif Al' : 'Get Free Quote'}
+                  ✦ {t.freeConsultation}
                 </button>
               </div>
             </div>

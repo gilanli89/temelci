@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes, Navigate, useLocation, useParams } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { LanguageProvider } from "@/i18n/LanguageContext";
+import { isActiveLanguage, LanguageProvider } from "@/i18n/LanguageContext";
 import { Layout } from "@/components/dental/Layout";
 import { ScrollToTop } from "@/components/dental/ScrollToTop";
 import { AdminAuthProvider, RequireAdmin } from "./lib/adminAuth";
@@ -55,7 +55,7 @@ const LangRoutes = () => {
   const { lang } = useParams<{ lang?: string }>();
   const location = useLocation();
 
-  if (lang !== 'en') {
+  if (!isActiveLanguage(lang)) {
     const rest = location.pathname.split('/').slice(2).join('/');
     return <Navigate to={`/en${rest ? `/${rest}` : ''}${location.search}${location.hash}`} replace />;
   }

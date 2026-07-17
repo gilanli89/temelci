@@ -19,7 +19,7 @@ const fadeInUp = {
 };
 
 const HomePage = () => {
-  const { t, localePath } = useLanguage();
+  const { t, lang, localePath } = useLanguage();
   const { data: page } = useSitePage('home');
   const { data: dbTreatments, isError: treatmentsError } = useTreatments();
   const { data: dbReviews } = useReviews(4, true);
@@ -27,8 +27,8 @@ const HomePage = () => {
   const { data: settings } = useSiteSettings();
 
   useSEO({
-    title: page?.seo_title || "Temelci Dental Kyrenia | Dental Tourism North Cyprus | Since 1990",
-    description: page?.seo_description || "Premier dental clinic in Kyrenia, North Cyprus. Dental implants, Hollywood smile, veneers, All-on-4/6. In-house lab and personal support for international patients.",
+    title: page?.seo_title || `${t.heroTitle} | Temelci Dental`,
+    description: page?.seo_description || t.heroDescription,
     canonical: "https://temelcidentist.com/en",
     ogImage: page?.og_image || page?.hero_image || undefined,
   });
@@ -46,19 +46,27 @@ const HomePage = () => {
   const treatments = dbTreatments && !treatmentsError ? dbTreatments.slice(0, 8).map(treatment => ({ name: treatment.title, desc: treatment.description || '', slug: treatment.slug, img: treatment.featured_image || implantImg, icon: Sparkles })) : fallbackTreatments;
 
   const stats = [
-    { value: 'Since 1990', label: 'Established family clinic' },
-    { value: 'English', label: 'Patient coordination' },
-    { value: 'Digital', label: 'Treatment planning' },
-    { value: 'Kyrenia', label: 'North Cyprus' },
+    { value: '1990', label: t.yearsExperience },
+    { value: '5', label: t.countriesServed },
+    { value: 'Digital', label: t.treatmentProcess },
+    { value: 'Kyrenia', label: t.clinicLocation },
   ];
 
+  const labLabels = { en: 'Dental Lab', de: 'Dentallabor', tr: 'Diş Laboratuvarı', he: 'מעבדת שיניים', ru: 'Зуботехническая лаборатория' } as const;
+  const labDescriptions = {
+    en: 'See how our in-house restorative workflow supports patient care.',
+    de: 'Erfahren Sie, wie unser hauseigenes Labor die Patientenversorgung unterstützt.',
+    tr: 'Klinik içi restoratif iş akışımızın hasta bakımını nasıl desteklediğini görün.',
+    he: 'גלו כיצד תהליך העבודה במעבדה הפנימית תומך בטיפול במטופלים.',
+    ru: 'Узнайте, как собственная лаборатория помогает обеспечивать качественное лечение.',
+  } as const;
   const primaryDestinations = [
-    { title: 'Treatments', description: 'Explore cosmetic, implant, restorative and preventive dentistry.', path: `/${t.treatmentsSlug}`, icon: Sparkles },
-    { title: 'Clinic', description: 'Tour our treatment rooms, imaging technology and facilities.', path: `/${t.ourClinicSlug}`, icon: Building2 },
-    { title: 'Dental Lab', description: 'See how our in-house restorative workflow supports patient care.', path: '/lab', icon: FlaskConical },
-    { title: 'Before & After', description: 'View documented patient transformations published with consent.', path: `/${t.beforeAfterSlug}`, icon: Images },
-    { title: 'Dental Tourism', description: 'Plan your dental visit to Kyrenia with personal coordination.', path: `/${t.dentalTourismSlug}`, icon: Plane },
-    { title: 'Contact', description: 'Talk to our patient team about appointments and treatment planning.', path: `/${t.contactSlug}`, icon: Mail },
+    { title: t.treatments, description: t.treatmentsSubtitle, path: `/${t.treatmentsSlug}`, icon: Sparkles },
+    { title: t.ourClinic, description: t.aboutSubtitle, path: `/${t.ourClinicSlug}`, icon: Building2 },
+    { title: labLabels[lang], description: labDescriptions[lang], path: '/lab', icon: FlaskConical },
+    { title: t.beforeAfter, description: t.beforeAfterSubtitle, path: `/${t.beforeAfterSlug}`, icon: Images },
+    { title: t.dentalTourism, description: t.dentalTourism, path: `/${t.dentalTourismSlug}`, icon: Plane },
+    { title: t.contact, description: t.contactSubtitle, path: `/${t.contactSlug}`, icon: Mail },
   ];
 
   const reasons = [

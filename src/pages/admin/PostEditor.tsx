@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { TipTapEditor } from '@/components/admin/TipTapEditor';
+import { PostTranslationsPanel } from '@/components/admin/PostTranslationsPanel';
 import { SeoScore, slugify } from '@/components/admin/SeoScore';
 import { useAdminAuth } from '@/lib/adminAuth';
 import { uploadToBucket } from '@/lib/mediaUpload';
@@ -23,6 +24,8 @@ export default function PostEditor() {
   const [lastSavedAt, setLastSavedAt] = useState<Date | null>(null);
   const [dirty, setDirty] = useState(false);
   const currentId = useRef<string | null>(isNew ? null : (id ?? null));
+  const [persistedId, setPersistedId] = useState<string | null>(isNew ? null : (id ?? null));
+  const [sourceUpdatedAt, setSourceUpdatedAt] = useState<string | null>(null);
 
   const [title, setTitle] = useState('');
   const [slug, setSlug] = useState('');
@@ -48,6 +51,7 @@ export default function PostEditor() {
       setFocusKeyword(data.focus_keyword || '');
       setKeywordsText((data.keywords || []).join(', '));
       setPublished(data.published);
+      setSourceUpdatedAt(data.updated_at);
       setLoading(false);
     });
   }, [id, isNew, nav]);
@@ -95,15 +99,17 @@ export default function PostEditor() {
     };
     const activeId = currentId.current;
     const q = !activeId
-      ? supabase.from('posts').insert(payload).select('id').single()
-      : supabase.from('posts').update(payload).eq('id', activeId).select('id').single();
+      ? supabase.from('posts').insert(payload).select('id,updated_at').single()
+      : supabase.from('posts').update(payload).eq('id', activeId).select('id,updated_at').single();
     const { data, error } = await q;
     setSaving(false);
     if (error) { if (!silent) toast.error(error.message); return; }
     if (!activeId && data) {
       currentId.current = data.id;
+      setPersistedId(data.id);
       window.history.replaceState(null, '', `/admin/posts/${data.id}`);
     }
+    if (data?.updated_at) setSourceUpdatedAt(data.updated_at);
     if (publish !== undefined) setPublished(nextPublished);
     setLastSavedAt(new Date());
     setDirty(false);
@@ -226,7 +232,10 @@ export default function PostEditor() {
           </Card>
         </div>
 
-        <SeoScore title={seoTitle || title} description={seoDescription} content={content} keyword={focusKeyword} slug={slug} />
+        <div className="space-y-6">
+          <SeoScore title={seoTitle || title} description={seoDescription} content={content} keyword={focusKeyword} slug={slug} />
+          <PostTranslationsPanel postId={persistedId} sourceUpdatedAt={sourceUpdatedAt} />
+        </div>
       </div>
     </div>
   );

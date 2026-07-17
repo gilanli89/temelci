@@ -137,9 +137,16 @@ const CATS_TR = ['Tümü', 'Diş Turizmi', 'İmplant', 'Gülüş Tasarımı', 'E
 // ── component ─────────────────────────────────────────────────────────────────
 export default function BlogPage() {
   const { data: page } = useSitePage('blog');
-  useSEO({ title: page?.seo_title || 'Dental Blog | Temelci Dental', description: page?.seo_description || 'Evidence-informed dental guides about implants, veneers, crowns, oral health and treatment planning.', canonical: 'https://temelcidentist.com/en/blog', ogImage: page?.og_image || undefined });
   const { lang, t, localePath } = useLanguage();
   const l = lang === 'tr' ? 'tr' : 'en';
+  const ui = {
+    en: { badge: 'Knowledge & Research', title: 'Blog & Academic Publications', subtitle: 'Expert dental guides, patient articles and peer-reviewed research from our clinical team', articles: 'Patient Articles', research: 'Academic Research', read: 'Read', question: 'Have a question about your treatment?', answer: 'Get a free consultation on WhatsApp — we reply within 24 hours.' },
+    de: { badge: 'Wissen & Forschung', title: 'Blog & wissenschaftliche Publikationen', subtitle: 'Fachliche Zahngesundheits-Ratgeber, Patienteninformationen und Forschung unseres klinischen Teams', articles: 'Patientenratgeber', research: 'Forschung', read: 'Lesen', question: 'Haben Sie Fragen zu Ihrer Behandlung?', answer: 'Erhalten Sie eine kostenlose Beratung über WhatsApp.' },
+    tr: { badge: 'Bilgi & Araştırma', title: 'Blog & Akademik Yayınlar', subtitle: 'Diş hekimliği hakkında uzman içerikleri, hasta rehberleri ve bilimsel araştırmalar', articles: 'Hasta Rehberleri', research: 'Akademik Araştırmalar', read: 'Oku', question: 'Tedavi hakkında sorunuz mu var?', answer: 'WhatsApp üzerinden ücretsiz konsültasyon alın.' },
+    he: { badge: 'ידע ומחקר', title: 'בלוג ופרסומים אקדמיים', subtitle: 'מדריכים מקצועיים, מידע למטופלים ומחקר של הצוות הקליני שלנו', articles: 'מדריכים למטופלים', research: 'מחקר אקדמי', read: 'קראו', question: 'יש לכם שאלה על הטיפול?', answer: 'קבלו ייעוץ ראשוני ללא עלות ב-WhatsApp.' },
+    ru: { badge: 'Знания и исследования', title: 'Блог и научные публикации', subtitle: 'Профессиональные материалы, руководства для пациентов и исследования нашей клинической команды', articles: 'Материалы для пациентов', research: 'Научные исследования', read: 'Читать', question: 'Есть вопрос о лечении?', answer: 'Получите бесплатную консультацию в WhatsApp.' },
+  }[lang];
+  useSEO({ title: page?.seo_title || `${ui.title} | Temelci Dental`, description: page?.seo_description || ui.subtitle, canonical: `https://temelcidentist.com/${lang}/blog`, ogImage: page?.og_image || undefined });
   const [activeTab, setActiveTab] = useState<'articles' | 'research'>('articles');
   const [activeCat, setActiveCat] = useState(0);
   const { data: dbPosts, isError: postsError } = usePostsFromDb();
@@ -169,7 +176,7 @@ export default function BlogPage() {
       })
     : ARTICLES;
 
-  const cats = l === 'tr' ? CATS_TR : CATS_EN;
+  const cats = l === 'tr' ? CATS_TR : lang === 'en' ? CATS_EN : ['All'];
   const filteredArticles = activeCat === 0
     ? articles
     : articles.filter(a => a.category[l] === cats[activeCat]);
@@ -189,15 +196,13 @@ export default function BlogPage() {
           <motion.div {...fadeUp()}>
             <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary text-xs font-semibold px-4 py-2 rounded-full mb-4 uppercase tracking-wider">
               <BookOpen className="h-3.5 w-3.5" />
-              {l === 'tr' ? 'Bilgi & Araştırma' : 'Knowledge & Research'}
+              {ui.badge}
             </div>
             <h1 className="heading-display mb-4">
-              {l === 'tr' ? 'Blog & Akademik Yayınlar' : 'Blog & Academic Publications'}
+              {ui.title}
             </h1>
             <p className="text-body max-w-2xl mx-auto">
-              {l === 'tr'
-                ? 'Diş hekimliği hakkında uzman içerikleri, hasta rehberleri ve bilimsel araştırmalar'
-                : 'Expert dental guides, patient articles and peer-reviewed research from our clinical team'}
+              {ui.subtitle}
             </p>
           </motion.div>
         </div>
@@ -208,8 +213,8 @@ export default function BlogPage() {
         <div className="container-dental px-4">
           <div className="flex gap-0">
             {[
-              { key: 'articles', icon: BookOpen, en: 'Patient Articles', tr: 'Hasta Rehberleri' },
-              { key: 'research', icon: GraduationCap, en: 'Academic Research', tr: 'Akademik Araştırmalar' },
+              { key: 'articles', icon: BookOpen, label: ui.articles },
+              { key: 'research', icon: GraduationCap, label: ui.research },
             ].map(tab => (
               <button
                 key={tab.key}
@@ -221,7 +226,7 @@ export default function BlogPage() {
                 }`}
               >
                 <tab.icon className="h-4 w-4" />
-                {l === 'tr' ? tab.tr : tab.en}
+                {tab.label}
               </button>
             ))}
           </div>
@@ -280,7 +285,7 @@ export default function BlogPage() {
                         <span>{article.author}</span>
                       </div>
                       <Link to={localePath(`/blog/${article.slug}`)} className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
-                        {l === 'tr' ? 'Oku' : 'Read'} <ChevronRight className="h-3 w-3" />
+                        {ui.read} <ChevronRight className="h-3 w-3" />
                       </Link>
                     </div>
                   </div>
@@ -291,12 +296,10 @@ export default function BlogPage() {
             {/* CTA after articles */}
             <motion.div {...fadeUp(0.3)} className="mt-14 bg-primary/5 border border-primary/20 rounded-2xl p-8 text-center">
               <h3 className="font-display font-bold text-foreground text-xl mb-2">
-                {l === 'tr' ? 'Tedavi hakkında sorunuz mu var?' : 'Have a question about your treatment?'}
+                {ui.question}
               </h3>
               <p className="text-muted-foreground text-sm mb-5">
-                {l === 'tr'
-                  ? 'WhatsApp üzerinden ücretsiz konsültasyon alın — 24 saat içinde yanıt garantisi.'
-                  : 'Get a free consultation on WhatsApp — we reply within 24 hours.'}
+                {ui.answer}
               </p>
               <WhatsAppButton text={l === 'tr' ? 'Ücretsiz Konsültasyon Al' : 'Get Free Consultation'} variant="hero" />
             </motion.div>
