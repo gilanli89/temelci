@@ -15,6 +15,7 @@ interface XrayRow {
   patient_name: string;
   email: string | null;
   phone: string;
+  preferred_visit_date: string | null;
   message: string | null;
   xray_image_url: string;
   status: XrayStatus;
@@ -156,7 +157,7 @@ export default function XrayList() {
                   {isMine && <span className="text-[10px] uppercase font-bold px-2 py-1 rounded bg-amber-50 text-amber-700">My case</span>}
                   {row.status === 'accepted' && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
                 </div>
-                <div className="text-xs text-muted-foreground mt-1">{row.phone} · {row.email || 'No email'} · {new Date(row.created_at).toLocaleString()}</div>
+                <div className="text-xs text-muted-foreground mt-1">{row.phone} · Visit: {row.preferred_visit_date ? new Date(`${row.preferred_visit_date}T12:00:00`).toLocaleDateString() : 'Flexible'} · Submitted: {new Date(row.created_at).toLocaleString()}</div>
                 {row.message && <p className="text-sm mt-1 line-clamp-2 text-foreground/80">{row.message}</p>}
                 {!!row.price_total && <p className="text-sm font-bold text-primary mt-1">{row.currency} {row.price_total}</p>}
               </div>

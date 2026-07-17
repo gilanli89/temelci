@@ -1077,6 +1077,7 @@ export type Database = {
           patient_consent_at: string | null
           patient_viewed_at: string | null
           phone: string
+          preferred_visit_date: string | null
           plan_expires_at: string | null
           plan_version: number
           price_total: number | null
@@ -1108,6 +1109,7 @@ export type Database = {
           patient_consent_at?: string | null
           patient_viewed_at?: string | null
           phone: string
+          preferred_visit_date?: string | null
           plan_expires_at?: string | null
           plan_version?: number
           price_total?: number | null
@@ -1139,6 +1141,7 @@ export type Database = {
           patient_consent_at?: string | null
           patient_viewed_at?: string | null
           phone?: string
+          preferred_visit_date?: string | null
           plan_expires_at?: string | null
           plan_version?: number
           price_total?: number | null
