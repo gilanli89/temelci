@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { useSEO } from '@/hooks/useSEO';
-import { useFaqs, useReviews, useSitePage, useSiteSettings, useTreatments } from '@/hooks/useCmsContent';
+import { useBeforeAfterCases, useFaqs, useReviews, useSitePage, useSiteSettings, useTreatments } from '@/hooks/useCmsContent';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
 import { QuoteButton } from '@/components/dental/QuoteButton';
 import { Star, Shield, Award, Users, Globe, ChevronRight, Sparkles, Heart, Zap, Crown, Building2, FlaskConical, Images, Plane, Mail } from 'lucide-react';
@@ -23,6 +23,7 @@ const HomePage = () => {
   const { data: page } = useSitePage('home');
   const { data: dbTreatments, isError: treatmentsError } = useTreatments();
   const { data: dbReviews } = useReviews(4, true);
+  const { data: dbBeforeAfter } = useBeforeAfterCases(3);
   const { data: dbFaqs, isError: faqsError } = useFaqs('global');
   const { data: settings } = useSiteSettings();
 
@@ -44,6 +45,7 @@ const HomePage = () => {
     { name: t.fullMouthRestoration, desc: t.fullMouthRestorationDesc, slug: t.fullMouthRestorationSlug, img: implantImg, icon: Shield },
   ];
   const treatments = dbTreatments && !treatmentsError ? dbTreatments.slice(0, 8).map(treatment => ({ name: treatment.title, desc: treatment.description || '', slug: treatment.slug, img: treatment.featured_image || implantImg, icon: Sparkles })) : fallbackTreatments;
+  const beforeAfterCases = dbBeforeAfter || [];
 
   const stats = [
     { value: '1990', label: t.yearsExperience },
@@ -192,18 +194,22 @@ const HomePage = () => {
             <h2 className="heading-section mb-3">{t.beforeAfterTitle}</h2>
             <p className="text-body">{t.beforeAfterSubtitle}</p>
           </motion.div>
-          <div className="bg-card rounded-2xl p-8 text-center border border-border">
-            <p className="text-muted-foreground mb-6">{t.followInstagram}</p>
-            <div className="flex flex-wrap justify-center gap-4">
-              <a href="https://www.instagram.com/dentaltemelci/" target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 text-primary-foreground font-medium text-sm hover:opacity-90 transition-opacity">
-                @dentaltemelci
-              </a>
-              <Link to={localePath(`/${t.beforeAfterSlug}`)}
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary text-primary-foreground font-medium text-sm">
-                {t.viewAll} <ChevronRight className="h-4 w-4" />
+          {beforeAfterCases.length > 0 && <div className="grid gap-6 md:grid-cols-3">
+            {beforeAfterCases.map((item, index) => <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.08 }}>
+              <Link to={localePath(`/${t.beforeAfterSlug}`)} className="group block overflow-hidden rounded-2xl border bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+                <div className="grid aspect-[4/3] grid-cols-2 overflow-hidden">
+                  <div className="relative overflow-hidden"><img src={item.before_image} alt={item.before_alt || `Before ${item.title || 'dental treatment'}`} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" width="640" height="480" /><span className="absolute bottom-2 left-2 rounded-full bg-foreground/80 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-background">Before</span></div>
+                  <div className="relative overflow-hidden"><img src={item.after_image} alt={item.after_alt || `After ${item.title || 'dental treatment'}`} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" width="640" height="480" /><span className="absolute bottom-2 right-2 rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">After</span></div>
+                </div>
+                <div className="flex items-center justify-between gap-3 p-4"><h3 className="font-display font-semibold">{item.title || 'Patient transformation'}</h3><ChevronRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-1" /></div>
               </Link>
-            </div>
+            </motion.div>)}
+          </div>}
+          <div className="mt-8 flex flex-wrap justify-center gap-4">
+            <Link to={localePath(`/${t.beforeAfterSlug}`)} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-medium text-primary-foreground">
+              {t.viewAll} <ChevronRight className="h-4 w-4" />
+            </Link>
+            <a href="https://www.instagram.com/dentaltemelci/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-medium hover:border-primary/40 hover:text-primary">@dentaltemelci</a>
           </div>
         </div>
       </section>
