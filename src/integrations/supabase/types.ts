@@ -1050,6 +1050,8 @@ export type Database = {
           annotations: Json | null
           created_at: string
           currency: string | null
+          delivery_error: string | null
+          delivery_status: string
           doctor_id: string | null
           doctor_notes: string | null
           email: string | null
@@ -1059,6 +1061,7 @@ export type Database = {
           patient_consent_at: string | null
           patient_name: string
           phone: string
+          plan_expires_at: string | null
           plan_version: number
           preferred_visit_date: string | null
           price_total: number | null
@@ -1072,6 +1075,8 @@ export type Database = {
           annotations?: Json | null
           created_at?: string
           currency?: string | null
+          delivery_error?: string | null
+          delivery_status?: string
           doctor_id?: string | null
           doctor_notes?: string | null
           email?: string | null
@@ -1081,6 +1086,7 @@ export type Database = {
           patient_consent_at?: string | null
           patient_name: string
           phone: string
+          plan_expires_at?: string | null
           plan_version?: number
           preferred_visit_date?: string | null
           price_total?: number | null
@@ -1094,6 +1100,8 @@ export type Database = {
           annotations?: Json | null
           created_at?: string
           currency?: string | null
+          delivery_error?: string | null
+          delivery_status?: string
           doctor_id?: string | null
           doctor_notes?: string | null
           email?: string | null
@@ -1103,6 +1111,7 @@ export type Database = {
           patient_consent_at?: string | null
           patient_name?: string
           phone?: string
+          plan_expires_at?: string | null
           plan_version?: number
           preferred_visit_date?: string | null
           price_total?: number | null
@@ -1159,13 +1168,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      claim_xray_request: {
+      archive_xray_request: {
         Args: { _request_id: string }
         Returns: {
           annotated_image_url: string | null
           annotations: Json | null
           created_at: string
           currency: string | null
+          delivery_error: string | null
+          delivery_status: string
           doctor_id: string | null
           doctor_notes: string | null
           email: string | null
@@ -1175,6 +1186,41 @@ export type Database = {
           patient_consent_at: string | null
           patient_name: string
           phone: string
+          plan_expires_at: string | null
+          plan_version: number
+          preferred_visit_date: string | null
+          price_total: number | null
+          share_token: string
+          status: string
+          updated_at: string
+          xray_image_url: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "xray_requests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      claim_xray_request: {
+        Args: { _request_id: string }
+        Returns: {
+          annotated_image_url: string | null
+          annotations: Json | null
+          created_at: string
+          currency: string | null
+          delivery_error: string | null
+          delivery_status: string
+          doctor_id: string | null
+          doctor_notes: string | null
+          email: string | null
+          id: string
+          lang: string | null
+          message: string | null
+          patient_consent_at: string | null
+          patient_name: string
+          phone: string
+          plan_expires_at: string | null
           plan_version: number
           preferred_visit_date: string | null
           price_total: number | null
@@ -1224,6 +1270,8 @@ export type Database = {
           annotations: Json | null
           created_at: string
           currency: string | null
+          delivery_error: string | null
+          delivery_status: string
           doctor_id: string | null
           doctor_notes: string | null
           email: string | null
@@ -1233,6 +1281,7 @@ export type Database = {
           patient_consent_at: string | null
           patient_name: string
           phone: string
+          plan_expires_at: string | null
           plan_version: number
           preferred_visit_date: string | null
           price_total: number | null
