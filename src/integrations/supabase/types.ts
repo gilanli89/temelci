@@ -731,8 +731,10 @@ export type Database = {
           language: string
           patient_name: string
           rating: number
+          review_date: string | null
           sort_order: number
           source: string | null
+          source_url: string | null
           updated_at: string
         }
         Insert: {
@@ -747,8 +749,10 @@ export type Database = {
           language?: string
           patient_name: string
           rating?: number
+          review_date?: string | null
           sort_order?: number
           source?: string | null
+          source_url?: string | null
           updated_at?: string
         }
         Update: {
@@ -763,8 +767,10 @@ export type Database = {
           language?: string
           patient_name?: string
           rating?: number
+          review_date?: string | null
           sort_order?: number
           source?: string | null
+          source_url?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -781,6 +787,7 @@ export type Database = {
           hero_title: string | null
           id: string
           language: string
+          og_image: string | null
           page_type: string
           seo_description: string | null
           seo_title: string | null
@@ -799,6 +806,7 @@ export type Database = {
           hero_title?: string | null
           id?: string
           language?: string
+          og_image?: string | null
           page_type: string
           seo_description?: string | null
           seo_title?: string | null
@@ -817,6 +825,7 @@ export type Database = {
           hero_title?: string | null
           id?: string
           language?: string
+          og_image?: string | null
           page_type?: string
           seo_description?: string | null
           seo_title?: string | null
@@ -918,6 +927,7 @@ export type Database = {
       treatments: {
         Row: {
           active: boolean
+          benefits: string[]
           category: string | null
           category_slug: string | null
           content: string | null
@@ -928,21 +938,28 @@ export type Database = {
           default_price: number | null
           deleted_at: string | null
           description: string | null
+          expected_results: string[]
           featured_image: string | null
+          focus_keyword: string | null
           icon: string | null
           id: string
           language: string
+          og_image: string | null
+          process_steps: string[]
           scheduled_at: string | null
           seo_description: string | null
           seo_title: string | null
           slug: string
           sort_order: number | null
+          suitable_for: string[]
+          tags: string[]
           title: string
           updated_at: string
           updated_by: string | null
         }
         Insert: {
           active?: boolean
+          benefits?: string[]
           category?: string | null
           category_slug?: string | null
           content?: string | null
@@ -953,21 +970,28 @@ export type Database = {
           default_price?: number | null
           deleted_at?: string | null
           description?: string | null
+          expected_results?: string[]
           featured_image?: string | null
+          focus_keyword?: string | null
           icon?: string | null
           id?: string
           language?: string
+          og_image?: string | null
+          process_steps?: string[]
           scheduled_at?: string | null
           seo_description?: string | null
           seo_title?: string | null
           slug: string
           sort_order?: number | null
+          suitable_for?: string[]
+          tags?: string[]
           title?: string
           updated_at?: string
           updated_by?: string | null
         }
         Update: {
           active?: boolean
+          benefits?: string[]
           category?: string | null
           category_slug?: string | null
           content?: string | null
@@ -978,15 +1002,21 @@ export type Database = {
           default_price?: number | null
           deleted_at?: string | null
           description?: string | null
+          expected_results?: string[]
           featured_image?: string | null
+          focus_keyword?: string | null
           icon?: string | null
           id?: string
           language?: string
+          og_image?: string | null
+          process_steps?: string[]
           scheduled_at?: string | null
           seo_description?: string | null
           seo_title?: string | null
           slug?: string
           sort_order?: number | null
+          suitable_for?: string[]
+          tags?: string[]
           title?: string
           updated_at?: string
           updated_by?: string | null
@@ -1029,6 +1059,7 @@ export type Database = {
           patient_consent_at: string | null
           patient_name: string
           phone: string
+          plan_version: number
           preferred_visit_date: string | null
           price_total: number | null
           share_token: string
@@ -1050,6 +1081,7 @@ export type Database = {
           patient_consent_at?: string | null
           patient_name: string
           phone: string
+          plan_version?: number
           preferred_visit_date?: string | null
           price_total?: number | null
           share_token?: string
@@ -1071,6 +1103,7 @@ export type Database = {
           patient_consent_at?: string | null
           patient_name?: string
           phone?: string
+          plan_version?: number
           preferred_visit_date?: string | null
           price_total?: number | null
           share_token?: string
@@ -1126,6 +1159,37 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      claim_xray_request: {
+        Args: { _request_id: string }
+        Returns: {
+          annotated_image_url: string | null
+          annotations: Json | null
+          created_at: string
+          currency: string | null
+          doctor_id: string | null
+          doctor_notes: string | null
+          email: string | null
+          id: string
+          lang: string | null
+          message: string | null
+          patient_consent_at: string | null
+          patient_name: string
+          phone: string
+          plan_version: number
+          preferred_visit_date: string | null
+          price_total: number | null
+          share_token: string
+          status: string
+          updated_at: string
+          xray_image_url: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "xray_requests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       get_xray_plan: { Args: { _token: string }; Returns: Json }
       has_any_role: {
         Args: {
@@ -1144,6 +1208,45 @@ export type Database = {
       respond_xray_plan: {
         Args: { _accept: boolean; _token: string }
         Returns: string
+      }
+      save_xray_plan: {
+        Args: {
+          _annotated_image_url: string
+          _annotations: Json
+          _currency: string
+          _doctor_notes: string
+          _items: Json
+          _mark_ready: boolean
+          _request_id: string
+        }
+        Returns: {
+          annotated_image_url: string | null
+          annotations: Json | null
+          created_at: string
+          currency: string | null
+          doctor_id: string | null
+          doctor_notes: string | null
+          email: string | null
+          id: string
+          lang: string | null
+          message: string | null
+          patient_consent_at: string | null
+          patient_name: string
+          phone: string
+          plan_version: number
+          preferred_visit_date: string | null
+          price_total: number | null
+          share_token: string
+          status: string
+          updated_at: string
+          xray_image_url: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "xray_requests"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
     }
     Enums: {
