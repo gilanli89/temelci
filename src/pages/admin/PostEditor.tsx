@@ -92,8 +92,8 @@ export default function PostEditor() {
       seo_title: seoTitle || title, seo_description: seoDescription, focus_keyword: focusKeyword,
       keywords: keywordsText.split(',').map(k => k.trim()).filter(Boolean),
       published: nextPublished,
-      status: nextPublished ? 'published' : 'draft',
-      content_status: nextPublished ? 'published' : 'draft',
+      status: (nextPublished ? 'published' : 'draft') as 'published' | 'draft',
+      content_status: (nextPublished ? 'published' : 'draft') as 'published' | 'draft',
       published_at: nextPublished ? new Date().toISOString() : null,
       author_id: user?.id,
     };
