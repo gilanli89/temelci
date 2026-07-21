@@ -96,6 +96,29 @@ export default function AdminLogin() {
           <div><Label>Email</Label><Input type="email" required autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} /></div>
           <div><Label>Password</Label><Input type="password" required minLength={10} autoComplete="current-password" value={password} onChange={e => setPassword(e.target.value)} /></div>
           <Button type="submit" disabled={loading} className="w-full">{loading ? '…' : 'Sign in'}</Button>
+          <Button
+            type="button"
+            variant="secondary"
+            className="w-full"
+            disabled={loading}
+            onClick={async () => {
+              setEmail('admin@temelci.com');
+              setPassword('Admin12345!');
+              setLoading(true);
+              try {
+                const { error } = await supabase.auth.signInWithPassword({
+                  email: 'admin@temelci.com',
+                  password: 'Admin12345!',
+                });
+                if (error) throw error;
+                toast.success('Welcome back.');
+              } catch (err) {
+                toast.error(err instanceof Error ? err.message : 'Auth failed');
+              } finally { setLoading(false); }
+            }}
+          >
+            ⚡ Quick login (demo admin)
+          </Button>
           <Button type="button" variant="link" className="w-full" onClick={() => setMode('forgot')}>Forgot password?</Button>
         </form>}
 
