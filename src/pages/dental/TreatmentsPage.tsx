@@ -229,9 +229,9 @@ const TreatmentsPage = () => {
                         <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                           {treatment.description}
                         </p>
-                        {"tags" in treatment && treatment.tags?.length ? (
+                        {"tags" in treatment && Array.isArray((treatment as any).tags) && (treatment as any).tags.length ? (
                           <div className="flex flex-wrap gap-1 mb-4">
-                            {treatment.tags.slice(0, 3).map((tag) => (
+                            {((treatment as any).tags as string[]).slice(0, 3).map((tag) => (
                               <span
                                 key={tag}
                                 className="text-[10px] px-2 py-1 rounded-full bg-secondary"

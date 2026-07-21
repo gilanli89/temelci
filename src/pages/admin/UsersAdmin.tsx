@@ -55,7 +55,7 @@ export default function UsersAdmin() {
               <Select value={r.roles[0] || ''} onValueChange={v => setRole(r.id, v as AssignableRole)}>
                 <SelectTrigger className="w-40"><SelectValue placeholder="Assign…" /></SelectTrigger>
                 <SelectContent>
-                  {ASSIGNABLE_ROLES.map(role => <SelectItem key={role} value={role}>{role.replaceAll('_', ' ')}</SelectItem>)}
+                  {ASSIGNABLE_ROLES.map(role => <SelectItem key={role} value={role}>{role.split('_').join(' ')}</SelectItem>)}
                 </SelectContent>
               </Select>
             )}

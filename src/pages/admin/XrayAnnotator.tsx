@@ -238,7 +238,7 @@ export default function XrayAnnotator() {
       const items = annotations.map((annotation, index) => annotationToTreatmentItem(annotation, request.id, index));
       const { data, error } = await supabase.rpc('save_xray_plan', {
         _request_id: request.id,
-        _annotations: annotations,
+        _annotations: annotations as unknown as any,
         _items: items,
         _doctor_notes: notes,
         _currency: currency,
