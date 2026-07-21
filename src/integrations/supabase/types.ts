@@ -16,7 +16,9 @@ export type Database = {
     Tables: {
       before_after: {
         Row: {
+          after_alt: string | null
           after_image: string
+          before_alt: string | null
           before_image: string
           content_status: Database["public"]["Enums"]["content_status"]
           created_at: string
@@ -24,15 +26,19 @@ export type Database = {
           description: string | null
           id: string
           language: string
+          patient_consent_confirmed: boolean
           published: boolean
           slug: string | null
           sort_order: number | null
+          tags: string[]
           title: string | null
           treatment_id: string | null
           updated_at: string
         }
         Insert: {
+          after_alt?: string | null
           after_image: string
+          before_alt?: string | null
           before_image: string
           content_status?: Database["public"]["Enums"]["content_status"]
           created_at?: string
@@ -40,15 +46,19 @@ export type Database = {
           description?: string | null
           id?: string
           language?: string
+          patient_consent_confirmed?: boolean
           published?: boolean
           slug?: string | null
           sort_order?: number | null
+          tags?: string[]
           title?: string | null
           treatment_id?: string | null
           updated_at?: string
         }
         Update: {
+          after_alt?: string | null
           after_image?: string
+          before_alt?: string | null
           before_image?: string
           content_status?: Database["public"]["Enums"]["content_status"]
           created_at?: string
@@ -56,9 +66,11 @@ export type Database = {
           description?: string | null
           id?: string
           language?: string
+          patient_consent_confirmed?: boolean
           published?: boolean
           slug?: string | null
           sort_order?: number | null
+          tags?: string[]
           title?: string | null
           treatment_id?: string | null
           updated_at?: string
@@ -407,7 +419,13 @@ export type Database = {
           meta_title: string | null
           og_image: string | null
           post_id: string
+          reviewed_at: string | null
+          reviewed_by: string | null
+          source_updated_at: string | null
           title: string
+          translated_at: string | null
+          translation_model: string | null
+          translation_status: string
         }
         Insert: {
           body?: string | null
@@ -419,7 +437,13 @@ export type Database = {
           meta_title?: string | null
           og_image?: string | null
           post_id: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          source_updated_at?: string | null
           title: string
+          translated_at?: string | null
+          translation_model?: string | null
+          translation_status?: string
         }
         Update: {
           body?: string | null
@@ -431,7 +455,13 @@ export type Database = {
           meta_title?: string | null
           og_image?: string | null
           post_id?: string
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          source_updated_at?: string | null
           title?: string
+          translated_at?: string | null
+          translation_model?: string | null
+          translation_status?: string
         }
         Relationships: [
           {
@@ -696,6 +726,7 @@ export type Database = {
           country_flag: string | null
           created_at: string
           deleted_at: string | null
+          featured: boolean
           id: string
           language: string
           patient_name: string
@@ -711,6 +742,7 @@ export type Database = {
           country_flag?: string | null
           created_at?: string
           deleted_at?: string | null
+          featured?: boolean
           id?: string
           language?: string
           patient_name: string
@@ -726,12 +758,70 @@ export type Database = {
           country_flag?: string | null
           created_at?: string
           deleted_at?: string | null
+          featured?: boolean
           id?: string
           language?: string
           patient_name?: string
           rating?: number
           sort_order?: number
           source?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      site_pages: {
+        Row: {
+          content_status: Database["public"]["Enums"]["content_status"]
+          created_at: string
+          deleted_at: string | null
+          eyebrow: string | null
+          focus_keyword: string | null
+          hero_description: string | null
+          hero_image: string | null
+          hero_title: string | null
+          id: string
+          language: string
+          page_type: string
+          seo_description: string | null
+          seo_title: string | null
+          slug: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content_status?: Database["public"]["Enums"]["content_status"]
+          created_at?: string
+          deleted_at?: string | null
+          eyebrow?: string | null
+          focus_keyword?: string | null
+          hero_description?: string | null
+          hero_image?: string | null
+          hero_title?: string | null
+          id?: string
+          language?: string
+          page_type: string
+          seo_description?: string | null
+          seo_title?: string | null
+          slug: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content_status?: Database["public"]["Enums"]["content_status"]
+          created_at?: string
+          deleted_at?: string | null
+          eyebrow?: string | null
+          focus_keyword?: string | null
+          hero_description?: string | null
+          hero_image?: string | null
+          hero_title?: string | null
+          id?: string
+          language?: string
+          page_type?: string
+          seo_description?: string | null
+          seo_title?: string | null
+          slug?: string
+          title?: string
           updated_at?: string
         }
         Relationships: []
@@ -936,8 +1026,10 @@ export type Database = {
           id: string
           lang: string | null
           message: string | null
+          patient_consent_at: string | null
           patient_name: string
           phone: string
+          preferred_visit_date: string | null
           price_total: number | null
           share_token: string
           status: string
@@ -955,8 +1047,10 @@ export type Database = {
           id?: string
           lang?: string | null
           message?: string | null
+          patient_consent_at?: string | null
           patient_name: string
           phone: string
+          preferred_visit_date?: string | null
           price_total?: number | null
           share_token?: string
           status?: string
@@ -974,8 +1068,10 @@ export type Database = {
           id?: string
           lang?: string | null
           message?: string | null
+          patient_consent_at?: string | null
           patient_name?: string
           phone?: string
+          preferred_visit_date?: string | null
           price_total?: number | null
           share_token?: string
           status?: string
