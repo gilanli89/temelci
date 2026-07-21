@@ -17,61 +17,49 @@ export type Database = {
       before_after: {
         Row: {
           after_image: string
-          after_alt: string | null
           before_image: string
-          before_alt: string | null
           content_status: Database["public"]["Enums"]["content_status"]
           created_at: string
           deleted_at: string | null
           description: string | null
           id: string
           language: string
-          patient_consent_confirmed: boolean
           published: boolean
           slug: string | null
           sort_order: number | null
           title: string | null
-          tags: string[]
           treatment_id: string | null
           updated_at: string
         }
         Insert: {
           after_image: string
-          after_alt?: string | null
           before_image: string
-          before_alt?: string | null
           content_status?: Database["public"]["Enums"]["content_status"]
           created_at?: string
           deleted_at?: string | null
           description?: string | null
           id?: string
           language?: string
-          patient_consent_confirmed?: boolean
           published?: boolean
           slug?: string | null
           sort_order?: number | null
           title?: string | null
-          tags?: string[]
           treatment_id?: string | null
           updated_at?: string
         }
         Update: {
           after_image?: string
-          after_alt?: string | null
           before_image?: string
-          before_alt?: string | null
           content_status?: Database["public"]["Enums"]["content_status"]
           created_at?: string
           deleted_at?: string | null
           description?: string | null
           id?: string
           language?: string
-          patient_consent_confirmed?: boolean
           published?: boolean
           slug?: string | null
           sort_order?: number | null
           title?: string | null
-          tags?: string[]
           treatment_id?: string | null
           updated_at?: string
         }
@@ -419,13 +407,7 @@ export type Database = {
           meta_title: string | null
           og_image: string | null
           post_id: string
-          reviewed_at: string | null
-          reviewed_by: string | null
-          source_updated_at: string | null
           title: string
-          translated_at: string | null
-          translation_model: string | null
-          translation_status: string
         }
         Insert: {
           body?: string | null
@@ -437,13 +419,7 @@ export type Database = {
           meta_title?: string | null
           og_image?: string | null
           post_id: string
-          reviewed_at?: string | null
-          reviewed_by?: string | null
-          source_updated_at?: string | null
           title: string
-          translated_at?: string | null
-          translation_model?: string | null
-          translation_status?: string
         }
         Update: {
           body?: string | null
@@ -455,13 +431,7 @@ export type Database = {
           meta_title?: string | null
           og_image?: string | null
           post_id?: string
-          reviewed_at?: string | null
-          reviewed_by?: string | null
-          source_updated_at?: string | null
           title?: string
-          translated_at?: string | null
-          translation_model?: string | null
-          translation_status?: string
         }
         Relationships: [
           {
@@ -726,15 +696,12 @@ export type Database = {
           country_flag: string | null
           created_at: string
           deleted_at: string | null
-          featured: boolean
           id: string
           language: string
           patient_name: string
           rating: number
-          review_date: string | null
           sort_order: number
           source: string | null
-          source_url: string | null
           updated_at: string
         }
         Insert: {
@@ -744,15 +711,12 @@ export type Database = {
           country_flag?: string | null
           created_at?: string
           deleted_at?: string | null
-          featured?: boolean
           id?: string
           language?: string
           patient_name: string
           rating?: number
-          review_date?: string | null
           sort_order?: number
           source?: string | null
-          source_url?: string | null
           updated_at?: string
         }
         Update: {
@@ -762,88 +726,13 @@ export type Database = {
           country_flag?: string | null
           created_at?: string
           deleted_at?: string | null
-          featured?: boolean
           id?: string
           language?: string
           patient_name?: string
           rating?: number
-          review_date?: string | null
           sort_order?: number
           source?: string | null
-          source_url?: string | null
           updated_at?: string
-        }
-        Relationships: []
-      }
-      site_pages: {
-        Row: {
-          body: Json
-          content_status: Database["public"]["Enums"]["content_status"]
-          created_at: string
-          created_by: string | null
-          deleted_at: string | null
-          eyebrow: string | null
-          focus_keyword: string | null
-          hero_description: string | null
-          hero_image: string | null
-          hero_title: string | null
-          id: string
-          language: string
-          og_image: string | null
-          page_type: string
-          scheduled_at: string | null
-          seo_description: string | null
-          seo_title: string | null
-          slug: string
-          title: string
-          updated_at: string
-          updated_by: string | null
-        }
-        Insert: {
-          body?: Json
-          content_status?: Database["public"]["Enums"]["content_status"]
-          created_at?: string
-          created_by?: string | null
-          deleted_at?: string | null
-          eyebrow?: string | null
-          focus_keyword?: string | null
-          hero_description?: string | null
-          hero_image?: string | null
-          hero_title?: string | null
-          id?: string
-          language?: string
-          og_image?: string | null
-          page_type?: string
-          scheduled_at?: string | null
-          seo_description?: string | null
-          seo_title?: string | null
-          slug: string
-          title: string
-          updated_at?: string
-          updated_by?: string | null
-        }
-        Update: {
-          body?: Json
-          content_status?: Database["public"]["Enums"]["content_status"]
-          created_at?: string
-          created_by?: string | null
-          deleted_at?: string | null
-          eyebrow?: string | null
-          focus_keyword?: string | null
-          hero_description?: string | null
-          hero_image?: string | null
-          hero_title?: string | null
-          id?: string
-          language?: string
-          og_image?: string | null
-          page_type?: string
-          scheduled_at?: string | null
-          seo_description?: string | null
-          seo_title?: string | null
-          slug?: string
-          title?: string
-          updated_at?: string
-          updated_by?: string | null
         }
         Relationships: []
       }
@@ -939,7 +828,6 @@ export type Database = {
       treatments: {
         Row: {
           active: boolean
-          benefits: string[]
           category: string | null
           category_slug: string | null
           content: string | null
@@ -950,28 +838,21 @@ export type Database = {
           default_price: number | null
           deleted_at: string | null
           description: string | null
-          expected_results: string[]
           featured_image: string | null
-          focus_keyword: string | null
           icon: string | null
           id: string
           language: string
-          og_image: string | null
-          process_steps: string[]
           scheduled_at: string | null
           seo_description: string | null
           seo_title: string | null
           slug: string
           sort_order: number | null
-          suitable_for: string[]
-          tags: string[]
           title: string
           updated_at: string
           updated_by: string | null
         }
         Insert: {
           active?: boolean
-          benefits?: string[]
           category?: string | null
           category_slug?: string | null
           content?: string | null
@@ -982,28 +863,21 @@ export type Database = {
           default_price?: number | null
           deleted_at?: string | null
           description?: string | null
-          expected_results?: string[]
           featured_image?: string | null
-          focus_keyword?: string | null
           icon?: string | null
           id?: string
           language?: string
-          og_image?: string | null
-          process_steps?: string[]
           scheduled_at?: string | null
           seo_description?: string | null
           seo_title?: string | null
           slug: string
           sort_order?: number | null
-          suitable_for?: string[]
-          tags?: string[]
           title?: string
           updated_at?: string
           updated_by?: string | null
         }
         Update: {
           active?: boolean
-          benefits?: string[]
           category?: string | null
           category_slug?: string | null
           content?: string | null
@@ -1014,21 +888,15 @@ export type Database = {
           default_price?: number | null
           deleted_at?: string | null
           description?: string | null
-          expected_results?: string[]
           featured_image?: string | null
-          focus_keyword?: string | null
           icon?: string | null
           id?: string
           language?: string
-          og_image?: string | null
-          process_steps?: string[]
           scheduled_at?: string | null
           seo_description?: string | null
           seo_title?: string | null
           slug?: string
           sort_order?: number | null
-          suitable_for?: string[]
-          tags?: string[]
           title?: string
           updated_at?: string
           updated_by?: string | null
@@ -1060,30 +928,17 @@ export type Database = {
         Row: {
           annotated_image_url: string | null
           annotations: Json | null
-          assigned_at: string | null
           created_at: string
           currency: string | null
-          delivery_channel: string | null
-          delivery_error: string | null
-          delivery_status: string
           doctor_id: string | null
           doctor_notes: string | null
           email: string | null
           id: string
           lang: string | null
           message: string | null
-          opened_at: string | null
           patient_name: string
-          patient_consent_at: string | null
-          patient_viewed_at: string | null
           phone: string
-          preferred_visit_date: string | null
-          plan_expires_at: string | null
-          plan_version: number
           price_total: number | null
-          ready_at: string | null
-          responded_at: string | null
-          sent_at: string | null
           share_token: string
           status: string
           updated_at: string
@@ -1092,30 +947,17 @@ export type Database = {
         Insert: {
           annotated_image_url?: string | null
           annotations?: Json | null
-          assigned_at?: string | null
           created_at?: string
           currency?: string | null
-          delivery_channel?: string | null
-          delivery_error?: string | null
-          delivery_status?: string
           doctor_id?: string | null
           doctor_notes?: string | null
           email?: string | null
           id?: string
           lang?: string | null
           message?: string | null
-          opened_at?: string | null
           patient_name: string
-          patient_consent_at?: string | null
-          patient_viewed_at?: string | null
           phone: string
-          preferred_visit_date?: string | null
-          plan_expires_at?: string | null
-          plan_version?: number
           price_total?: number | null
-          ready_at?: string | null
-          responded_at?: string | null
-          sent_at?: string | null
           share_token?: string
           status?: string
           updated_at?: string
@@ -1124,71 +966,23 @@ export type Database = {
         Update: {
           annotated_image_url?: string | null
           annotations?: Json | null
-          assigned_at?: string | null
           created_at?: string
           currency?: string | null
-          delivery_channel?: string | null
-          delivery_error?: string | null
-          delivery_status?: string
           doctor_id?: string | null
           doctor_notes?: string | null
           email?: string | null
           id?: string
           lang?: string | null
           message?: string | null
-          opened_at?: string | null
           patient_name?: string
-          patient_consent_at?: string | null
-          patient_viewed_at?: string | null
           phone?: string
-          preferred_visit_date?: string | null
-          plan_expires_at?: string | null
-          plan_version?: number
           price_total?: number | null
-          ready_at?: string | null
-          responded_at?: string | null
-          sent_at?: string | null
           share_token?: string
           status?: string
           updated_at?: string
           xray_image_url?: string
         }
         Relationships: []
-      }
-      xray_plan_events: {
-        Row: {
-          actor_id: string | null
-          created_at: string
-          event_type: string
-          id: string
-          metadata: Json
-          request_id: string
-        }
-        Insert: {
-          actor_id?: string | null
-          created_at?: string
-          event_type: string
-          id?: string
-          metadata?: Json
-          request_id: string
-        }
-        Update: {
-          actor_id?: string | null
-          created_at?: string
-          event_type?: string
-          id?: string
-          metadata?: Json
-          request_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "xray_plan_events_request_id_fkey"
-            columns: ["request_id"]
-            isOneToOne: false
-            referencedRelation: "xray_requests"
-            referencedColumns: ["id"]
-          },
-        ]
       }
       xray_treatment_items: {
         Row: {
@@ -1236,11 +1030,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      archive_xray_request: { Args: { _request_id: string }; Returns: undefined }
-      claim_xray_request: {
-        Args: { _request_id: string }
-        Returns: Database["public"]["Tables"]["xray_requests"]["Row"]
-      }
       get_xray_plan: { Args: { _token: string }; Returns: Json }
       has_any_role: {
         Args: {
@@ -1259,18 +1048,6 @@ export type Database = {
       respond_xray_plan: {
         Args: { _accept: boolean; _token: string }
         Returns: string
-      }
-      save_xray_plan: {
-        Args: {
-          _annotated_image_url: string
-          _annotations: Json
-          _currency: string
-          _doctor_notes: string
-          _items: Json
-          _mark_ready?: boolean
-          _request_id: string
-        }
-        Returns: Database["public"]["Tables"]["xray_requests"]["Row"]
       }
     }
     Enums: {
