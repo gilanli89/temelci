@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { annotationToTreatmentItem, normalizeAnnotations, xrayPlanTotal } from '@/lib/xrayPlanning';
+import { annotationToTreatmentItem, applyPricingItem, createAnnotation, normalizeAnnotations, pricingItemsForTool, xrayPlanTotal } from '@/lib/xrayPlanning';
 
 describe('X-ray planning helpers', () => {
   it('upgrades legacy markers and keeps normalized coordinates', () => {
@@ -23,5 +23,37 @@ describe('X-ray planning helpers', () => {
       { id: '2', x: 0.3, y: 0.2, label: 'Extraction', price: null },
     ]);
     expect(xrayPlanTotal(annotations)).toBe(900);
+  });
+
+  it('applies the matching admin price and brand to a marker', () => {
+    const marker = createAnnotation('implant', 0.5, 0.5);
+    const priced = applyPricingItem(marker, {
+      id: 'price-1',
+      code: 'implant-straumann',
+      kind: 'implant',
+      display_name: 'Implant — Straumann',
+      brand: 'Straumann',
+      unit_price: 950,
+      currency: 'EUR',
+      active: true,
+      sort_order: 10,
+    });
+
+    expect(priced).toMatchObject({
+      label: 'Implant — Straumann',
+      pricingCode: 'implant-straumann',
+      brand: 'Straumann',
+      price: 950,
+    });
+  });
+
+  it('only offers active prices for the selected tool and currency', () => {
+    const items = [
+      { id: '1', code: 'implant-eur', kind: 'implant' as const, display_name: 'Implant EUR', brand: null, unit_price: 800, currency: 'EUR', active: true, sort_order: 20 },
+      { id: '2', code: 'implant-gbp', kind: 'implant' as const, display_name: 'Implant GBP', brand: null, unit_price: 700, currency: 'GBP', active: true, sort_order: 10 },
+      { id: '3', code: 'inactive', kind: 'implant' as const, display_name: 'Inactive', brand: null, unit_price: 1, currency: 'EUR', active: false, sort_order: 0 },
+    ];
+
+    expect(pricingItemsForTool(items, 'implant', 'EUR').map(item => item.code)).toEqual(['implant-eur']);
   });
 });

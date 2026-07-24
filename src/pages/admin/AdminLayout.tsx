@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { useAdminAuth } from '@/lib/adminAuth';
-import { LayoutDashboard, FileText, Stethoscope, Image as ImgIcon, MessageSquare, Settings, LogOut, ImagePlus, Scan, UserCog, Sparkles, PanelsTopLeft, Star, CircleHelp, Menu, X } from 'lucide-react';
+import { LayoutDashboard, FileText, Stethoscope, Image as ImgIcon, MessageSquare, Settings, LogOut, ImagePlus, Scan, UserCog, Sparkles, PanelsTopLeft, Star, CircleHelp, Menu, X, BadgeEuro } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const nav = [
@@ -14,6 +14,7 @@ const nav = [
   { to: '/admin/reviews', icon: Star, label: 'Reviews', roles: ['super_admin', 'admin', 'editor'] },
   { to: '/admin/faqs', icon: CircleHelp, label: 'FAQs', roles: ['super_admin', 'admin', 'editor'] },
   { to: '/admin/xrays', icon: Scan, label: 'X-Ray Planning', roles: ['super_admin', 'admin', 'doctor'] },
+  { to: '/admin/xray-pricing', icon: BadgeEuro, label: 'X-Ray Unit Prices', roles: ['super_admin', 'admin'] },
   { to: '/admin/leads', icon: MessageSquare, label: 'Leads', roles: ['super_admin', 'admin', 'lead_manager'] },
   { to: '/admin/media', icon: ImgIcon, label: 'Media', roles: ['super_admin', 'admin', 'editor'] },
   { to: '/admin/users', icon: UserCog, label: 'Users & Roles', roles: ['super_admin', 'admin'] },

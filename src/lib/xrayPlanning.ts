@@ -19,7 +19,31 @@ export interface XrayAnnotation {
   price: number | null;
   note: string;
   arch?: DentalArch;
+  pricingCode?: string;
+  brand?: string;
 }
+
+export interface XrayPricingItem {
+  id: string;
+  code: string;
+  kind: XrayTool;
+  display_name: string;
+  brand: string | null;
+  unit_price: number;
+  currency: string;
+  active: boolean;
+  sort_order: number;
+}
+
+export const DEFAULT_XRAY_PRICING_ITEMS: XrayPricingItem[] = [
+  { id: 'seed-extraction', code: 'extraction', kind: 'extraction', display_name: 'Extraction', brand: null, unit_price: 0, currency: 'EUR', active: true, sort_order: 10 },
+  { id: 'seed-implant-straumann', code: 'implant-straumann', kind: 'implant', display_name: 'Implant — Straumann', brand: 'Straumann', unit_price: 0, currency: 'EUR', active: true, sort_order: 20 },
+  { id: 'seed-implant-neodent', code: 'implant-neodent', kind: 'implant', display_name: 'Implant — Neodent', brand: 'Neodent', unit_price: 0, currency: 'EUR', active: true, sort_order: 30 },
+  { id: 'seed-crown-zirconia', code: 'crown-zirconia', kind: 'crown', display_name: 'Zirconia crown', brand: 'Zirconia', unit_price: 0, currency: 'EUR', active: true, sort_order: 40 },
+  { id: 'seed-root-canal', code: 'root-canal', kind: 'root_canal', display_name: 'Root canal treatment', brand: null, unit_price: 0, currency: 'EUR', active: true, sort_order: 50 },
+  { id: 'seed-all-on-4-straumann', code: 'all-on-4-straumann', kind: 'all_on_4', display_name: 'All-on-4 — Straumann', brand: 'Straumann', unit_price: 0, currency: 'EUR', active: true, sort_order: 60 },
+  { id: 'seed-all-on-6-straumann', code: 'all-on-6-straumann', kind: 'all_on_6', display_name: 'All-on-6 — Straumann', brand: 'Straumann', unit_price: 0, currency: 'EUR', active: true, sort_order: 70 },
+];
 
 export interface XrayToolDefinition {
   kind: XrayTool;
@@ -80,6 +104,8 @@ export function normalizeAnnotations(value: unknown): XrayAnnotation[] {
       price: price !== null && Number.isFinite(price) ? price : null,
       note: typeof raw.note === 'string' ? raw.note : '',
       ...(arch ? { arch } : {}),
+      ...(typeof raw.pricingCode === 'string' ? { pricingCode: raw.pricingCode } : {}),
+      ...(typeof raw.brand === 'string' ? { brand: raw.brand } : {}),
     }];
   });
 }
@@ -111,6 +137,26 @@ export function annotationToTreatmentItem(annotation: XrayAnnotation, requestId:
   };
 }
 
+export function applyPricingItem(annotation: XrayAnnotation, item: XrayPricingItem): XrayAnnotation {
+  const fullArch = annotation.kind === 'all_on_4' || annotation.kind === 'all_on_6';
+  return {
+    ...annotation,
+    label: fullArch ? `${item.display_name} (${annotation.arch || 'upper'})` : item.display_name,
+    pricingCode: item.code,
+    brand: item.brand || undefined,
+    price: Math.max(0, Number(item.unit_price) || 0),
+  };
+}
+
+export function pricingItemsForTool(
+  items: XrayPricingItem[],
+  kind: XrayTool,
+  currency: string,
+) {
+  return items
+    .filter(item => item.active && item.kind === kind && item.currency === currency)
+    .sort((left, right) => left.sort_order - right.sort_order || left.display_name.localeCompare(right.display_name));
+}
+
 export const xrayPlanTotal = (annotations: XrayAnnotation[]) =>
   annotations.reduce((sum, annotation) => sum + (annotation.price ?? 0), 0);
-

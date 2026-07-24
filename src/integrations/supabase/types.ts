@@ -1044,6 +1044,48 @@ export type Database = {
         }
         Relationships: []
       }
+      xray_pricing_catalog: {
+        Row: {
+          active: boolean
+          brand: string | null
+          code: string
+          created_at: string
+          currency: string
+          display_name: string
+          id: string
+          kind: string
+          sort_order: number
+          unit_price: number
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          brand?: string | null
+          code: string
+          created_at?: string
+          currency?: string
+          display_name: string
+          id?: string
+          kind: string
+          sort_order?: number
+          unit_price?: number
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          brand?: string | null
+          code?: string
+          created_at?: string
+          currency?: string
+          display_name?: string
+          id?: string
+          kind?: string
+          sort_order?: number
+          unit_price?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       xray_requests: {
         Row: {
           annotated_image_url: string | null
