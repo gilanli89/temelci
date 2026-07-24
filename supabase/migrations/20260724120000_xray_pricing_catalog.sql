@@ -80,7 +80,8 @@ ALTER TABLE public.xray_requests
   ADD COLUMN IF NOT EXISTS delivery_channel text,
   ADD COLUMN IF NOT EXISTS delivery_error text,
   ADD COLUMN IF NOT EXISTS patient_consent_at timestamptz,
-  ADD COLUMN IF NOT EXISTS preferred_visit_date date;
+  ADD COLUMN IF NOT EXISTS preferred_visit_date date,
+  ADD COLUMN IF NOT EXISTS is_demo boolean NOT NULL DEFAULT false;
 
 ALTER TABLE public.xray_requests
   DROP CONSTRAINT IF EXISTS xray_requests_status_check;
@@ -120,6 +121,7 @@ CREATE POLICY "Patients submit private xray cases"
     AND doctor_notes IS NULL
     AND COALESCE(price_total, 0) = 0
     AND patient_consent_at IS NOT NULL
+    AND NOT is_demo
     AND char_length(patient_name) BETWEEN 1 AND 200
     AND char_length(phone) BETWEEN 7 AND 50
     AND (email IS NULL OR char_length(email) <= 255)
@@ -128,6 +130,99 @@ CREATE POLICY "Patients submit private xray cases"
     AND preferred_visit_date >= current_date
     AND xray_image_url LIKE 'requests/%'
   );
+
+INSERT INTO public.xray_requests (
+  id,
+  share_token,
+  patient_name,
+  phone,
+  message,
+  preferred_visit_date,
+  xray_image_url,
+  status,
+  currency,
+  patient_consent_at,
+  created_at,
+  updated_at,
+  is_demo
+)
+VALUES
+  (
+    'd1000000-0000-4000-8000-000000000001',
+    'd0000000-0000-4000-8000-000000000001',
+    'DEMO 01 — Implant Gap',
+    '+900000000001',
+    'Synthetic case: missing upper molar. Compare Straumann and Neodent implant options.',
+    current_date + 11,
+    '/demo/xrays/demo-implant-gap.svg',
+    'new',
+    'EUR',
+    now(),
+    now() - interval '50 minutes',
+    now() - interval '50 minutes',
+    true
+  ),
+  (
+    'd1000000-0000-4000-8000-000000000002',
+    'd0000000-0000-4000-8000-000000000002',
+    'DEMO 02 — Extractions',
+    '+900000000002',
+    'Synthetic case: mark two non-restorable teeth with extraction X markers.',
+    current_date + 15,
+    '/demo/xrays/demo-extractions.svg',
+    'new',
+    'EUR',
+    now(),
+    now() - interval '40 minutes',
+    now() - interval '40 minutes',
+    true
+  ),
+  (
+    'd1000000-0000-4000-8000-000000000003',
+    'd0000000-0000-4000-8000-000000000003',
+    'DEMO 03 — Crowns & Canal',
+    '+900000000003',
+    'Synthetic case: test zirconia crown and root-canal planning with itemised fees.',
+    current_date + 19,
+    '/demo/xrays/demo-crowns-canal.svg',
+    'new',
+    'EUR',
+    now(),
+    now() - interval '30 minutes',
+    now() - interval '30 minutes',
+    true
+  ),
+  (
+    'd1000000-0000-4000-8000-000000000004',
+    'd0000000-0000-4000-8000-000000000004',
+    'DEMO 04 — All-on-4',
+    '+900000000004',
+    'Synthetic full-arch case: place an upper All-on-4 marker and review the plan total.',
+    current_date + 23,
+    '/demo/xrays/demo-all-on-4.svg',
+    'new',
+    'EUR',
+    now(),
+    now() - interval '20 minutes',
+    now() - interval '20 minutes',
+    true
+  ),
+  (
+    'd1000000-0000-4000-8000-000000000005',
+    'd0000000-0000-4000-8000-000000000005',
+    'DEMO 05 — Mixed Plan',
+    '+900000000005',
+    'Synthetic complex case: combine implant, extraction, crown and clinical-note markers.',
+    current_date + 27,
+    '/demo/xrays/demo-mixed-plan.svg',
+    'new',
+    'EUR',
+    now(),
+    now() - interval '10 minutes',
+    now() - interval '10 minutes',
+    true
+  )
+ON CONFLICT (id) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS public.xray_plan_events (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

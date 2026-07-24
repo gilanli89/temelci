@@ -27,6 +27,7 @@ import {
   XrayTool,
   xrayPlanTotal,
 } from '@/lib/xrayPlanning';
+import { getDemoXrayCase, isDirectXrayUrl, isVirtualDemoXray } from '@/lib/xrayDemoCases';
 
 interface XrayRequest {
   id: string;
@@ -45,6 +46,7 @@ interface XrayRequest {
   delivery_error: string | null;
   plan_version: number | null;
   plan_expires_at: string | null;
+  is_demo?: boolean;
 }
 
 interface DeliveryResult {
@@ -132,6 +134,15 @@ export default function XrayAnnotator() {
 
   useEffect(() => {
     if (!id) return;
+    const demoCase = getDemoXrayCase(id);
+    if (demoCase) {
+      setRequest(demoCase);
+      setAnnotations(normalizeAnnotations(demoCase.annotations));
+      setNotes('');
+      setCurrency(demoCase.currency);
+      setSourceUrl(demoCase.xray_image_url);
+      return;
+    }
     (async () => {
       const { data, error } = await supabase.rpc('claim_xray_request', { _request_id: id });
       if (error || !data) {
@@ -144,7 +155,7 @@ export default function XrayAnnotator() {
       setAnnotations(normalizeAnnotations(claimed.annotations));
       setNotes(claimed.doctor_notes || '');
       setCurrency(claimed.currency || 'EUR');
-      if (/^https?:\/\//.test(claimed.xray_image_url)) setSourceUrl(claimed.xray_image_url);
+      if (isDirectXrayUrl(claimed.xray_image_url)) setSourceUrl(claimed.xray_image_url);
       else {
         const { data: signed, error: signError } = await supabase.storage.from('xrays').createSignedUrl(claimed.xray_image_url, 3600);
         if (signError || !signed) toast.error('The private X-ray image could not be opened.');
@@ -296,6 +307,22 @@ export default function XrayAnnotator() {
     }
     setSaving(true);
     try {
+      if (request.is_demo || isVirtualDemoXray(request.id)) {
+        const savedDemo: XrayRequest = {
+          ...request,
+          annotations,
+          doctor_notes: notes,
+          currency,
+          status: markReady ? 'ready' : 'in_review',
+          plan_version: (request.plan_version || 0) + 1,
+        };
+        setRequest(savedDemo);
+        setHistory([]);
+        setFuture([]);
+        toast.success(markReady ? 'Demo plan ready — no patient contacted' : 'Demo draft saved locally');
+        return savedDemo;
+      }
+
       let annotatedPath = request.annotated_image_url || '';
       if (stageRef.current) {
         const selectionNodes = stageRef.current.find('.selection');
@@ -332,6 +359,7 @@ export default function XrayAnnotator() {
   async function sendPlan() {
     const saved = await persist(true);
     if (!saved) return;
+    if (saved.is_demo || isVirtualDemoXray(saved.id)) return;
     setSaving(true);
     try {
       const { data, error } = await supabase.functions.invoke<DeliveryResult>('send-xray-plan', { body: { requestId: saved.id } });
@@ -358,7 +386,7 @@ export default function XrayAnnotator() {
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" aria-label="Back to X-ray pool" onClick={() => navigate('/admin/xrays')}><ArrowLeft className="w-4 h-4" /></Button>
           <div>
-            <div className="flex items-center gap-2"><h1 className="font-display text-xl font-bold">{request.patient_name}</h1><span className="rounded bg-primary/10 text-primary text-[10px] uppercase font-bold px-2 py-1">{request.status.replace('_', ' ')}</span></div>
+            <div className="flex items-center gap-2"><h1 className="font-display text-xl font-bold">{request.patient_name}</h1><span className="rounded bg-primary/10 text-primary text-[10px] uppercase font-bold px-2 py-1">{request.status.replace('_', ' ')}</span>{request.is_demo && <span className="rounded bg-fuchsia-100 text-fuchsia-700 text-[10px] uppercase font-bold px-2 py-1">Demo</span>}</div>
             <p className="text-xs text-muted-foreground">{request.phone} · {request.email || 'No email'} · Plan v{request.plan_version || 0}</p>
           </div>
         </div>
@@ -516,7 +544,13 @@ export default function XrayAnnotator() {
 
           <Card className="p-4"><Label>Doctor notes visible to patient</Label><Textarea disabled={closed} rows={5} value={notes} onChange={event => setNotes(event.target.value)} maxLength={10000} placeholder="Explain priorities, sequencing and the need for an in-person examination…" /></Card>
 
-          {['ready', 'sent', 'accepted', 'rejected'].includes(request.status) && (
+          {(request.is_demo || isVirtualDemoXray(request.id)) && (
+            <Card className="border-blue-200 bg-blue-50 p-4 text-sm text-blue-900">
+              Demo mode: draft and plan actions stay in this browser session. No database record, share link or WhatsApp message is created.
+            </Card>
+          )}
+
+          {!request.is_demo && !isVirtualDemoXray(request.id) && ['ready', 'sent', 'accepted', 'rejected'].includes(request.status) && (
             <Card className="p-4 bg-primary/5 border-primary/30">
               <h3 className="font-semibold mb-2">Secure patient plan</h3>
               <div className="flex gap-2"><Input readOnly value={shareUrl} /><Button size="icon" variant="outline" aria-label="Copy secure link" onClick={() => { navigator.clipboard.writeText(shareUrl); toast.success('Secure link copied'); }}><Copy className="w-4 h-4" /></Button><Button size="icon" variant="outline" asChild><a href={shareUrl} target="_blank" rel="noreferrer" aria-label="Open patient plan"><ExternalLink className="w-4 h-4" /></a></Button></div>

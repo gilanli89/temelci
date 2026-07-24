@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="48%" r="72%"><stop offset="0" stop-color="#6d7882"/><stop offset=".55" stop-color="#303943"/><stop offset="1" stop-color="#10161d"/></radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <g id="tooth" fill="#dce7ef" fill-opacity=".68" stroke="#f5fbff" stroke-opacity=".38" stroke-width="2"><path d="M-22 0C-30 20-24 54-12 68L-7 120C-5 137 5 137 7 120L12 68C24 54 30 20 22 0C12-10-12-10-22 0Z"/></g>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bg)"/>
+  <ellipse cx="600" cy="300" rx="500" ry="220" fill="none" stroke="#b7c7d1" stroke-opacity=".15" stroke-width="36"/>
+  <path d="M105 250Q600 70 1095 250M105 350Q600 530 1095 350" fill="none" stroke="#e7f2f8" stroke-opacity=".14" stroke-width="18"/>
+  <g filter="url(#glow)">
+    <use href="#tooth" transform="translate(180 220)rotate(-20)scale(.82)"/><use href="#tooth" transform="translate(250 196)rotate(-15)scale(.88)"/><use href="#tooth" transform="translate(322 176)rotate(-11)scale(.92)"/><use href="#tooth" transform="translate(394 161)rotate(-7)scale(.96)"/><use href="#tooth" transform="translate(466 152)rotate(-4)"/><use href="#tooth" transform="translate(538 147)rotate(-1)"/><use href="#tooth" transform="translate(610 147)rotate(1)"/><use href="#tooth" transform="translate(682 152)rotate(4)"/><use href="#tooth" transform="translate(754 161)rotate(7)"/><use href="#tooth" transform="translate(826 176)rotate(11)"/><use href="#tooth" transform="translate(970 220)rotate(20)scale(.82)"/>
+    <g transform="translate(0 600)scale(1 -1)"><use href="#tooth" transform="translate(180 220)rotate(-20)scale(.82)"/><use href="#tooth" transform="translate(250 196)rotate(-15)scale(.88)"/><use href="#tooth" transform="translate(322 176)rotate(-11)scale(.92)"/><use href="#tooth" transform="translate(394 161)rotate(-7)scale(.96)"/><use href="#tooth" transform="translate(466 152)rotate(-4)"/><use href="#tooth" transform="translate(538 147)rotate(-1)"/><use href="#tooth" transform="translate(610 147)rotate(1)"/><use href="#tooth" transform="translate(682 152)rotate(4)"/><use href="#tooth" transform="translate(754 161)rotate(7)"/><use href="#tooth" transform="translate(826 176)rotate(11)"/><use href="#tooth" transform="translate(898 196)rotate(15)scale(.88)"/><use href="#tooth" transform="translate(970 220)rotate(20)scale(.82)"/></g>
+  </g>
+  <ellipse cx="898" cy="178" rx="42" ry="58" fill="#0b1117" fill-opacity=".72" stroke="#cbe4f1" stroke-opacity=".25" stroke-dasharray="8 6"/>
+  <rect x="18" y="18" width="460" height="42" rx="21" fill="#080c11" fill-opacity=".8"/><text x="38" y="46" font-family="Arial" font-size="19" font-weight="700" fill="#f5f8fa">SYNTHETIC DEMO 01 — NOT FOR CLINICAL USE</text>
+</svg>

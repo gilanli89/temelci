@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Scan, ArrowRight, Archive, Users, UserCheck, Clock3, Send, CheckCircle2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { DEMO_XRAY_CASES, isDirectXrayUrl, isVirtualDemoXray } from '@/lib/xrayDemoCases';
 
 type XrayStatus = 'new' | 'in_review' | 'ready' | 'sent' | 'accepted' | 'rejected' | 'archived';
 
@@ -25,6 +26,7 @@ interface XrayRow {
   delivery_status: string | null;
   created_at: string;
   updated_at: string;
+  is_demo?: boolean;
   preview_url?: string;
 }
 
@@ -44,6 +46,7 @@ export default function XrayList() {
   const [statusFilter, setStatusFilter] = useState('active');
   const [ownerFilter, setOwnerFilter] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [usingPreviewCases, setUsingPreviewCases] = useState(false);
   const canDelete = role === 'admin' || role === 'super_admin';
 
   const load = useCallback(async () => {
@@ -54,8 +57,10 @@ export default function XrayList() {
       setLoading(false);
       return;
     }
-    const loaded = (data || []) as XrayRow[];
-    const paths = [...new Set(loaded.map(row => row.xray_image_url).filter(path => path && !/^https?:\/\//.test(path)))];
+    const databaseRows = (data || []) as XrayRow[];
+    const loaded = databaseRows.length ? databaseRows : DEMO_XRAY_CASES as XrayRow[];
+    setUsingPreviewCases(databaseRows.length === 0);
+    const paths = [...new Set(loaded.map(row => row.xray_image_url).filter(path => path && !isDirectXrayUrl(path)))];
     const signedEntries = await Promise.all(paths.map(async path => {
       const { data: signed } = await supabase.storage.from('xrays').createSignedUrl(path, 900);
       return [path, signed?.signedUrl] as const;
@@ -63,7 +68,7 @@ export default function XrayList() {
     const signedByPath = new Map(signedEntries);
     setRows(loaded.map(row => ({
       ...row,
-      preview_url: /^https?:\/\//.test(row.xray_image_url) ? row.xray_image_url : signedByPath.get(row.xray_image_url),
+      preview_url: isDirectXrayUrl(row.xray_image_url) ? row.xray_image_url : signedByPath.get(row.xray_image_url),
     })));
     setLoading(false);
   }, []);
@@ -113,6 +118,12 @@ export default function XrayList() {
         ].map(metric => <Card key={metric.label} className="p-4 flex items-center gap-3"><metric.icon className={`w-5 h-5 ${metric.color}`} /><div><div className="text-2xl font-bold">{metric.value}</div><div className="text-xs text-muted-foreground">{metric.label}</div></div></Card>)}
       </div>
 
+      {usingPreviewCases && (
+        <Card className="border-blue-200 bg-blue-50 p-4 text-sm text-blue-900">
+          Five synthetic Preview cases are loaded because this backend has no patient records. They contain no real patient data and never contact WhatsApp.
+        </Card>
+      )}
+
       <div className="flex items-center gap-3 flex-wrap">
         <Select value={ownerFilter} onValueChange={setOwnerFilter}>
           <SelectTrigger className="w-44"><SelectValue /></SelectTrigger>
@@ -153,6 +164,7 @@ export default function XrayList() {
                 <div className="flex items-center gap-2 flex-wrap">
                   <strong>{row.patient_name}</strong>
                   <span className={`text-[10px] uppercase font-bold px-2 py-1 rounded ${status.className}`}>{status.label}</span>
+                  {row.is_demo && <span className="text-[10px] uppercase font-bold px-2 py-1 rounded bg-fuchsia-100 text-fuchsia-700">Demo</span>}
                   {!row.doctor_id && <span className="text-[10px] uppercase font-bold px-2 py-1 rounded bg-blue-50 text-blue-700">Pool</span>}
                   {isMine && <span className="text-[10px] uppercase font-bold px-2 py-1 rounded bg-amber-50 text-amber-700">My case</span>}
                   {row.status === 'accepted' && <CheckCircle2 className="w-4 h-4 text-emerald-600" />}
@@ -164,7 +176,7 @@ export default function XrayList() {
               <Button asChild size="sm">
                 <Link to={`/admin/xrays/${row.id}`}>{!row.doctor_id ? 'Claim & plan' : 'Open plan'} <ArrowRight className="w-3 h-3 ml-1" /></Link>
               </Button>
-              {canDelete && row.status !== 'archived' && <Button size="icon" variant="ghost" aria-label="Archive case" onClick={() => archiveCase(row.id)}><Archive className="w-4 h-4 text-muted-foreground" /></Button>}
+              {canDelete && row.status !== 'archived' && !row.is_demo && !isVirtualDemoXray(row.id) && <Button size="icon" variant="ghost" aria-label="Archive case" onClick={() => archiveCase(row.id)}><Archive className="w-4 h-4 text-muted-foreground" /></Button>}
             </div>
           );
         })}
