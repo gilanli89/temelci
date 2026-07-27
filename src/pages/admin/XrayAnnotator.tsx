@@ -10,7 +10,28 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { ArrowLeft, Undo, Redo, Trash2, Save, Copy, ExternalLink, ZoomIn, ZoomOut, Send, MousePointer2, CheckCircle2, MessageCircle } from 'lucide-react';
+import {
+  Activity,
+  ArrowLeft,
+  CheckCircle2,
+  Copy,
+  Crown,
+  ExternalLink,
+  MessageCircle,
+  MousePointer2,
+  Redo,
+  Save,
+  Send,
+  Smile,
+  StickyNote,
+  Syringe,
+  Trash2,
+  Undo,
+  X,
+  ZoomIn,
+  ZoomOut,
+  type LucideIcon,
+} from 'lucide-react';
 import { uploadDataUrl } from '@/lib/mediaUpload';
 import {
   annotationToTreatmentItem,
@@ -62,49 +83,81 @@ function useImg(src: string): [HTMLImageElement | undefined] {
   return [image];
 }
 
-function AnnotationShape({ annotation, currency, selected }: { annotation: XrayAnnotation; currency: string; selected: boolean }) {
+const TOOL_ICONS: Record<XrayTool, LucideIcon> = {
+  implant: Syringe,
+  extraction: X,
+  crown: Crown,
+  root_canal: Activity,
+  all_on_4: Smile,
+  all_on_6: Smile,
+  note: StickyNote,
+};
+
+function AnnotationShape({ annotation, selected }: { annotation: XrayAnnotation; selected: boolean }) {
   const tool = getXrayTool(annotation.kind);
   const fullArchCount = annotation.kind === 'all_on_4' ? 4 : 6;
   const fullArch = annotation.kind === 'all_on_4' || annotation.kind === 'all_on_6';
   const archDirection = annotation.arch === 'lower' ? -1 : 1;
+  const compactCaption = annotation.tooth ? `#${annotation.tooth}` : tool.shortLabel;
+  const captionWidth = Math.max(34, compactCaption.length * 8 + 14);
+  const captionY = fullArch ? 24 : -48;
   return (
     <>
-      {selected && <Circle name="selection" radius={fullArch ? 62 : 21} stroke="#38bdf8" strokeWidth={3} dash={[6, 4]} />}
+      {selected && <Circle name="selection" listening={false} radius={fullArch ? 62 : 21} stroke="#38bdf8" strokeWidth={3} dash={[6, 4]} />}
       {annotation.kind === 'implant' && <>
         <Rect x={-6} y={-17} width={12} height={30} cornerRadius={4} fill={tool.color} stroke="white" strokeWidth={2} />
-        <Line points={[-6, -8, 6, -4, -6, 0, 6, 4, -6, 8]} stroke="white" strokeWidth={1.5} />
+        <Line listening={false} points={[-6, -8, 6, -4, -6, 0, 6, 4, -6, 8]} stroke="white" strokeWidth={1.5} />
       </>}
       {annotation.kind === 'extraction' && <>
         <Circle radius={17} fill="rgba(239,68,68,.2)" stroke={tool.color} strokeWidth={2} />
-        <Line points={[-12, -12, 12, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
-        <Line points={[12, -12, -12, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
+        <Line listening={false} points={[-12, -12, 12, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
+        <Line listening={false} points={[12, -12, -12, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
       </>}
       {annotation.kind === 'crown' && <>
         <Circle radius={16} fill="rgba(139,92,246,.25)" stroke={tool.color} strokeWidth={4} />
-        <Text text="C" fill="white" fontSize={14} fontStyle="bold" x={-5} y={-7} />
+        <Text listening={false} text="C" fill="white" fontSize={14} fontStyle="bold" x={-5} y={-7} />
       </>}
       {annotation.kind === 'root_canal' && <>
         <Circle radius={16} fill="rgba(245,158,11,.25)" stroke={tool.color} strokeWidth={3} />
-        <Line points={[0, -12, 0, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
-        <Circle y={-12} radius={4} fill={tool.color} />
+        <Line listening={false} points={[0, -12, 0, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
+        <Circle listening={false} y={-12} radius={4} fill={tool.color} />
       </>}
       {annotation.kind === 'note' && <>
         <Circle radius={16} fill={tool.color} stroke="white" strokeWidth={2} />
-        <Text text="N" fill="white" fontSize={14} fontStyle="bold" x={-5} y={-7} />
+        <Text listening={false} text="N" fill="white" fontSize={14} fontStyle="bold" x={-5} y={-7} />
       </>}
       {fullArch && <>
         <Line points={[-58, 8 * archDirection, -32, -4 * archDirection, 0, -9 * archDirection, 32, -4 * archDirection, 58, 8 * archDirection]} stroke={tool.color} strokeWidth={5} tension={0.4} lineCap="round" />
         {Array.from({ length: fullArchCount }, (_, index) => {
           const x = fullArchCount === 4 ? -42 + index * 28 : -50 + index * 20;
           const y = (Math.abs(x) / 10 - 7) * archDirection;
-          return <Group key={index} x={x} y={y}><Circle radius={8} fill={tool.color} stroke="white" strokeWidth={2} /><Text text={String(index + 1)} x={-3} y={-4} fill="white" fontSize={9} fontStyle="bold" /></Group>;
+          return <Group listening={false} key={index} x={x} y={y}><Circle radius={8} fill={tool.color} stroke="white" strokeWidth={2} /><Text text={String(index + 1)} x={-3} y={-4} fill="white" fontSize={9} fontStyle="bold" /></Group>;
         })}
       </>}
-      <Text
-        text={`${annotation.label}${annotation.tooth ? ` · #${annotation.tooth}` : ''}${annotation.price ? ` · ${currency} ${annotation.price}` : ''}`}
-        fill="white" fontSize={12} fontStyle="bold" x={fullArch ? -58 : 22} y={fullArch ? 22 : -8}
-        shadowColor="black" shadowBlur={5} shadowOpacity={1}
-      />
+      {selected && (
+        <Group listening={false}>
+          <Rect
+            x={-captionWidth / 2}
+            y={captionY}
+            width={captionWidth}
+            height={22}
+            cornerRadius={11}
+            fill="rgba(15,23,42,.92)"
+            stroke="rgba(255,255,255,.75)"
+            strokeWidth={1}
+          />
+          <Text
+            text={compactCaption}
+            x={-captionWidth / 2}
+            y={captionY + 5}
+            width={captionWidth}
+            align="center"
+            fill="white"
+            fontSize={11}
+            fontStyle="bold"
+          />
+        </Group>
+      )}
     </>
   );
 }
@@ -405,16 +458,28 @@ export default function XrayAnnotator() {
           <Card className="p-3">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-bold uppercase text-muted-foreground mr-1">Plan tools</span>
-              {XRAY_TOOLS.map(tool => (
-                <button key={tool.kind} type="button" title={tool.description} disabled={closed} onClick={() => {
-                  setSelectedTool(tool.kind);
-                  setSelectedPricingCode(pricingItemsForTool(pricingCatalog, tool.kind, currency)[0]?.code || '');
-                }}
-                  className={`rounded-lg border px-3 py-2 text-xs font-semibold transition ${selectedTool === tool.kind ? 'text-white shadow-sm' : 'bg-background hover:bg-secondary'}`}
-                  style={selectedTool === tool.kind ? { backgroundColor: tool.color, borderColor: tool.color } : { borderColor: `${tool.color}66`, color: tool.color }}>
-                  {tool.shortLabel} · {tool.label}
-                </button>
-              ))}
+              {XRAY_TOOLS.map(tool => {
+                const ToolIcon = TOOL_ICONS[tool.kind];
+                return (
+                  <button
+                    key={tool.kind}
+                    type="button"
+                    title={tool.description}
+                    aria-label={tool.label}
+                    disabled={closed}
+                    onClick={() => {
+                      setSelectedTool(tool.kind);
+                      setSelectedPricingCode(pricingItemsForTool(pricingCatalog, tool.kind, currency)[0]?.code || '');
+                    }}
+                    className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold transition sm:min-w-28 ${selectedTool === tool.kind ? 'text-white shadow-sm' : 'bg-background hover:bg-secondary'}`}
+                    style={selectedTool === tool.kind ? { backgroundColor: tool.color, borderColor: tool.color } : { borderColor: `${tool.color}66`, color: tool.color }}
+                  >
+                    <ToolIcon className="h-4 w-4 shrink-0" />
+                    <span className="hidden sm:inline">{tool.label}</span>
+                    <span className="sm:hidden">{tool.shortLabel}</span>
+                  </button>
+                );
+              })}
               {(selectedTool === 'all_on_4' || selectedTool === 'all_on_6') && (
                 <Select value={arch} onValueChange={value => setArch(value as DentalArch)}><SelectTrigger className="w-28 h-9"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="upper">Upper arch</SelectItem><SelectItem value="lower">Lower arch</SelectItem></SelectContent></Select>
               )}
@@ -451,14 +516,14 @@ export default function XrayAnnotator() {
                         x: Math.min(1, Math.max(0, event.target.x() / drawingSize.width)),
                         y: Math.min(1, Math.max(0, event.target.y() / drawingSize.height)),
                       })}>
-                      <AnnotationShape annotation={annotation} currency={currency} selected={selectedId === annotation.id} />
+                      <AnnotationShape annotation={annotation} selected={selectedId === annotation.id} />
                     </Group>
                   ))}
                 </Layer>
               </Stage>
             )}
           </Card>
-          <p className="text-xs text-muted-foreground flex items-center gap-2"><MousePointer2 className="w-3 h-3" />Choose a tool, click the X-ray to place it, then drag to reposition. Ctrl/Cmd+Z undo · Shift+Ctrl/Cmd+Z redo · Delete removes the selected marker.</p>
+          <p className="text-xs text-muted-foreground flex items-center gap-2"><MousePointer2 className="w-3 h-3" />Choose an icon, tap the X-ray to place it, or tap an existing marker to edit it. Labels only appear on the selected marker. Ctrl/Cmd+Z undo · Shift+Ctrl/Cmd+Z redo.</p>
         </div>
 
         <aside className="space-y-3">
