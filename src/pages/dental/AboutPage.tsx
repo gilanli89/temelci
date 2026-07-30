@@ -110,8 +110,9 @@ const AboutPage = () => {
   // The CMS is authoritative when available. Known clinicians retain their
   // existing education details, while newly added clinicians appear too.
   const staticBySlug = new Map(doctors.map(doctor => [doctor.slug, doctor]));
-  const doctorsToRender = (dbDoctors?.length && !doctorsError)
-    ? dbDoctors.map((db) => {
+  const visibleDbDoctors = (dbDoctors || []).filter(db => db.slug !== 'yaskan-ugurlu' && !db.name.toLocaleLowerCase('tr-TR').includes('yaşkan uğurlu'));
+  const doctorsToRender = (visibleDbDoctors.length && !doctorsError)
+    ? visibleDbDoctors.map((db) => {
           const existing = staticBySlug.get(db.slug);
           return {
             slug: db.slug,
@@ -190,7 +191,7 @@ const AboutPage = () => {
         <div className="container-dental">
           <motion.div className="text-center mb-14" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="heading-section mb-3">{t.ourDoctors}</h2>
-            <p className="text-body max-w-2xl mx-auto">{t.ourDoctorsSubtitle}</p>
+            <p className="text-body max-w-2xl mx-auto">{t.ourDoctorsSubtitle.replace(/\b6\b/, String(doctorsToRender.length)).replace('127+', '100+')}</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -32,9 +32,9 @@ const TECH = [
 
 const STATS = [
   { value: '1990', label: { en: 'Founded', tr: 'Kuruluş', el: 'Ιδρύθηκε', ru: 'Основана', ar: 'تأسست', he: 'נוסדה', de: 'Gegründet', fa: 'تأسیس' } },
-  { value: '6', label: { en: 'Specialists', tr: 'Uzman Hekim', el: 'Ειδικοί', ru: 'Специалистов', ar: 'متخصصون', he: 'מומחים', de: 'Spezialisten', fa: 'متخصص' } },
+  { value: '5', label: { en: 'Specialists', tr: 'Uzman Hekim', el: 'Ειδικοί', ru: 'Специалистов', ar: 'متخصصون', he: 'מומחים', de: 'Spezialisten', fa: 'متخصص' } },
   { value: '4', label: { en: 'Treatment Rooms', tr: 'Muayene Odası', el: 'Αίθουσες', ru: 'Кабинетов', ar: 'غرف علاج', he: 'חדרי טיפול', de: 'Behandlungszimmer', fa: 'اتاق درمان' } },
-  { value: '127+', label: { en: 'Years Experience', tr: 'Yıl Deneyim', el: 'Χρόνια Εμπειρίας', ru: 'Лет Опыта', ar: 'سنة خبرة', he: 'שנות ניסיון', de: 'Jahre Erfahrung', fa: 'سال تجربه' } },
+  { value: '100+', label: { en: 'Years Experience', tr: 'Yıl Deneyim', el: 'Χρόνια Εμπειρίας', ru: 'Лет Опыта', ar: 'سنة خبرة', he: 'שנות ניסיון', de: 'Jahre Erfahrung', fa: 'سال تجربه' } },
 ];
 
 type LangKey = 'en' | 'tr' | 'el' | 'ru' | 'ar' | 'he' | 'de' | 'fa';

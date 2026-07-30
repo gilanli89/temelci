@@ -8,14 +8,15 @@ import { QuoteButton } from '@/components/dental/QuoteButton';
 import { Star, Shield, Award, ChevronRight, Sparkles, Heart, Zap, Building2, FlaskConical, Images, Plane, Mail } from 'lucide-react';
 import { TreatmentIconPanel } from '@/components/dental/TreatmentIcon';
 import { clinicalCases } from '@/data/clinicalCases';
-import heroImg from '@/assets/clinic/clinic_room1.jpg';
 import clinicRoom from '@/assets/clinic/clinic_room2.jpg';
 import photoNural from '@/assets/doctors/nural_temelci.jpg';
 import photoAli from '@/assets/doctors/ali_temelci.jpg';
 import photoRasih from '@/assets/doctors/rasih_denktash.jpg';
 import photoSerife from '@/assets/doctors/serife_kole.jpg';
 import photoAnna from '@/assets/doctors/anna_zubtcovskaia.jpg';
-import photoYaskan from '@/assets/doctors/yaskan_ugurlu.jpg';
+
+// Photo: Michael Dam / Unsplash — https://unsplash.com/photos/mEZ3PoFGs_k
+const heroImg = '/hero-smiling-patient.webp';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -57,7 +58,6 @@ const HomePage = () => {
     { name: 'Dt. Rasih Denktaş Çelebi', photo: photoRasih },
     { name: 'Dr. Dt. Şerife Köle', photo: photoSerife },
     { name: 'Dt. Anna Zubtcovskaia', photo: photoAnna },
-    { name: 'Dt. Yaşkan Uğurlu', photo: photoYaskan },
   ];
 
   const stats = [
@@ -105,21 +105,23 @@ const HomePage = () => {
   return (
     <>
       {/* Hero */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img src={heroImg} alt="Temelci Dental Clinic" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-r from-foreground/80 via-foreground/50 to-transparent" />
-        </div>
-        <div className="relative container-dental section-padding">
-          <motion.div className="max-w-2xl" {...fadeInUp}>
-            <span className="trust-badge mb-6 inline-block">{page?.eyebrow || t.heroSubtitle}</span>
-            <h1 className="heading-display text-background mb-6">{page?.hero_title || t.heroTitle}</h1>
-            <p className="text-lg text-background/80 mb-8 leading-relaxed">{page?.hero_description || t.heroDescription}</p>
+      <section className="overflow-hidden bg-foreground">
+        <div className="grid min-h-[calc(100vh-68px)] lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="order-2 flex items-center px-6 py-10 md:px-10 lg:order-1 lg:px-14 lg:py-12 xl:pl-24">
+            <motion.div className="max-w-xl" {...fadeInUp}>
+            <span className="trust-badge mb-4 inline-block lg:mb-6">{page?.eyebrow || t.heroSubtitle}</span>
+            <h1 className="heading-display mb-4 text-background lg:mb-6">{page?.hero_title || t.heroTitle}</h1>
+            <p className="mb-6 text-base leading-relaxed text-background/80 md:text-lg lg:mb-8">{page?.hero_description || t.heroDescription}</p>
             <div className="flex flex-wrap gap-4">
               <QuoteButton text={t.freeConsultation || 'Get Free Quote'} variant="hero" />
               <WhatsAppButton text={t.bookWhatsApp} variant="outline" className="border-background/30 text-background hover:bg-background/10 hover:text-background" />
             </div>
-          </motion.div>
+            </motion.div>
+          </div>
+          <div className="relative order-1 min-h-[40vh] overflow-hidden lg:order-2 lg:min-h-full">
+            <img src={heroImg} alt="Confident smiling woman" className="absolute inset-0 h-full w-full object-cover object-[center_24%]" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/45 via-transparent to-transparent lg:bg-gradient-to-r lg:from-foreground/25 lg:to-transparent" />
+          </div>
         </div>
       </section>
 
@@ -161,7 +163,7 @@ const HomePage = () => {
           <motion.div {...fadeInUp}>
             <span className="trust-badge mb-4 inline-block">Real clinic · Real team</span>
             <h2 className="heading-section mb-3">{t.ourDoctors}</h2>
-            <p className="text-body mb-7">{t.ourDoctorsSubtitle}</p>
+            <p className="text-body mb-7">{t.ourDoctorsSubtitle.replace(/\b6\b/, '5').replace('127+', '100+')}</p>
             <div className="grid grid-cols-3 gap-3">
               {team.map(member => <Link key={member.name} to={localePath(`/${t.aboutSlug}#doctors`)} className="group overflow-hidden rounded-2xl border bg-card">
                 <img src={member.photo} alt={member.name} className="aspect-square w-full object-cover object-top transition-transform duration-500 group-hover:scale-105" loading="lazy" />
