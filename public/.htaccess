@@ -1,0 +1,19 @@
+Options -MultiViews
+RewriteEngine On
+
+# Canonical English landing page.
+RewriteRule ^$ /en [R=301,L]
+RewriteRule ^index\.html$ /en [R=301,L]
+RewriteRule ^landing/?$ /en [R=301,L]
+
+# Serve generated assets and real directories as-is.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Serve generated clean-URL HTML entry points when present.
+RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
+
+# React Router fallback.
+RewriteRule ^ /index.html [L]
