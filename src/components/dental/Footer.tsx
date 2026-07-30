@@ -15,6 +15,13 @@ export const Footer = () => {
   const address = settings?.address || t.contactAddress;
   const phone = CONTACT_PHONE;
   const email = settings?.email || t.contactEmail;
+  const ui = {
+    en: { careTeam: 'English-speaking care team', coordination: 'Personal treatment coordination', familyClinic: 'Established family clinic', allTreatments: 'All Treatments', clinic: 'Clinic', lab: 'Dental Lab', tourism: 'Tourism', freeQuote: 'Free Quote', hollywoodPackage: 'Hollywood Smile Package', allOn4Package: 'All-on-4 Package', doctors: 'Our Doctors', profile: 'Dr. Şerife Köle Profile', location: 'Kyrenia (Girne), North Cyprus' },
+    de: { careTeam: 'Mehrsprachiges Betreuungsteam', coordination: 'Persönliche Behandlungskoordination', familyClinic: 'Etablierte Familienklinik', allTreatments: 'Alle Behandlungen', clinic: 'Klinik', lab: 'Dentallabor', tourism: 'Zahntourismus', freeQuote: 'Kostenlose Anfrage', hollywoodPackage: 'Hollywood-Smile-Paket', allOn4Package: 'All-on-4-Paket', doctors: 'Unsere Behandler', profile: 'Profil Dr. Şerife Köle', location: 'Kyrenia (Girne), Nordzypern' },
+    tr: { careTeam: 'Çok dilli hasta ekibi', coordination: 'Kişisel tedavi koordinasyonu', familyClinic: 'Köklü aile kliniği', allTreatments: 'Tüm Tedaviler', clinic: 'Klinik', lab: 'Diş Laboratuvarı', tourism: 'Diş Turizmi', freeQuote: 'Ücretsiz Teklif Al', hollywoodPackage: 'Hollywood Smile Paketi', allOn4Package: 'All-on-4 Paketi', doctors: 'Hekimlerimiz', profile: 'Dr. Şerife Köle Profili', location: 'Girne, Kuzey Kıbrıs' },
+    he: { careTeam: 'צוות טיפול רב-לשוני', coordination: 'תיאום טיפול אישי', familyClinic: 'מרפאה משפחתית ותיקה', allTreatments: 'כל הטיפולים', clinic: 'המרפאה', lab: 'מעבדת שיניים', tourism: 'תיירות מרפא', freeQuote: 'בקשת הצעה חינם', hollywoodPackage: 'חבילת Hollywood Smile', allOn4Package: 'חבילת All-on-4', doctors: 'הרופאים שלנו', profile: 'הפרופיל של ד״ר Şerife Köle', location: 'קירניה (גירנה), צפון קפריסין' },
+    ru: { careTeam: 'Многоязычная команда', coordination: 'Персональная координация лечения', familyClinic: 'Семейная клиника с историей', allTreatments: 'Все виды лечения', clinic: 'Клиника', lab: 'Зуботехническая лаборатория', tourism: 'Стоматологический туризм', freeQuote: 'Бесплатный расчёт', hollywoodPackage: 'Пакет Hollywood Smile', allOn4Package: 'Пакет All-on-4', doctors: 'Наши врачи', profile: 'Профиль Dr. Şerife Köle', location: 'Кирения (Гирне), Северный Кипр' },
+  }[lang];
 
   const linkClass = "block text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all duration-200 py-0.5";
   const headingClass = "text-xs font-bold uppercase tracking-widest opacity-40 mb-4";
@@ -26,9 +33,9 @@ export const Footer = () => {
       <div className="border-b border-background/10">
         <div className="container-dental px-4 py-5">
           <div className="flex flex-wrap items-center justify-center gap-6 md:gap-12 text-xs opacity-60">
-            <span className="flex items-center gap-2"><Languages className="h-3.5 w-3.5" /> English-speaking care team</span>
-            <span className="flex items-center gap-2"><HeartHandshake className="h-3.5 w-3.5" /> Personal treatment coordination</span>
-            <span className="flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> Established family clinic</span>
+            <span className="flex items-center gap-2"><Languages className="h-3.5 w-3.5" /> {ui.careTeam}</span>
+            <span className="flex items-center gap-2"><HeartHandshake className="h-3.5 w-3.5" /> {ui.coordination}</span>
+            <span className="flex items-center gap-2"><Clock className="h-3.5 w-3.5" /> {ui.familyClinic}</span>
             <span className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> {address}</span>
           </div>
         </div>
@@ -110,17 +117,17 @@ export const Footer = () => {
               <Link to={localePath(`/${t.smileMakeoverSlug}`)}       onClick={scrollToTop} className={linkClass}>{t.smileMakeover}</Link>
               <Link to={localePath(`/${t.fullMouthRestorationSlug}`)} onClick={scrollToTop} className={linkClass}>{t.fullMouthRestoration}</Link>
               <Link to={localePath(`/${t.treatmentsSlug}`)}          onClick={scrollToTop} className="block text-xs text-primary opacity-80 hover:opacity-100 transition-opacity mt-2 pt-2 border-t border-background/10">
-                {lang === 'tr' ? 'Tüm Tedaviler →' : 'All Treatments →'}
+                {ui.allTreatments} →
               </Link>
             </nav>
           </div>
 
           {/* Clinic col */}
           <div>
-            <p className={headingClass}>{lang === 'tr' ? 'Klinik' : 'Clinic'}</p>
+            <p className={headingClass}>{ui.clinic}</p>
             <nav aria-label="Clinic pages">
               <Link to={localePath(`/${t.ourClinicSlug}`)}       onClick={scrollToTop} className={linkClass}>{t.ourClinic}</Link>
-              <Link to={localePath('/lab')}                      onClick={scrollToTop} className={linkClass}>Dental Lab</Link>
+              <Link to={localePath('/lab')}                      onClick={scrollToTop} className={linkClass}>{ui.lab}</Link>
               <Link to={localePath(`/${t.aboutSlug}#doctors`)}   className={linkClass}>{t.ourTeam}</Link>
               <Link to={localePath(`/${t.beforeAfterSlug}`)}     onClick={scrollToTop} className={linkClass}>{t.beforeAfter}</Link>
               <Link to={localePath(`/${t.reviewsSlug}`)}         onClick={scrollToTop} className={linkClass}>{t.reviews}</Link>
@@ -129,24 +136,24 @@ export const Footer = () => {
               <Link to={localePath(`/${t.contactSlug}`)}         onClick={scrollToTop} className={linkClass}>{t.contact}</Link>
             </nav>
 
-            <p className={`${headingClass} mt-8`}>{lang === 'tr' ? 'Diş Turizmi' : 'Tourism'}</p>
+            <p className={`${headingClass} mt-8`}>{ui.tourism}</p>
             <nav aria-label="Dental tourism">
               <Link to={localePath(`/${t.dentalTourismSlug}`)}   onClick={scrollToTop} className={linkClass}>{t.dentalTourism}</Link>
               <Link to={localePath('/landing')}                  onClick={scrollToTop} className={linkClass}>
-                {lang === 'tr' ? 'Ücretsiz Teklif Al' : 'Free Quote'}
+                {ui.freeQuote}
               </Link>
               <Link to={localePath('/landing/hollywood-smile')}  onClick={scrollToTop} className={linkClass}>
-                {lang === 'tr' ? 'Hollywood Smile Paketi' : 'Hollywood Smile Package'}
+                {ui.hollywoodPackage}
               </Link>
               <Link to={localePath('/landing/allon4')}           onClick={scrollToTop} className={linkClass}>
-                {lang === 'tr' ? 'All-on-4 Paketi' : 'All-on-4 Package'}
+                {ui.allOn4Package}
               </Link>
             </nav>
           </div>
 
           {/* Doctors col */}
           <div>
-            <p className={headingClass}>{lang === 'tr' ? 'Hekimlerimiz' : 'Our Doctors'}</p>
+            <p className={headingClass}>{ui.doctors}</p>
             <nav aria-label="Our doctors">
               {[
                 { name: 'DT. Nural Temelci',          anchor: 'nural-temelci' },
@@ -167,7 +174,7 @@ export const Footer = () => {
               ))}
               <Link to="/en/dr-serife-kole" onClick={scrollToTop}
                 className="block text-xs text-primary opacity-80 hover:opacity-100 transition-opacity mt-2 pt-2 border-t border-background/10">
-                Dr. Şerife Köle Profile →
+                {ui.profile} →
               </Link>
             </nav>
           </div>
@@ -179,7 +186,7 @@ export const Footer = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs opacity-40">
             <p>© {new Date().getFullYear()} {brandName}. {t.footerRights}</p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <span>Kyrenia (Girne), North Cyprus</span>
+              <span>{ui.location}</span>
               <span>·</span>
               <a href={`mailto:${email}`} className="hover:opacity-80 transition-opacity">{email}</a>
               <span>·</span>

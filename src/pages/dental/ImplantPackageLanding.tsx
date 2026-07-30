@@ -4,7 +4,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { QuoteModal } from "@/components/dental/QuoteModal";
 import "./LandingPage.css";
 
-const WA = "905338229445";
+const WA = "905391011113";
 const waLink = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
 
 const PACKAGES = [

@@ -166,6 +166,116 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://temelcidentist.com/en/dental-tourism</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/dental-tourism" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/zahntourismus" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/dis-turizmi" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/tayarut-refuit" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/stom-turizm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/dental-tourism" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/de/zahntourismus</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/dental-tourism" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/zahntourismus" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/dis-turizmi" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/tayarut-refuit" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/stom-turizm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/dental-tourism" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/tr/dis-turizmi</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/dental-tourism" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/zahntourismus" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/dis-turizmi" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/tayarut-refuit" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/stom-turizm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/dental-tourism" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/he/tayarut-refuit</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/dental-tourism" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/zahntourismus" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/dis-turizmi" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/tayarut-refuit" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/stom-turizm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/dental-tourism" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/ru/stom-turizm</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/dental-tourism" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/zahntourismus" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/dis-turizmi" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/tayarut-refuit" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/stom-turizm" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/dental-tourism" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/contact</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/iletisim" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/tsorkesher" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/kontakty" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/contact" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/de/kontakt</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/iletisim" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/tsorkesher" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/kontakty" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/contact" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/tr/iletisim</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/iletisim" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/tsorkesher" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/kontakty" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/contact" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/he/tsorkesher</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/iletisim" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/tsorkesher" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/kontakty" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/contact" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/ru/kontakty</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/kontakt" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/iletisim" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/tsorkesher" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/kontakty" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/contact" />
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://temelcidentist.com/en/before-after</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/before-after" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/before-after" />
@@ -201,13 +311,6 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://temelcidentist.com/en/dental-tourism</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/dental-tourism" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/dental-tourism" />
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
     <loc>https://temelcidentist.com/en/research</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/research" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/research" />
@@ -215,219 +318,193 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://temelcidentist.com/en/contact</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/contact" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/contact" />
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/veneers</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/veneers" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/veneers" />
-    <lastmod>2026-07-16T14:26:37.234Z</lastmod>
+    <loc>https://temelcidentist.com/en/hollywood-smile</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/hollywood-smile" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/hollywood-smile" />
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://temelcidentist.com/treatments/veneers.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/teeth-whitening</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/teeth-whitening" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/teeth-whitening" />
-    <lastmod>2026-07-16T14:26:37.428Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/teeth-whitening.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/dental-bonding</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/dental-bonding" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/dental-bonding" />
-    <lastmod>2026-07-16T14:26:37.615Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/dental-bonding.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/smile-makeover</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/smile-makeover" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/smile-makeover" />
-    <lastmod>2026-07-16T14:26:37.797Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/smile-makeover.webp</image:loc>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/implants</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/implants" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/implants" />
-    <lastmod>2026-07-16T14:26:37.985Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://temelcidentist.com/treatments/implants.webp</image:loc>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
     </image:image>
   </url>
   <url>
-    <loc>https://temelcidentist.com/en/all-on-4</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/all-on-4" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/all-on-4" />
-    <lastmod>2026-07-16T14:26:38.151Z</lastmod>
+    <loc>https://temelcidentist.com/en/veneers</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/veneers" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/veneers" />
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://temelcidentist.com/treatments/all-on-4.webp</image:loc>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/crowns</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/crowns" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/crowns" />
-    <lastmod>2026-07-16T14:26:38.391Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://temelcidentist.com/treatments/crowns.webp</image:loc>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/zirconia-crowns</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/zirconia-crowns" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/zirconia-crowns" />
-    <lastmod>2026-07-16T14:26:38.562Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://temelcidentist.com/treatments/zirconia-crowns.webp</image:loc>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/teeth-whitening</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/teeth-whitening" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/teeth-whitening" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/smile-makeover</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/smile-makeover" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/smile-makeover" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/full-mouth-restoration</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/full-mouth-restoration" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/full-mouth-restoration" />
-    <lastmod>2026-07-16T14:26:39.011Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://temelcidentist.com/treatments/full-mouth-restoration.webp</image:loc>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/root-canal-treatment</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/root-canal-treatment" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/root-canal-treatment" />
-    <lastmod>2026-07-16T14:26:39.206Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://temelcidentist.com/treatments/root-canal-treatment.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/wisdom-tooth-removal</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/wisdom-tooth-removal" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/wisdom-tooth-removal" />
-    <lastmod>2026-07-16T14:26:39.417Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/wisdom-tooth-removal.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/gum-disease-treatment</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/gum-disease-treatment" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/gum-disease-treatment" />
-    <lastmod>2026-07-16T14:26:39.651Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/gum-disease-treatment.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/laser-gum-treatment</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/laser-gum-treatment" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/laser-gum-treatment" />
-    <lastmod>2026-07-16T14:26:39.868Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/laser-gum-treatment.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/bruxism-treatment</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/bruxism-treatment" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/bruxism-treatment" />
-    <lastmod>2026-07-16T14:26:40.055Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/bruxism-treatment.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/clear-aligners</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/clear-aligners" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/clear-aligners" />
-    <lastmod>2026-07-16T14:26:40.205Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/clear-aligners.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/preventive-dentistry</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/preventive-dentistry" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/preventive-dentistry" />
-    <lastmod>2026-07-16T14:26:40.510Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/preventive-dentistry.webp</image:loc>
-    </image:image>
-  </url>
-  <url>
-    <loc>https://temelcidentist.com/en/hollywood-smile</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/hollywood-smile" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/hollywood-smile" />
-    <lastmod>2026-07-16T14:26:37.042Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <image:image>
-      <image:loc>https://temelcidentist.com/treatments/hollywood-smile.webp</image:loc>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/composite-fillings</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/composite-fillings" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/composite-fillings" />
-    <lastmod>2026-07-16T14:26:38.789Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://temelcidentist.com/treatments/composite-fillings.webp</image:loc>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/all-on-4</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/all-on-4" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/all-on-4" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/clear-aligners</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/clear-aligners" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/clear-aligners" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/dental-bonding</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/dental-bonding" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/dental-bonding" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
     </image:image>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/orthodontics</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/orthodontics" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/orthodontics" />
-    <lastmod>2026-07-16T14:26:40.348Z</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
-      <image:loc>https://temelcidentist.com/treatments/orthodontics.webp</image:loc>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/wisdom-tooth-removal</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/wisdom-tooth-removal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/wisdom-tooth-removal" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/gum-disease-treatment</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/gum-disease-treatment" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/gum-disease-treatment" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/laser-gum-treatment</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/laser-gum-treatment" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/laser-gum-treatment" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/bruxism-treatment</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/bruxism-treatment" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/bruxism-treatment" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/preventive-dentistry</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/preventive-dentistry" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/preventive-dentistry" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://temelcidentist.com/hero-smiling-patient.webp</image:loc>
     </image:image>
   </url>
 </urlset>

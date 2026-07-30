@@ -32,6 +32,13 @@ const HomePage = () => {
   const { data: dbReviews } = useReviews(4, true);
   const { data: dbFaqs, isError: faqsError } = useFaqs('global');
   const { data: settings } = useSiteSettings();
+  const ui = {
+    en: { digital: 'Digital', kyrenia: 'Kyrenia', explore: 'Explore Temelci Dental', clinicImageAlt: 'A real treatment room at Temelci Dental Clinic', clinicLabel: 'Our clinic in Kyrenia', realClinic: 'Real clinic · Real team', before: 'Before', after: 'After', clinicalCase: 'Clinical case', transformation: 'Patient transformation' },
+    de: { digital: 'Digital', kyrenia: 'Kyrenia', explore: 'Temelci Dental entdecken', clinicImageAlt: 'Ein echter Behandlungsraum der Temelci Dental Clinic', clinicLabel: 'Unsere Klinik in Kyrenia', realClinic: 'Echte Klinik · Echtes Team', before: 'Vorher', after: 'Nachher', clinicalCase: 'Klinischer Fall', transformation: 'Patientenbehandlung' },
+    tr: { digital: 'Dijital', kyrenia: 'Girne', explore: 'Temelci Dental’i keşfedin', clinicImageAlt: 'Temelci Dental Clinic’in gerçek tedavi odası', clinicLabel: 'Girne’deki kliniğimiz', realClinic: 'Gerçek klinik · Gerçek ekip', before: 'Önce', after: 'Sonra', clinicalCase: 'Klinik vaka', transformation: 'Hasta dönüşümü' },
+    he: { digital: 'דיגיטלי', kyrenia: 'קירניה', explore: 'גלו את Temelci Dental', clinicImageAlt: 'חדר טיפולים אמיתי במרפאת Temelci Dental', clinicLabel: 'המרפאה שלנו בקירניה', realClinic: 'מרפאה אמיתית · צוות אמיתי', before: 'לפני', after: 'אחרי', clinicalCase: 'מקרה קליני', transformation: 'שינוי חיוך של מטופל' },
+    ru: { digital: 'Цифровое', kyrenia: 'Кирения', explore: 'Откройте Temelci Dental', clinicImageAlt: 'Настоящий лечебный кабинет клиники Temelci Dental', clinicLabel: 'Наша клиника в Кирении', realClinic: 'Настоящая клиника · Настоящая команда', before: 'До', after: 'После', clinicalCase: 'Клинический случай', transformation: 'Преображение пациента' },
+  }[lang];
 
   useSEO({
     title: page?.seo_title || `${t.heroTitle} | Temelci Dental`,
@@ -63,8 +70,8 @@ const HomePage = () => {
   const stats = [
     { value: '1990', label: t.yearsExperience },
     { value: '5', label: t.countriesServed },
-    { value: 'Digital', label: t.treatmentProcess },
-    { value: 'Kyrenia', label: t.clinicLocation },
+    { value: ui.digital, label: t.treatmentProcess },
+    { value: ui.kyrenia, label: t.clinicLocation },
   ];
 
   const labLabels = { en: 'Dental Lab', de: 'Dentallabor', tr: 'Diş Laboratuvarı', he: 'מעבדת שיניים', ru: 'Зуботехническая лаборатория' } as const;
@@ -91,7 +98,7 @@ const HomePage = () => {
     { title: t.whyReason4Title, desc: t.whyReason4Desc, icon: Heart },
   ];
 
-  const reviews = (dbReviews || []).map(review => ({ name: review.patient_name, country: `${review.country_flag || ''} ${review.country || ''}`.trim(), text: review.content, rating: review.rating }));
+  const reviews = lang === 'en' ? (dbReviews || []).map(review => ({ name: review.patient_name, country: `${review.country_flag || ''} ${review.country || ''}`.trim(), text: review.content, rating: review.rating })) : [];
 
   const fallbackFaqs = [
     { q: t.faq1Q, a: t.faq1A },
@@ -99,8 +106,9 @@ const HomePage = () => {
     { q: t.faq3Q, a: t.faq3A },
     { q: t.faq4Q, a: t.faq4A },
     { q: t.faq5Q, a: t.faq5A },
+    { q: t.faq6Q, a: t.faq6A },
   ];
-  const faqs = dbFaqs && !faqsError ? dbFaqs.map(faq => ({ q: faq.question, a: faq.answer })) : fallbackFaqs;
+  const faqs = lang === 'en' && dbFaqs && !faqsError ? dbFaqs.map(faq => ({ q: faq.question, a: faq.answer })) : fallbackFaqs;
 
   return (
     <>
@@ -140,8 +148,8 @@ const HomePage = () => {
       {/* Primary destination links support clear navigation and search sitelinks. */}
       <section className="border-b bg-card py-8" aria-labelledby="primary-destinations-title">
         <div className="container-dental px-4">
-          <h2 id="primary-destinations-title" className="sr-only">Explore Temelci Dental</h2>
-          <nav aria-label="Explore Temelci Dental" className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <h2 id="primary-destinations-title" className="sr-only">{ui.explore}</h2>
+          <nav aria-label={ui.explore} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {primaryDestinations.map(item => {
               const Icon = item.icon;
               return <Link key={item.path} to={localePath(item.path)} className="group flex items-start gap-4 rounded-2xl border bg-background p-5 transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-md">
@@ -157,11 +165,11 @@ const HomePage = () => {
       <section className="section-padding bg-secondary/30">
         <div className="container-dental grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
           <motion.div className="relative overflow-hidden rounded-3xl border bg-card shadow-sm" {...fadeInUp}>
-            <img src={clinicRoom} alt="A real treatment room at Temelci Dental Clinic" className="aspect-[4/3] h-full w-full object-cover" loading="lazy" />
-            <span className="absolute bottom-4 left-4 rounded-full bg-foreground/80 px-4 py-2 text-xs font-semibold text-background backdrop-blur-sm">Our clinic in Kyrenia</span>
+            <img src={clinicRoom} alt={ui.clinicImageAlt} className="aspect-[4/3] h-full w-full object-cover" loading="lazy" />
+            <span className="absolute bottom-4 left-4 rounded-full bg-foreground/80 px-4 py-2 text-xs font-semibold text-background backdrop-blur-sm">{ui.clinicLabel}</span>
           </motion.div>
           <motion.div {...fadeInUp}>
-            <span className="trust-badge mb-4 inline-block">Real clinic · Real team</span>
+            <span className="trust-badge mb-4 inline-block">{ui.realClinic}</span>
             <h2 className="heading-section mb-3">{t.ourDoctors}</h2>
             <p className="text-body mb-7">{t.ourDoctorsSubtitle.replace(/\b6\b/, '5').replace('127+', '100+')}</p>
             <div className="grid grid-cols-3 gap-3">
@@ -233,9 +241,9 @@ const HomePage = () => {
             {beforeAfterCases.map((item, index) => <motion.div key={item.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.08 }}>
               <Link to={localePath(`/${t.beforeAfterSlug}`)} className="group block overflow-hidden rounded-2xl border bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
                 <div className="aspect-[4/3] overflow-hidden bg-secondary/30">
-                  {item.after_image ? <div className="grid h-full grid-cols-2"><div className="relative overflow-hidden"><img src={item.before_image} alt={item.before_alt} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" /><span className="absolute bottom-2 left-2 rounded-full bg-foreground/80 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-background">Before</span></div><div className="relative overflow-hidden"><img src={item.after_image} alt={item.after_alt} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" /><span className="absolute bottom-2 right-2 rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">After</span></div></div> : <div className="relative h-full"><img src={item.before_image} alt={item.before_alt} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" /><span className="absolute bottom-2 left-2 rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">Clinical case</span></div>}
+                  {item.after_image ? <div className="grid h-full grid-cols-2"><div className="relative overflow-hidden"><img src={item.before_image} alt={item.before_alt} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" /><span className="absolute bottom-2 left-2 rounded-full bg-foreground/80 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-background">{ui.before}</span></div><div className="relative overflow-hidden"><img src={item.after_image} alt={item.after_alt} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" /><span className="absolute bottom-2 right-2 rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">{ui.after}</span></div></div> : <div className="relative h-full"><img src={item.before_image} alt={item.before_alt} className="h-full w-full object-contain transition-transform duration-500 group-hover:scale-[1.02]" loading="lazy" /><span className="absolute bottom-2 left-2 rounded-full bg-primary px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-foreground">{ui.clinicalCase}</span></div>}
                 </div>
-                <div className="flex items-center justify-between gap-3 p-4"><h3 className="font-display font-semibold">{item.title || 'Patient transformation'}</h3><ChevronRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-1" /></div>
+                <div className="flex items-center justify-between gap-3 p-4"><h3 className="font-display font-semibold">{lang === 'en' ? (item.title || ui.transformation) : ui.transformation}</h3><ChevronRight className="h-4 w-4 shrink-0 text-primary transition-transform group-hover:translate-x-1" /></div>
               </Link>
             </motion.div>)}
           </div>}

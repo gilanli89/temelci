@@ -25,7 +25,8 @@ export default function BlogArticlePage() {
   const article = staticArticle;
   const seoTitle = dbPost?.seo_title || article?.seoTitle || dbPost?.title || article?.title?.en || 'Dental guide | Temelci Dental';
   const seoDescription = dbPost?.seo_description || article?.seoDescription || dbPost?.excerpt || article?.excerpt?.en || 'Dental information from Temelci Dental Clinic.';
-  useSEO({ title: seoTitle, description: seoDescription, canonical: `https://temelcidentist.com/${lang}/blog/${slug || ''}`, ogImage: dbPost?.cover_image || dbPost?.featured_image || article?.img, type: 'article', robots: !isLoading && !dbPost && !article ? 'noindex,follow' : undefined, publishedTime: dbPost?.published_at || article?.date, modifiedTime: dbPost?.updated_at });
+  const isEditoriallyPublished = Boolean(dbPost);
+  useSEO({ title: seoTitle, description: seoDescription, canonical: `https://temelcidentist.com/${lang}/blog/${slug || ''}`, ogImage: dbPost?.cover_image || dbPost?.featured_image || article?.img, type: 'article', robots: !isEditoriallyPublished ? 'noindex,follow' : undefined, publishedTime: dbPost?.published_at || article?.date, modifiedTime: dbPost?.updated_at });
 
   // If we have neither DB post nor static article and finished loading, show 404
   if (!isLoading && !dbPost && !article) {

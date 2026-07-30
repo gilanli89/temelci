@@ -3,7 +3,7 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import "./LandingPage.css";
 import { useSEO } from '@/hooks/useSEO';
 
-const WHATSAPP_NUMBER = "905338229445";
+const WHATSAPP_NUMBER = "905391011113";
 
 const TREATMENTS = [
   { id: "hollywood", emoji: "✨", en: "Hollywood Smile", tr: "Hollywood Smile", desc_en: "Complete smile makeover with porcelain veneers", desc_tr: "Porselen veneerlerle tam gülüş dönüşümü", days_en: "5–7 days", days_tr: "5–7 gün", save: "60–70%" },

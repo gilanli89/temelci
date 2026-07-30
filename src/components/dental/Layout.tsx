@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import { ChevronUp } from 'lucide-react';
 
 export const Layout = () => {
-  const { t } = useLanguage();
+  const { lang } = useLanguage();
   const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export const Layout = () => {
       {showTop && (
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="Back to top"
+          aria-label={({ en: 'Back to top', de: 'Nach oben', tr: 'Yukarı dön', he: 'חזרה למעלה', ru: 'Наверх' } as const)[lang]}
           className="fixed bottom-6 right-20 z-40 w-10 h-10 rounded-full bg-card border border-border shadow-lg flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary transition-all hover:scale-110"
         >
           <ChevronUp className="h-5 w-5" />

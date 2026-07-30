@@ -1,5 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { fallbackTreatments } from './seo-fallbacks.mjs';
 
 const SITE_URL = (process.env.SITE_URL || 'https://temelcidentist.com').replace(/\/$/, '');
 const ACTIVE_LANGUAGES = ['en', 'de', 'tr', 'he', 'ru'];
@@ -36,19 +37,22 @@ const localizedStaticGroups = [
   { paths: { en: '/en', de: '/de', tr: '/tr', he: '/he', ru: '/ru' }, priority: 1, changefreq: 'weekly' },
   { paths: { en: '/en/treatments', de: '/de/behandlungen', tr: '/tr/tedaviler', he: '/he/tipulim', ru: '/ru/lechenie' }, priority: 0.9, changefreq: 'weekly' },
   { paths: { en: '/en/blog', de: '/de/blog', tr: '/tr/blog', he: '/he/blog', ru: '/ru/blog' }, priority: 0.8, changefreq: 'weekly' },
+  { paths: { en: '/en/dental-tourism', de: '/de/zahntourismus', tr: '/tr/dis-turizmi', he: '/he/tayarut-refuit', ru: '/ru/stom-turizm' }, priority: 0.85, changefreq: 'monthly' },
+  { paths: { en: '/en/contact', de: '/de/kontakt', tr: '/tr/iletisim', he: '/he/tsorkesher', ru: '/ru/kontakty' }, priority: 0.7, changefreq: 'monthly' },
 ];
 const englishOnlyStatic = [
   ['before-after', 0.8, 'monthly'], ['reviews', 0.75, 'monthly'], ['about', 0.75, 'monthly'],
-  ['our-clinic', 0.85, 'monthly'], ['lab', 0.85, 'monthly'], ['dental-tourism', 0.85, 'monthly'],
-  ['research', 0.7, 'monthly'], ['contact', 0.7, 'monthly'],
+  ['our-clinic', 0.85, 'monthly'], ['lab', 0.85, 'monthly'],
+  ['research', 0.7, 'monthly'],
 ];
 
-const [treatments, posts, research, postTranslations] = await Promise.all([
+const [remoteTreatments, posts, research, postTranslations] = await Promise.all([
   from('treatments', 'select=slug,title,description,featured_image,og_image,updated_at&language=eq.en&active=eq.true&content_status=eq.published&deleted_at=is.null'),
   from('posts', 'select=id,slug,title,excerpt,featured_image,cover_image,updated_at,published_at&language=eq.en&published=eq.true&status=eq.published&deleted_at=is.null'),
   from('research_publications', 'select=slug,title,abstract,updated_at&language=eq.en&content_status=eq.published&deleted_at=is.null'),
   from('post_translations', 'select=post_id,lang,title,excerpt'),
 ]);
+const treatments = remoteTreatments.length ? remoteTreatments : fallbackTreatments;
 
 const urls = [];
 for (const group of localizedStaticGroups) {
@@ -61,7 +65,7 @@ for (const [path, priority, changefreq] of englishOnlyStatic) {
 }
 for (const item of treatments) {
   const loc = `${SITE_URL}/en/${item.slug}`;
-  urls.push({ loc, lastmod: item.updated_at, priority: 0.85, changefreq: 'monthly', image: absoluteUrl(`/treatments/${item.slug}.webp`), alternates: [{ lang: 'en', href: loc }] });
+  urls.push({ loc, lastmod: item.updated_at, priority: 0.85, changefreq: 'monthly', image: absoluteUrl(item.og_image || item.featured_image || '/hero-smiling-patient.webp'), alternates: [{ lang: 'en', href: loc }] });
 }
 for (const item of posts) {
   const available = ['en', ...postTranslations.filter(translation => translation.post_id === item.id).map(translation => translation.lang)]

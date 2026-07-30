@@ -4,7 +4,7 @@ import { useSEO } from "@/hooks/useSEO";
 import { QuoteModal } from "@/components/dental/QuoteModal";
 import "./LandingPage.css";
 
-const WA = "905338229445";
+const WA = "905391011113";
 const waLink = (msg: string) => `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
 
 const STATS = [
@@ -210,7 +210,7 @@ export default function HollywoodSmileLanding() {
             style={{ background: "#25d366", border: "none" }}>💬 WhatsApp Direct</a>
         </div>
         <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 12, marginTop: 20 }}>
-          Temelci Dental · Salih Miroğlu Cad. No:14, Kyrenia, North Cyprus · +90 533 822 9445
+          Temelci Dental · Salih Miroğlu Cad. No:14, Kyrenia, North Cyprus · +90 539 101 11 13
         </p>
       </section>
 
