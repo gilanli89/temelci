@@ -41,14 +41,14 @@ export const useSEO = ({ title, description, canonical, ogImage, ogImageAlt, typ
   useEffect(() => {
     const firstSegment = window.location.pathname.split('/').filter(Boolean)[1] || '';
     const indexableLocalizedSegments = {
-      de: new Set(['', 'behandlungen', 'blog', 'zahntourismus', 'kontakt']),
-      tr: new Set(['', 'tedaviler', 'blog', 'dis-turizmi', 'iletisim']),
-      he: new Set(['', 'tipulim', 'blog', 'tayarut-refuit', 'tsorkesher']),
-      ru: new Set(['', 'lechenie', 'blog', 'stom-turizm', 'kontakty']),
+      de: new Set(['', 'behandlungen', 'blog', 'zahntourismus', 'kontakt', 'vorher-nachher', 'ueber-uns', 'unsere-klinik', 'lab']),
+      tr: new Set(['', 'tedaviler', 'blog', 'dis-turizmi', 'iletisim', 'once-sonra', 'hakkimizda', 'kliniğimiz', 'lab']),
+      he: new Set(['', 'tipulim', 'blog', 'tayarut-refuit', 'tsorkesher', 'lifnei-acharei', 'odot', 'hamirpa-shelanu', 'lab']),
+      ru: new Set(['', 'lechenie', 'blog', 'stom-turizm', 'kontakty', 'do-posle', 'o-nas', 'nasha-klinika', 'lab']),
     } as const;
     const localizedContentReady = lang === 'en' || indexableLocalizedSegments[lang]?.has(firstSegment);
     const completeAlternateSetReady = lang === 'en'
-      ? new Set(['', 'treatments', 'blog', 'dental-tourism', 'contact']).has(firstSegment)
+      ? new Set(['', 'treatments', 'blog', 'dental-tourism', 'contact', 'before-after', 'about', 'our-clinic', 'lab']).has(firstSegment)
       : Boolean(indexableLocalizedSegments[lang]?.has(firstSegment));
     const effectiveRobots = localizedContentReady ? robots : 'noindex,follow';
     document.documentElement.lang = lang;

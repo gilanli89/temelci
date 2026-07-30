@@ -21,14 +21,7 @@ const GALLERY = [
   { src: ctScan, label: { en: 'NewTom 3G CBCT Scanner', tr: 'NewTom 3G CBCT Tarayıcı', el: 'Scanner CBCT NewTom 3G', ru: 'КТ-сканер NewTom 3G', ar: 'ماسح CBCT نيوتوم 3G', he: 'סורק CBCT NewTom 3G', de: 'NewTom 3G CBCT-Scanner', fa: 'اسکنر CBCT نیوتام ۳G' } },
 ];
 
-const TECH = [
-  { icon: Scan,        en: 'NewTom 3G CBCT', tr: 'NewTom 3G CBCT',        note: { en: '3D cone-beam CT imaging', tr: '3B konik ışın BT görüntüleme' } },
-  { icon: Monitor,     en: 'CAD/CAM Design', tr: 'CAD/CAM Tasarım',       note: { en: 'Digital smile planning', tr: 'Dijital gülüş planlaması' } },
-  { icon: FlaskConical,en: 'In-House Lab',   tr: 'Bünyemizde Laboratuvar',note: { en: 'Full ceramic lab on-site', tr: 'Yerinde seramik laboratuvar' } },
-  { icon: Zap,         en: 'Digital X-Ray',  tr: 'Dijital Röntgen',       note: { en: 'Low-dose instant imaging', tr: 'Düşük doz anlık görüntü' } },
-  { icon: Camera,      en: 'Intraoral Camera',tr: 'İntraoral Kamera',     note: { en: 'Live tooth-by-tooth preview', tr: 'Canlı diş önizlemesi' } },
-  { icon: Star,        en: 'Straumann Implants', tr: 'Straumann İmplant', note: { en: 'Swiss precision, global benchmark', tr: 'İsviçre hassasiyeti' } },
-];
+const TECH_ICONS = [Scan, Monitor, FlaskConical, Zap, Camera, Star];
 
 const STATS = [
   { value: '1990', label: { en: 'Founded', tr: 'Kuruluş', el: 'Ιδρύθηκε', ru: 'Основана', ar: 'تأسست', he: 'נוסדה', de: 'Gegründet', fa: 'تأسیس' } },
@@ -39,9 +32,53 @@ const STATS = [
 
 type LangKey = 'en' | 'tr' | 'el' | 'ru' | 'ar' | 'he' | 'de' | 'fa';
 
+const CLINIC_COPY = {
+  en: {
+    seoTitle: 'Our Dental Clinic in Kyrenia | Temelci Dental', seoDescription: 'Explore Temelci Dental Clinic, its treatment rooms, digital imaging and in-house clinical facilities in Kyrenia.', location: 'Kyrenia, North Cyprus', hero: 'A family dental clinic in Kyrenia since 1990',
+    gallery: 'Clinic Gallery', galleryText: 'Modern equipment and comfortable surroundings', about: 'About the Clinic', portraitAlt: 'Dt. Nural Temelci at Temelci Dental',
+    bullets: ['4 fully equipped treatment rooms', 'In-house ceramic dental laboratory', 'NewTom 3G CBCT imaging', 'Personal visit coordination'], consult: 'Book a Consultation',
+    technology: 'Technology & Equipment', technologyText: 'Clinical technology supporting diagnosis and treatment planning',
+    tech: [['NewTom 3G CBCT', '3D cone-beam CT imaging'], ['CAD/CAM Design', 'Digital restorative planning'], ['In-House Lab', 'On-site ceramic workflow'], ['Digital X-Ray', 'Low-dose digital imaging'], ['Intraoral Camera', 'Detailed chairside imaging'], ['Straumann Implants', 'Established implant system']],
+    visit: 'Visit Us in Kyrenia', whatsapp: 'Contact on WhatsApp', map: 'View on Map', close: 'Close gallery', previous: 'Previous image', next: 'Next image',
+  },
+  de: {
+    seoTitle: 'Unsere Zahnklinik in Kyrenia | Temelci Dental', seoDescription: 'Entdecken Sie die Behandlungsräume, digitale Bildgebung und klinischen Einrichtungen der Temelci Dental Clinic in Kyrenia.', location: 'Kyrenia, Nordzypern', hero: 'Familiengeführte Zahnklinik in Kyrenia seit 1990',
+    gallery: 'Klinikgalerie', galleryText: 'Moderne Ausstattung und angenehme Umgebung', about: 'Über die Klinik', portraitAlt: 'Dt. Nural Temelci bei Temelci Dental',
+    bullets: ['4 voll ausgestattete Behandlungszimmer', 'Hauseigenes Keramiklabor', 'NewTom 3G CBCT-Bildgebung', 'Persönliche Besuchskoordination'], consult: 'Beratung vereinbaren',
+    technology: 'Technologie & Ausstattung', technologyText: 'Klinische Technologie für Diagnostik und Behandlungsplanung',
+    tech: [['NewTom 3G CBCT', '3D-DVT-Bildgebung'], ['CAD/CAM-Design', 'Digitale restaurative Planung'], ['Hauseigenes Labor', 'Keramik-Workflow vor Ort'], ['Digitales Röntgen', 'Digitale Bildgebung mit niedriger Dosis'], ['Intraoralkamera', 'Detaillierte Aufnahmen am Behandlungsstuhl'], ['Straumann Implantate', 'Etabliertes Implantatsystem']],
+    visit: 'Besuchen Sie uns in Kyrenia', whatsapp: 'Über WhatsApp kontaktieren', map: 'Auf Karte anzeigen', close: 'Galerie schließen', previous: 'Vorheriges Bild', next: 'Nächstes Bild',
+  },
+  tr: {
+    seoTitle: 'Girne Diş Kliniğimiz | Temelci Dental', seoDescription: 'Temelci Dental Clinic’in Girne’deki muayene odalarını, dijital görüntüleme sistemlerini ve klinik olanaklarını inceleyin.', location: 'Girne, Kuzey Kıbrıs', hero: '1990’dan beri Girne’de hizmet veren aile diş kliniği',
+    gallery: 'Klinik Galeri', galleryText: 'Modern donanım ve konforlu klinik ortamı', about: 'Klinik Hakkında', portraitAlt: 'Temelci Dental’de Dt. Nural Temelci',
+    bullets: ['4 tam donanımlı muayene odası', 'Klinik içi seramik diş laboratuvarı', 'NewTom 3G CBCT görüntüleme', 'Kişisel ziyaret koordinasyonu'], consult: 'Randevu Al',
+    technology: 'Teknoloji & Ekipman', technologyText: 'Tanı ve tedavi planlamasını destekleyen klinik teknoloji',
+    tech: [['NewTom 3G CBCT', '3B konik ışın BT görüntüleme'], ['CAD/CAM Tasarım', 'Dijital restoratif planlama'], ['Klinik İçi Laboratuvar', 'Yerinde seramik iş akışı'], ['Dijital Röntgen', 'Düşük dozlu dijital görüntüleme'], ['İntraoral Kamera', 'Detaylı koltuk başı görüntüleme'], ['Straumann İmplant', 'Yerleşik implant sistemi']],
+    visit: 'Girne’de Bizi Ziyaret Edin', whatsapp: 'WhatsApp ile Ulaşın', map: 'Haritada Gör', close: 'Galeriyi kapat', previous: 'Önceki görsel', next: 'Sonraki görsel',
+  },
+  he: {
+    seoTitle: 'מרפאת השיניים שלנו בקירניה | Temelci Dental', seoDescription: 'הכירו את חדרי הטיפול, מערכות הדימות הדיגיטליות והמתקנים הקליניים של Temelci Dental בקירניה.', location: 'קירניה, צפון קפריסין', hero: 'מרפאת שיניים משפחתית בקירניה מאז 1990',
+    gallery: 'גלריית המרפאה', galleryText: 'ציוד מודרני וסביבה נוחה', about: 'על המרפאה', portraitAlt: 'ד״ר נוראל טמלג׳י ב-Temelci Dental',
+    bullets: ['4 חדרי טיפול מאובזרים', 'מעבדת קרמיקה פנימית', 'דימות NewTom 3G CBCT', 'תיאום אישי לביקור'], consult: 'קביעת ייעוץ',
+    technology: 'טכנולוגיה וציוד', technologyText: 'טכנולוגיה קלינית התומכת באבחון ובתכנון הטיפול',
+    tech: [['NewTom 3G CBCT', 'דימות CT תלת-ממדי'], ['תכנון CAD/CAM', 'תכנון שיקומי דיגיטלי'], ['מעבדה פנימית', 'תהליך קרמיקה במרפאה'], ['רנטגן דיגיטלי', 'דימות דיגיטלי במינון נמוך'], ['מצלמה תוך-פומית', 'דימות מפורט ליד כיסא הטיפול'], ['שתלי Straumann', 'מערכת שתלים מבוססת']],
+    visit: 'בקרו אותנו בקירניה', whatsapp: 'יצירת קשר ב-WhatsApp', map: 'הצגה במפה', close: 'סגירת הגלריה', previous: 'תמונה קודמת', next: 'תמונה הבאה',
+  },
+  ru: {
+    seoTitle: 'Наша стоматологическая клиника в Кирении | Temelci Dental', seoDescription: 'Познакомьтесь с кабинетами, цифровой диагностикой и клиническими возможностями Temelci Dental Clinic в Кирении.', location: 'Кирения, Северный Кипр', hero: 'Семейная стоматологическая клиника в Кирении с 1990 года',
+    gallery: 'Галерея клиники', galleryText: 'Современное оборудование и комфортная обстановка', about: 'О клинике', portraitAlt: 'Дт. Нурал Темельджи в Temelci Dental',
+    bullets: ['4 полностью оборудованных кабинета', 'Собственная керамическая лаборатория', 'Диагностика NewTom 3G CBCT', 'Персональная координация визита'], consult: 'Записаться на консультацию',
+    technology: 'Технологии и оборудование', technologyText: 'Клинические технологии для диагностики и планирования лечения',
+    tech: [['NewTom 3G CBCT', 'Трёхмерная конусно-лучевая КТ'], ['CAD/CAM-дизайн', 'Цифровое планирование реставраций'], ['Собственная лаборатория', 'Керамический процесс на месте'], ['Цифровой рентген', 'Цифровая диагностика с низкой дозой'], ['Внутриротовая камера', 'Детальная визуализация у кресла'], ['Импланты Straumann', 'Проверенная имплантационная система']],
+    visit: 'Посетите нас в Кирении', whatsapp: 'Связаться в WhatsApp', map: 'Посмотреть на карте', close: 'Закрыть галерею', previous: 'Предыдущее изображение', next: 'Следующее изображение',
+  },
+} as const;
+
 const OurClinicPage = () => {
-  useSEO({ title: 'Our Dental Clinic in Kyrenia | Temelci Dental', description: 'Explore Temelci Dental Clinic, its treatment rooms, digital imaging and in-house clinical facilities in Kyrenia.', canonical: 'https://temelcidentist.com/en/our-clinic', ogImage: heroImg });
   const { t, lang, localePath } = useLanguage();
+  const copy = CLINIC_COPY[lang as keyof typeof CLINIC_COPY] || CLINIC_COPY.en;
+  useSEO({ title: copy.seoTitle, description: copy.seoDescription, canonical: `https://temelcidentist.com${localePath('/our-clinic')}`, ogImage: heroImg });
   const l = (lang as LangKey) in GALLERY[0].label ? (lang as LangKey) : 'en';
   const [lightbox, setLightbox] = useState<number | null>(null);
 
@@ -64,15 +101,13 @@ const OurClinicPage = () => {
           >
             <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white text-xs font-semibold px-4 py-2 rounded-full mb-5 uppercase tracking-wider backdrop-blur-sm">
               <Building2 className="h-3.5 w-3.5" />
-              Kyrenia, Northern Cyprus
+              {copy.location}
             </div>
             <h1 className="text-4xl md:text-6xl font-display font-bold text-white mb-4 leading-tight">
               {t.ourClinic}
             </h1>
             <p className="text-white/80 text-lg max-w-xl mx-auto">
-              {lang === 'tr'
-                ? '1990\'dan bu yana Girne\'nin köklü diş kliniği'
-                : 'Kyrenia\'s most established dental clinic since 1990'}
+              {copy.hero}
             </p>
           </motion.div>
         </div>
@@ -109,12 +144,10 @@ const OurClinicPage = () => {
             viewport={{ once: true }}
           >
             <h2 className="heading-section mb-3">
-              {lang === 'tr' ? 'Klinik Galeri' : 'Clinic Gallery'}
+              {copy.gallery}
             </h2>
             <p className="text-body max-w-xl mx-auto">
-              {lang === 'tr'
-                ? 'Modern donanımımız ve konforlu ortamımız'
-                : 'Modern equipment and comfortable surroundings'}
+              {copy.galleryText}
             </p>
           </motion.div>
 
@@ -196,7 +229,7 @@ const OurClinicPage = () => {
             >
               <img
                 src={teamPortrait}
-                alt="Dt. Nural Temelci at Temelci Dental"
+                alt={copy.portraitAlt}
                 className="rounded-2xl shadow-xl w-full object-cover max-h-[480px]"
               />
             </motion.div>
@@ -206,27 +239,22 @@ const OurClinicPage = () => {
               viewport={{ once: true }}
             >
               <div className="inline-flex items-center gap-2 bg-primary/10 border border-primary/20 text-primary text-xs font-semibold px-4 py-2 rounded-full mb-5 uppercase tracking-wider">
-                ✦ {lang === 'tr' ? 'Hakkımızda' : 'About The Clinic'}
+                ✦ {copy.about}
               </div>
               <h2 className="heading-section mb-5">{t.aboutDoctorName}</h2>
               <p className="text-body mb-6 leading-relaxed">{t.aboutDoctorBio}</p>
               <div className="space-y-3">
-                {[
-                  { en: '4 fully-equipped treatment rooms', tr: '4 tam donanımlı muayene odası' },
-                  { en: 'In-house ceramic dental laboratory', tr: 'Bünyemizde seramik diş laboratuvarı' },
-                  { en: 'NewTom 3G CBCT 3D imaging', tr: 'NewTom 3G CBCT 3B görüntüleme' },
-                  { en: 'VIP airport transfer & hotel assistance', tr: 'VIP havalimanı transferi ve otel yardımı' },
-                ].map((item, i) => (
+                {copy.bullets.map((item, i) => (
                   <div key={i} className="flex items-center gap-3">
                     <div className="w-5 h-5 rounded-full bg-primary/15 flex items-center justify-center shrink-0">
                       <div className="w-2 h-2 rounded-full bg-primary" />
                     </div>
-                    <span className="text-sm text-foreground">{lang === 'tr' ? item.tr : item.en}</span>
+                    <span className="text-sm text-foreground">{item}</span>
                   </div>
                 ))}
               </div>
               <div className="mt-8">
-                <WhatsAppButton text={lang === 'tr' ? 'Randevu Al' : 'Book a Consultation'} variant="hero" />
+                <WhatsAppButton text={copy.consult} variant="hero" />
               </div>
             </motion.div>
           </div>
@@ -243,18 +271,16 @@ const OurClinicPage = () => {
             viewport={{ once: true }}
           >
             <h2 className="heading-section mb-3">
-              {lang === 'tr' ? 'Teknoloji & Ekipman' : 'Technology & Equipment'}
+              {copy.technology}
             </h2>
             <p className="text-body max-w-xl mx-auto">
-              {lang === 'tr'
-                ? 'En son teknolojiyle en yüksek kalitede tedavi'
-                : 'The latest technology for the highest quality treatment'}
+              {copy.technologyText}
             </p>
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-            {TECH.map((item, i) => {
-              const Icon = item.icon;
+            {copy.tech.map((item, i) => {
+              const Icon = TECH_ICONS[i];
               return (
                 <motion.div
                   key={i}
@@ -268,10 +294,10 @@ const OurClinicPage = () => {
                     <Icon className="h-5 w-5 text-primary" />
                   </div>
                   <h3 className="font-display font-semibold text-foreground text-sm mb-1">
-                    {lang === 'tr' ? item.tr : item.en}
+                    {item[0]}
                   </h3>
                   <p className="text-xs text-muted-foreground">
-                    {lang === 'tr' ? item.note.tr : item.note.en}
+                    {item[1]}
                   </p>
                 </motion.div>
               );
@@ -286,7 +312,7 @@ const OurClinicPage = () => {
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="text-center md:text-left">
               <h2 className="text-2xl md:text-3xl font-display font-bold text-primary-foreground mb-2">
-                {lang === 'tr' ? 'Bizi Ziyaret Edin' : 'Visit Us in Kyrenia'}
+                {copy.visit}
               </h2>
               <div className="flex items-center gap-2 justify-center md:justify-start text-primary-foreground/80 text-sm">
                 <MapPin className="h-4 w-4 shrink-0" />
@@ -295,7 +321,7 @@ const OurClinicPage = () => {
             </div>
             <div className="flex flex-col sm:flex-row gap-3">
               <WhatsAppButton
-                text={lang === 'tr' ? 'WhatsApp ile Ulaşın' : 'Contact on WhatsApp'}
+                text={copy.whatsapp}
                 variant="hero"
               />
               <a
@@ -305,7 +331,7 @@ const OurClinicPage = () => {
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full border-2 border-primary-foreground/40 text-primary-foreground font-semibold text-sm hover:bg-primary-foreground/10 transition-colors"
               >
                 <MapPin className="h-4 w-4" />
-                {lang === 'tr' ? 'Haritada Gör' : 'View on Map'}
+                {copy.map}
               </a>
             </div>
           </div>
@@ -323,18 +349,21 @@ const OurClinicPage = () => {
             onClick={closeLightbox}
           >
             <button
+              aria-label={copy.close}
               className="absolute top-4 right-4 text-white/80 hover:text-white p-2"
               onClick={closeLightbox}
             >
               <X className="h-8 w-8" />
             </button>
             <button
+              aria-label={copy.previous}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-white/80 hover:text-white p-2"
               onClick={(e) => { e.stopPropagation(); prev(); }}
             >
               <ChevronLeft className="h-10 w-10" />
             </button>
             <button
+              aria-label={copy.next}
               className="absolute right-16 top-1/2 -translate-y-1/2 text-white/80 hover:text-white p-2"
               onClick={(e) => { e.stopPropagation(); next(); }}
             >

@@ -278,20 +278,109 @@
   <url>
     <loc>https://temelcidentist.com/en/before-after</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/before-after" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/vorher-nachher" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/once-sonra" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/lifnei-acharei" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/do-posle" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/before-after" />
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://temelcidentist.com/en/reviews</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/reviews" />
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/reviews" />
+    <loc>https://temelcidentist.com/de/vorher-nachher</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/before-after" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/vorher-nachher" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/once-sonra" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/lifnei-acharei" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/do-posle" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/before-after" />
     <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/tr/once-sonra</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/before-after" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/vorher-nachher" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/once-sonra" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/lifnei-acharei" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/do-posle" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/before-after" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/he/lifnei-acharei</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/before-after" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/vorher-nachher" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/once-sonra" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/lifnei-acharei" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/do-posle" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/before-after" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/ru/do-posle</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/before-after" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/vorher-nachher" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/once-sonra" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/lifnei-acharei" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/do-posle" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/before-after" />
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/about</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/ueber-uns" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/hakkimizda" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/odot" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/about" />
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/de/ueber-uns</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/ueber-uns" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/hakkimizda" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/odot" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/about" />
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/tr/hakkimizda</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/ueber-uns" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/hakkimizda" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/odot" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/about" />
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/he/odot</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/ueber-uns" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/hakkimizda" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/odot" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/o-nas" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/about" />
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/ru/o-nas</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/ueber-uns" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/hakkimizda" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/odot" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/o-nas" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/about" />
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -299,6 +388,54 @@
   <url>
     <loc>https://temelcidentist.com/en/our-clinic</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/our-clinic" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/unsere-klinik" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/kliniğimiz" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/hamirpa-shelanu" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/nasha-klinika" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/our-clinic" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/de/unsere-klinik</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/our-clinic" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/unsere-klinik" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/kliniğimiz" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/hamirpa-shelanu" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/nasha-klinika" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/our-clinic" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/tr/kliniğimiz</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/our-clinic" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/unsere-klinik" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/kliniğimiz" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/hamirpa-shelanu" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/nasha-klinika" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/our-clinic" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/he/hamirpa-shelanu</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/our-clinic" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/unsere-klinik" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/kliniğimiz" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/hamirpa-shelanu" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/nasha-klinika" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/our-clinic" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/ru/nasha-klinika</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/our-clinic" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/unsere-klinik" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/kliniğimiz" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/hamirpa-shelanu" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/nasha-klinika" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/our-clinic" />
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -306,9 +443,64 @@
   <url>
     <loc>https://temelcidentist.com/en/lab</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/lab" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/lab" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/lab" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/lab" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/lab" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/lab" />
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/de/lab</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/lab" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/lab" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/lab" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/lab" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/lab" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/lab" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/tr/lab</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/lab" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/lab" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/lab" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/lab" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/lab" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/lab" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/he/lab</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/lab" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/lab" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/lab" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/lab" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/lab" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/lab" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/ru/lab</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/lab" />
+    <xhtml:link rel="alternate" hreflang="de" href="https://temelcidentist.com/de/lab" />
+    <xhtml:link rel="alternate" hreflang="tr" href="https://temelcidentist.com/tr/lab" />
+    <xhtml:link rel="alternate" hreflang="he" href="https://temelcidentist.com/he/lab" />
+    <xhtml:link rel="alternate" hreflang="ru" href="https://temelcidentist.com/ru/lab" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/lab" />
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://temelcidentist.com/en/reviews</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://temelcidentist.com/en/reviews" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://temelcidentist.com/en/reviews" />
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
   </url>
   <url>
     <loc>https://temelcidentist.com/en/research</loc>

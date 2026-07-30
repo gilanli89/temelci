@@ -42,30 +42,9 @@ const staticPages = [
     description: 'Explore cosmetic, implant, restorative, specialist and preventive dental treatments available at Temelci Dental Clinic in Kyrenia.',
   },
   {
-    path: '/en/before-after',
-    title: 'Dental Before and After Results | Temelci Dental',
-    description: 'View real dental transformations including veneers, implants, crowns and smile makeovers, published with patient consent.',
-  },
-  {
     path: '/en/reviews',
     title: 'Patient Reviews | Temelci Dental Clinic',
     description: 'Read patient experiences and verified feedback about dental care at Temelci Dental Clinic in Kyrenia, North Cyprus.',
-  },
-  {
-    path: '/en/about',
-    title: 'Dentists and Clinical Team | Temelci Dental Clinic',
-    description: 'Meet the dentists and clinical team at Temelci Dental Clinic in Kyrenia, North Cyprus.',
-  },
-  {
-    path: '/en/our-clinic',
-    title: 'Our Dental Clinic in Kyrenia | Temelci Dental',
-    description: 'Explore Temelci Dental Clinic, its treatment rooms, digital imaging and in-house clinical facilities in Kyrenia.',
-  },
-  {
-    path: '/en/lab',
-    title: 'In-House Dental Laboratory in Kyrenia | Temelci Dental',
-    description: 'Discover Temelci Dental’s in-house dental laboratory and digital restorative workflow for crowns, veneers, bridges and implant-supported restorations.',
-    image: '/treatments/zirconia-crowns.webp',
   },
   {
     path: '/en/blog',
@@ -102,6 +81,26 @@ const localizedShellPages = [
   { path: '/tr/iletisim', lang: 'tr', title: 'Temelci Dental Clinic Girne İletişim', description: 'Tedavi planlaması, diş turizmi ve randevu talepleri için Girne’deki Temelci Dental Clinic ile iletişime geçin.' },
   { path: '/he/tsorkesher', lang: 'he', title: 'יצירת קשר עם Temelci Dental בקירניה', description: 'צרו קשר עם Temelci Dental לתכנון טיפול, תיירות שיניים ובקשות לתורים.' },
   { path: '/ru/kontakty', lang: 'ru', title: 'Контакты Temelci Dental Clinic в Кирении', description: 'Свяжитесь с Temelci Dental Clinic по вопросам планирования лечения, стоматологического туризма и записи на приём.' },
+  { path: '/en/before-after', lang: 'en', title: 'Dental Before and After Results | Temelci Dental', description: 'View documented dental treatments including veneers, implants, crowns and smile makeovers, published with patient consent.' },
+  { path: '/de/vorher-nachher', lang: 'de', title: 'Zahnbehandlung Vorher und Nachher | Temelci Dental', description: 'Sehen Sie dokumentierte Zahnbehandlungen mit Veneers, Implantaten, Kronen und Smile Makeovers.' },
+  { path: '/tr/once-sonra', lang: 'tr', title: 'Diş Tedavisi Öncesi ve Sonrası | Temelci Dental', description: 'Veneer, implant, kron ve gülüş tasarımı dahil belgelenmiş diş tedavisi sonuçlarını inceleyin.' },
+  { path: '/he/lifnei-acharei', lang: 'he', title: 'לפני ואחרי טיפולי שיניים | Temelci Dental', description: 'צפו בתוצאות מתועדות של ציפויים, שתלים, כתרים ועיצוב חיוך שפורסמו בהסכמה.' },
+  { path: '/ru/do-posle', lang: 'ru', title: 'Стоматология до и после | Temelci Dental', description: 'Посмотрите документированные результаты лечения: виниры, импланты, коронки и преображение улыбки.' },
+  { path: '/en/about', lang: 'en', title: 'Dentists and Clinical Team in Kyrenia | Temelci Dental', description: 'Meet the dentists and clinical team at Temelci Dental Clinic in Kyrenia, North Cyprus.' },
+  { path: '/de/ueber-uns', lang: 'de', title: 'Zahnärzte und Praxisteam in Kyrenia | Temelci Dental', description: 'Lernen Sie die Zahnärzte und das klinische Team der Temelci Dental Clinic in Kyrenia, Nordzypern, kennen.' },
+  { path: '/tr/hakkimizda', lang: 'tr', title: 'Girne Diş Hekimleri ve Klinik Ekibi | Temelci Dental', description: 'Girne, Kuzey Kıbrıs’taki Temelci Dental Clinic’in diş hekimleri ve klinik ekibiyle tanışın.' },
+  { path: '/he/odot', lang: 'he', title: 'רופאי שיניים והצוות הקליני בקירניה | Temelci Dental', description: 'הכירו את רופאי השיניים והצוות הקליני של Temelci Dental בקירניה, צפון קפריסין.' },
+  { path: '/ru/o-nas', lang: 'ru', title: 'Стоматологи и команда клиники в Кирении | Temelci Dental', description: 'Познакомьтесь со стоматологами и клинической командой Temelci Dental Clinic в Кирении, Северный Кипр.' },
+  { path: '/en/our-clinic', lang: 'en', title: 'Our Dental Clinic in Kyrenia | Temelci Dental', description: 'Explore Temelci Dental Clinic, its treatment rooms, digital imaging and in-house clinical facilities in Kyrenia.' },
+  { path: '/de/unsere-klinik', lang: 'de', title: 'Unsere Zahnklinik in Kyrenia | Temelci Dental', description: 'Entdecken Sie die Behandlungsräume, digitale Bildgebung und klinischen Einrichtungen der Temelci Dental Clinic in Kyrenia.' },
+  { path: '/tr/kliniğimiz', lang: 'tr', title: 'Girne Diş Kliniğimiz | Temelci Dental', description: 'Temelci Dental Clinic’in Girne’deki muayene odalarını, dijital görüntüleme sistemlerini ve klinik olanaklarını inceleyin.' },
+  { path: '/he/hamirpa-shelanu', lang: 'he', title: 'מרפאת השיניים שלנו בקירניה | Temelci Dental', description: 'הכירו את חדרי הטיפול, מערכות הדימות הדיגיטליות והמתקנים הקליניים של Temelci Dental בקירניה.' },
+  { path: '/ru/nasha-klinika', lang: 'ru', title: 'Наша стоматологическая клиника в Кирении | Temelci Dental', description: 'Познакомьтесь с кабинетами, цифровой диагностикой и клиническими возможностями Temelci Dental Clinic в Кирении.' },
+  { path: '/en/lab', lang: 'en', title: 'In-House Dental Laboratory in Kyrenia | Temelci Dental', description: 'Discover Temelci Dental’s in-house laboratory and digital workflow for crowns, veneers, bridges and implant-supported restorations.', image: '/lab/in-house-restoration.webp' },
+  { path: '/de/lab', lang: 'de', title: 'Eigenes Dentallabor in Kyrenia | Temelci Dental', description: 'Entdecken Sie das hauseigene Dentallabor und den digitalen Ablauf für Kronen, Veneers, Brücken und implantatgetragenen Zahnersatz.', image: '/lab/in-house-restoration.webp' },
+  { path: '/tr/lab', lang: 'tr', title: 'Girne Klinik İçi Diş Laboratuvarı | Temelci Dental', description: 'Kron, veneer, köprü ve implant üstü restorasyonlar için Temelci Dental’in klinik içi laboratuvarını ve dijital iş akışını inceleyin.', image: '/lab/in-house-restoration.webp' },
+  { path: '/he/lab', lang: 'he', title: 'מעבדת שיניים פנימית בקירניה | Temelci Dental', description: 'הכירו את המעבדה הפנימית ואת תהליך העבודה הדיגיטלי לכתרים, ציפויים, גשרים ושיקום על גבי שתלים.', image: '/lab/in-house-restoration.webp' },
+  { path: '/ru/lab', lang: 'ru', title: 'Собственная зуботехническая лаборатория в Кирении | Temelci Dental', description: 'Узнайте о собственной лаборатории и цифровом процессе изготовления коронок, виниров, мостов и конструкций на имплантах.', image: '/lab/in-house-restoration.webp' },
 ];
 
 const alternateGroups = [
@@ -110,6 +109,10 @@ const alternateGroups = [
   { en: '/en/blog', de: '/de/blog', tr: '/tr/blog', he: '/he/blog', ru: '/ru/blog' },
   { en: '/en/dental-tourism', de: '/de/zahntourismus', tr: '/tr/dis-turizmi', he: '/he/tayarut-refuit', ru: '/ru/stom-turizm' },
   { en: '/en/contact', de: '/de/kontakt', tr: '/tr/iletisim', he: '/he/tsorkesher', ru: '/ru/kontakty' },
+  { en: '/en/before-after', de: '/de/vorher-nachher', tr: '/tr/once-sonra', he: '/he/lifnei-acharei', ru: '/ru/do-posle' },
+  { en: '/en/about', de: '/de/ueber-uns', tr: '/tr/hakkimizda', he: '/he/odot', ru: '/ru/o-nas' },
+  { en: '/en/our-clinic', de: '/de/unsere-klinik', tr: '/tr/kliniğimiz', he: '/he/hamirpa-shelanu', ru: '/ru/nasha-klinika' },
+  { en: '/en/lab', de: '/de/lab', tr: '/tr/lab', he: '/he/lab', ru: '/ru/lab' },
 ];
 const alternatesForPath = (path) => {
   const group = alternateGroups.find(candidate => Object.values(candidate).includes(path));

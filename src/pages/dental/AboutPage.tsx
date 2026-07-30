@@ -101,11 +101,55 @@ const UNIVERSITY_LOGOS: Record<string, { abbr: string; full: string; color: stri
   izhevsk:   { abbr: 'IGMA',full: 'Izhevsk State Medical Academy', color: '#1a4f8a', bg: '#eef2fb' },
 };
 
+const ABOUT_COPY = {
+  en: {
+    seoTitle: 'Dentists and Clinical Team in Kyrenia | Temelci Dental',
+    seoDescription: 'Meet the dentists and clinical team at Temelci Dental Clinic in Kyrenia, North Cyprus.',
+    intro: 'Temelci Dental is a family clinic in Kyrenia focused on clear diagnosis, personal treatment planning and coordinated follow-up. Our clinicians work across restorative, cosmetic, surgical and preventive dentistry.',
+    established: 'Established in 1990', clinicians: 'clinicians', support: 'Multilingual patient support',
+    planning: 'Personal care planning', team: 'Collaborative clinical team', education: 'Education',
+    visit: 'Visit', profile: 'View academic profile & publications', clinician: 'Dental clinician',
+  },
+  de: {
+    seoTitle: 'Zahnärzte und Praxisteam in Kyrenia | Temelci Dental',
+    seoDescription: 'Lernen Sie die Zahnärzte und das klinische Team der Temelci Dental Clinic in Kyrenia, Nordzypern, kennen.',
+    intro: 'Temelci Dental ist eine familiengeführte Klinik in Kyrenia mit Schwerpunkt auf klarer Diagnostik, persönlicher Behandlungsplanung und koordinierter Nachsorge. Unser Team deckt restaurative, ästhetische, chirurgische und präventive Zahnmedizin ab.',
+    established: 'Seit 1990', clinicians: 'Behandler', support: 'Mehrsprachige Patientenbetreuung',
+    planning: 'Persönliche Behandlungsplanung', team: 'Interdisziplinäres Behandlungsteam', education: 'Ausbildung',
+    visit: 'Website besuchen', profile: 'Akademisches Profil und Publikationen', clinician: 'Zahnärztliche Fachkraft',
+  },
+  tr: {
+    seoTitle: 'Girne Diş Hekimleri ve Klinik Ekibi | Temelci Dental',
+    seoDescription: 'Girne, Kuzey Kıbrıs’taki Temelci Dental Clinic’in diş hekimleri ve klinik ekibiyle tanışın.',
+    intro: 'Temelci Dental; doğru tanı, kişiye özel tedavi planlaması ve koordineli takibe odaklanan, Girne’deki bir aile kliniğidir. Hekimlerimiz restoratif, estetik, cerrahi ve koruyucu diş hekimliği alanlarında birlikte çalışır.',
+    established: '1990’dan beri', clinicians: 'klinik hekimi', support: 'Çok dilli hasta desteği',
+    planning: 'Kişiye özel tedavi planı', team: 'Birlikte çalışan klinik ekip', education: 'Eğitim',
+    visit: 'Ziyaret et', profile: 'Akademik profil ve yayınları görüntüle', clinician: 'Diş hekimi',
+  },
+  he: {
+    seoTitle: 'רופאי שיניים והצוות הקליני בקירניה | Temelci Dental',
+    seoDescription: 'הכירו את רופאי השיניים והצוות הקליני של Temelci Dental בקירניה, צפון קפריסין.',
+    intro: 'Temelci Dental היא מרפאה משפחתית בקירניה המתמקדת באבחון ברור, תכנון טיפול אישי ומעקב מתואם. הצוות שלנו עוסק ברפואת שיניים משקמת, אסתטית, כירורגית ומונעת.',
+    established: 'פועלים מאז 1990', clinicians: 'אנשי צוות קליני', support: 'תמיכה רב-לשונית למטופלים',
+    planning: 'תכנון טיפול אישי', team: 'צוות קליני רב-תחומי', education: 'השכלה',
+    visit: 'לביקור באתר', profile: 'לפרופיל האקדמי ולפרסומים', clinician: 'רופא שיניים',
+  },
+  ru: {
+    seoTitle: 'Стоматологи и команда клиники в Кирении | Temelci Dental',
+    seoDescription: 'Познакомьтесь со стоматологами и клинической командой Temelci Dental Clinic в Кирении, Северный Кипр.',
+    intro: 'Temelci Dental — семейная клиника в Кирении, где особое внимание уделяется точной диагностике, индивидуальному планированию и согласованному наблюдению. Наша команда работает в восстановительной, эстетической, хирургической и профилактической стоматологии.',
+    established: 'Работаем с 1990 года', clinicians: 'специалистов', support: 'Многоязычная поддержка пациентов',
+    planning: 'Индивидуальный план лечения', team: 'Слаженная клиническая команда', education: 'Образование',
+    visit: 'Перейти на сайт', profile: 'Академический профиль и публикации', clinician: 'Стоматолог',
+  },
+} as const;
+
 const AboutPage = () => {
-  const { t, localePath } = useLanguage();
+  const { t, lang, localePath } = useLanguage();
+  const copy = ABOUT_COPY[lang as keyof typeof ABOUT_COPY] || ABOUT_COPY.en;
   const { data: dbDoctors, isError: doctorsError } = useDoctorsFromDb();
   const { data: page } = useSitePage('about');
-  useSEO({ title: page?.seo_title || 'About Temelci Dental Clinic', description: page?.seo_description || 'Meet the dentists and clinical team at Temelci Dental Clinic in Kyrenia, North Cyprus.', canonical: 'https://temelcidentist.com/en/about', ogImage: page?.og_image || page?.hero_image || undefined });
+  useSEO({ title: lang === 'en' && page?.seo_title ? page.seo_title : copy.seoTitle, description: lang === 'en' && page?.seo_description ? page.seo_description : copy.seoDescription, canonical: `https://temelcidentist.com${localePath('/about')}`, ogImage: page?.og_image || page?.hero_image || undefined });
 
   // The CMS is authoritative when available. Known clinicians retain their
   // existing education details, while newly added clinicians appear too.
@@ -118,17 +162,17 @@ const AboutPage = () => {
             slug: db.slug,
             name: db.name,
             photo: db.photo || existing?.photo || null,
-            title: db.title || existing?.title.en || 'Dental clinician',
-            bio: db.bio || existing?.bio.en || '',
-            university: existing?.university.en || '',
-            specialization: db.specialties?.join(' · ') || existing?.specialization.en || '',
+            title: existing?.title[lang] || db.title || existing?.title.en || copy.clinician,
+            bio: existing?.bio[lang] || db.bio || existing?.bio.en || '',
+            university: existing?.university[lang] || existing?.university.en || '',
+            specialization: existing?.specialization[lang] || db.specialties?.join(' · ') || existing?.specialization.en || '',
             experience: existing?.experience || '',
             initials: existing?.initials || db.name.split(/\s+/).map(part => part[0]).join('').slice(0, 2).toUpperCase(),
             universityUrl: existing?.universityUrl,
             universityLogo: existing?.universityLogo,
           };
         })
-    : doctors.map(doctor => ({ ...doctor, title: doctor.title.en, bio: doctor.bio.en, university: doctor.university.en, specialization: doctor.specialization.en }));
+    : doctors.map(doctor => ({ ...doctor, title: doctor.title[lang], bio: doctor.bio[lang], university: doctor.university[lang], specialization: doctor.specialization[lang] }));
 
 
   return (
@@ -136,8 +180,8 @@ const AboutPage = () => {
       {/* Header */}
       <section className="section-padding bg-secondary/30">
         <div className="container-dental text-center">
-          <h1 className="heading-display mb-4">{page?.hero_title || t.aboutTitle}</h1>
-          <p className="text-body max-w-2xl mx-auto">{page?.hero_description || t.aboutSubtitle}</p>
+          <h1 className="heading-display mb-4">{lang === 'en' && page?.hero_title ? page.hero_title : t.aboutTitle}</h1>
+          <p className="text-body max-w-2xl mx-auto">{lang === 'en' && page?.hero_description ? page.hero_description : t.aboutSubtitle}</p>
         </div>
       </section>
 
@@ -150,28 +194,28 @@ const AboutPage = () => {
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <h2 className="heading-section mb-4">{t.aboutDoctorName}</h2>
-              <p className="text-body mb-6">Temelci Dental is a family clinic in Kyrenia focused on clear diagnosis, personal treatment planning and coordinated follow-up. Our clinicians work across restorative, cosmetic, surgical and preventive dentistry.</p>
+              <p className="text-body mb-6">{copy.intro}</p>
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="flex items-center gap-3">
                   <Award className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-medium">Established in 1990</span>
+                  <span className="text-sm font-medium">{copy.established}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Users className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-medium">{doctorsToRender.length} clinicians</span>
+                  <span className="text-sm font-medium">{doctorsToRender.length} {copy.clinicians}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Globe className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-medium">English patient support</span>
+                  <span className="text-sm font-medium">{copy.support}</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <Heart className="h-6 w-6 text-primary" />
-                  <span className="text-sm font-medium">Personal care planning</span>
+                  <span className="text-sm font-medium">{copy.planning}</span>
                 </div>
               </div>
               <div className="flex items-center gap-3 p-4 bg-primary/5 rounded-xl mb-6">
                 <Clock className="h-5 w-5 text-primary shrink-0" />
-                <span className="text-sm font-medium">Collaborative clinical team</span>
+                <span className="text-sm font-medium">{copy.team}</span>
               </div>
               <div className="flex items-start gap-3 p-4 bg-primary/5 rounded-xl mb-6">
                 <MapPin className="h-5 w-5 text-primary mt-0.5 shrink-0" />
@@ -235,7 +279,7 @@ const AboutPage = () => {
                   {doc.universityLogo && UNIVERSITY_LOGOS[doc.universityLogo] && (
                     <div className="mt-4 pt-4 border-t border-border">
                       <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground mb-2">
-                        Education
+                        {copy.education}
                       </p>
                       <a
                         href={doc.universityUrl}
@@ -256,7 +300,7 @@ const AboutPage = () => {
                         </div>
                         <span className="text-xs text-muted-foreground group-hover:text-primary transition-colors leading-tight">
                           {UNIVERSITY_LOGOS[doc.universityLogo].full}
-                          <span className="block text-[10px] opacity-60">↗ Visit</span>
+                          <span className="block text-[10px] opacity-60">↗ {copy.visit}</span>
                         </span>
                       </a>
                     </div>
@@ -268,7 +312,7 @@ const AboutPage = () => {
                         to={localePath('/dr-serife-kole')}
                         className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline"
                       >
-                        📚 View academic profile & publications →
+                        📚 {copy.profile} →
                       </Link>
                     </div>
                   )}

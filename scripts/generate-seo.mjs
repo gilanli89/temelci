@@ -39,11 +39,13 @@ const localizedStaticGroups = [
   { paths: { en: '/en/blog', de: '/de/blog', tr: '/tr/blog', he: '/he/blog', ru: '/ru/blog' }, priority: 0.8, changefreq: 'weekly' },
   { paths: { en: '/en/dental-tourism', de: '/de/zahntourismus', tr: '/tr/dis-turizmi', he: '/he/tayarut-refuit', ru: '/ru/stom-turizm' }, priority: 0.85, changefreq: 'monthly' },
   { paths: { en: '/en/contact', de: '/de/kontakt', tr: '/tr/iletisim', he: '/he/tsorkesher', ru: '/ru/kontakty' }, priority: 0.7, changefreq: 'monthly' },
+  { paths: { en: '/en/before-after', de: '/de/vorher-nachher', tr: '/tr/once-sonra', he: '/he/lifnei-acharei', ru: '/ru/do-posle' }, priority: 0.8, changefreq: 'monthly' },
+  { paths: { en: '/en/about', de: '/de/ueber-uns', tr: '/tr/hakkimizda', he: '/he/odot', ru: '/ru/o-nas' }, priority: 0.75, changefreq: 'monthly' },
+  { paths: { en: '/en/our-clinic', de: '/de/unsere-klinik', tr: '/tr/kliniğimiz', he: '/he/hamirpa-shelanu', ru: '/ru/nasha-klinika' }, priority: 0.85, changefreq: 'monthly' },
+  { paths: { en: '/en/lab', de: '/de/lab', tr: '/tr/lab', he: '/he/lab', ru: '/ru/lab' }, priority: 0.85, changefreq: 'monthly' },
 ];
 const englishOnlyStatic = [
-  ['before-after', 0.8, 'monthly'], ['reviews', 0.75, 'monthly'], ['about', 0.75, 'monthly'],
-  ['our-clinic', 0.85, 'monthly'], ['lab', 0.85, 'monthly'],
-  ['research', 0.7, 'monthly'],
+  ['reviews', 0.75, 'monthly'], ['research', 0.7, 'monthly'],
 ];
 
 const [remoteTreatments, posts, research, postTranslations] = await Promise.all([
