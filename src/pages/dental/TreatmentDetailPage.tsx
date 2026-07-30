@@ -6,6 +6,7 @@ import { QuoteButton } from '@/components/dental/QuoteButton';
 import { useFaqs, useTreatment } from '@/hooks/useCmsContent';
 import { useSEO } from '@/hooks/useSEO';
 import { ChevronRight, ChevronLeft, Check } from 'lucide-react';
+import { TreatmentIconPanel } from '@/components/dental/TreatmentIcon';
 import implantImg from '@/assets/dental-implant.jpg';
 import veneersImg from '@/assets/veneers.jpg';
 import crownsImg from '@/assets/crowns.jpg';
@@ -1755,7 +1756,7 @@ const TreatmentDetailPage = () => {
         results: dbTreatment.expected_results.length ? dbTreatment.expected_results : staticTreatment?.results || [],
         faq: dbFaqs?.length ? dbFaqs.map(item => ({ q: item.question, a: item.answer })) : staticTreatment?.faq || [],
       }
-    : (isLoading || treatmentError ? staticTreatment : null);
+    : staticTreatment;
 
   const title = dbTreatment?.title || (treatment ? (t as Record<string, string>)[treatment.titleKey] || treatment.titleKey : 'Treatment');
   const desc = dbTreatment?.description || (treatment ? (t as Record<string, string>)[treatment.descKey] || treatment.descKey : '');
@@ -1795,15 +1796,15 @@ const TreatmentDetailPage = () => {
         </button>
       </div>
       {/* Hero */}
-      <section className="relative">
-        <div className="aspect-[21/9] max-h-[400px] overflow-hidden">
-          <img src={treatment.img} alt={`${title} treatment at Temelci Dental Clinic`} width="1672" height="941" fetchPriority="high" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 to-transparent" />
-        </div>
-        <div className="absolute bottom-0 left-0 right-0 section-padding pb-8">
-          <div className="container-dental">
-            <h1 className="heading-display text-background">{title}</h1>
-            <p className="text-background/80 mt-2 max-w-2xl">{desc}</p>
+      <section className="bg-secondary/30">
+        <div className="container-dental grid items-center gap-8 py-12 md:grid-cols-[1.2fr_0.8fr] md:py-16">
+          <div>
+            <span className="trust-badge mb-5 inline-block">{lang === 'tr' ? 'Kişiye özel tedavi planı' : 'Personalised treatment planning'}</span>
+            <h1 className="heading-display">{title}</h1>
+            <p className="text-body mt-4 max-w-2xl">{desc}</p>
+          </div>
+          <div className="overflow-hidden rounded-3xl border bg-card shadow-sm">
+            <TreatmentIconPanel slug={canonicalSlug} title={title} />
           </div>
         </div>
       </section>

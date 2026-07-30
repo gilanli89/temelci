@@ -5,6 +5,7 @@ import { useSEO } from '@/hooks/useSEO';
 import { useSitePage } from '@/hooks/useCmsContent';
 import { QuoteButton } from '@/components/dental/QuoteButton';
 import { WhatsAppButton } from '@/components/dental/WhatsAppButton';
+import { TreatmentIconPanel } from '@/components/dental/TreatmentIcon';
 
 const workflow = [
   { icon: ScanLine, title: 'Digital records', text: 'Clinical scans, photographs and treatment requirements are shared directly with the restorative team.' },
@@ -14,15 +15,15 @@ const workflow = [
 ];
 
 const capabilities = [
-  { title: 'Ceramic crowns and bridges', text: 'Restorations planned for strength, fit and natural appearance.', image: '/treatments/crowns.webp' },
-  { title: 'Zirconia restorations', text: 'Metal-free restorative options selected according to each clinical indication.', image: '/treatments/zirconia-crowns.webp' },
-  { title: 'Veneers and smile design', text: 'Dentist-led aesthetic planning with attention to facial proportions and natural tooth character.', image: '/treatments/veneers.webp' },
-  { title: 'Implant-supported restorations', text: 'Prosthetic coordination for single implants and selected full-arch rehabilitation cases.', image: '/treatments/all-on-4.webp' },
+  { slug: 'ceramic-crowns', title: 'Ceramic crowns and bridges', text: 'Restorations planned for strength, fit and natural appearance.' },
+  { slug: 'zirconia-crowns', title: 'Zirconia restorations', text: 'Metal-free restorative options selected according to each clinical indication.' },
+  { slug: 'veneers', title: 'Veneers and smile design', text: 'Dentist-led aesthetic planning with attention to facial proportions and natural tooth character.' },
+  { slug: 'dental-implants', title: 'Implant-supported restorations', text: 'Prosthetic coordination for single implants and selected full-arch rehabilitation cases.' },
 ];
 
 export default function LabPage() {
   const { data: page } = useSitePage('lab');
-  const heroImage = page?.hero_image || '/treatments/zirconia-crowns.webp';
+  const heroImage = '/lab/in-house-restoration.webp';
   const title = page?.hero_title || 'In-House Dental Laboratory';
   const description = page?.hero_description || 'Closer communication between dentist and dental technician for carefully planned crowns, veneers, bridges and implant-supported restorations.';
 
@@ -36,19 +37,20 @@ export default function LabPage() {
 
   return (
     <>
-      <section className="relative min-h-[520px] flex items-end overflow-hidden">
-        <img src={heroImage} alt="Dental restoration created through Temelci Dental's in-house laboratory workflow" className="absolute inset-0 h-full w-full object-cover" fetchPriority="high" />
-        <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/65 to-foreground/15" />
-        <div className="relative container-dental section-padding text-background">
-          <nav aria-label="Breadcrumb" className="mb-8 text-sm text-background/70">
-            <Link to="/en" className="hover:text-background">Home</Link><span className="mx-2">/</span><span>Dental Lab</span>
-          </nav>
-          <div className="max-w-3xl">
+      <section className="overflow-hidden bg-foreground text-background">
+        <div className="container-dental grid min-h-[560px] items-center gap-10 px-4 py-12 md:px-8 lg:grid-cols-[1fr_0.82fr]">
+          <div>
+            <nav aria-label="Breadcrumb" className="mb-8 text-sm text-background/70">
+              <Link to="/en" className="hover:text-background">Home</Link><span className="mx-2">/</span><span>Dental Lab</span>
+            </nav>
             <div className="inline-flex items-center gap-2 rounded-full border border-background/20 bg-background/10 px-4 py-2 text-xs font-bold uppercase tracking-wider backdrop-blur-sm">
-              <FlaskConical className="h-4 w-4" /> {page?.eyebrow || 'On-site restorative coordination'}
+              <FlaskConical className="h-4 w-4" /> {page?.eyebrow || 'Real in-house restorative work'}
             </div>
             <h1 className="heading-display mt-5 text-background">{title}</h1>
             <p className="mt-5 max-w-2xl text-lg leading-relaxed text-background/80">{description}</p>
+          </div>
+          <div className="overflow-hidden rounded-3xl border border-background/15 bg-black shadow-2xl">
+            <img src={heroImage} alt="Dental restoration created through Temelci Dental's in-house laboratory workflow" className="max-h-[520px] w-full object-contain" />
           </div>
         </div>
       </section>
@@ -80,7 +82,7 @@ export default function LabPage() {
           </div>
           <div className="grid gap-6 sm:grid-cols-2">
             {capabilities.map(item => <article key={item.title} className="group overflow-hidden rounded-2xl border bg-card">
-              <div className="aspect-[16/8] overflow-hidden"><img src={item.image} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" decoding="async" /></div>
+              <TreatmentIconPanel slug={item.slug} title={item.title} compact />
               <div className="p-6"><div className="flex items-center gap-2"><Crown className="h-5 w-5 text-primary" /><h3 className="font-display text-xl font-semibold">{item.title}</h3></div><p className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.text}</p></div>
             </article>)}
           </div>
@@ -98,4 +100,3 @@ export default function LabPage() {
     </>
   );
 }
-

@@ -4,40 +4,11 @@ import { useLanguage } from "@/i18n/LanguageContext";
 import { useSitePage, useTreatments } from "@/hooks/useCmsContent";
 import { useSEO } from "@/hooks/useSEO";
 import { WhatsAppButton } from "@/components/dental/WhatsAppButton";
+import { ChevronRight } from "lucide-react";
 import {
-  Activity,
-  Award,
-  CheckCircle,
-  ChevronRight,
-  Crown,
-  Heart,
-  Layers,
-  Shield,
-  Sparkles,
-  Star,
-  Zap,
-} from "lucide-react";
-import implantImg from "@/assets/dental-implant.jpg";
-import veneersImg from "@/assets/veneers.jpg";
-import crownsImg from "@/assets/crowns.jpg";
-import hollywoodSmileImg from "@/assets/hollywood-smile.jpg";
-import teethWhiteningImg from "@/assets/teeth-whitening.jpg";
-import zirconiaCrownsImg from "@/assets/zirconia-crowns.jpg";
-import smileMakeoverImg from "@/assets/smile-makeover.jpg";
-import fullMouthImg from "@/assets/full-mouth-restoration.jpg";
-
-const iconMap = {
-  sparkle: Sparkles,
-  star: Star,
-  shield: Shield,
-  award: Award,
-  crown: Crown,
-  heart: Heart,
-  zap: Zap,
-  layers: Layers,
-  activity: Activity,
-  check: CheckCircle,
-};
+  getTreatmentIcon,
+  TreatmentIconPanel,
+} from "@/components/dental/TreatmentIcon";
 
 const TreatmentsPage = () => {
   const { t, localePath } = useLanguage();
@@ -56,7 +27,6 @@ const TreatmentsPage = () => {
       slug: t.hollywoodSmileSlug,
       title: t.hollywoodSmile,
       description: t.hollywoodSmileDesc,
-      featured_image: hollywoodSmileImg,
       category: "Aesthetic & Smile Design",
       category_slug: "aesthetic",
       icon: "sparkle",
@@ -65,7 +35,6 @@ const TreatmentsPage = () => {
       slug: t.veneersSlug,
       title: t.veneers,
       description: t.veneersDesc,
-      featured_image: veneersImg,
       category: "Aesthetic & Smile Design",
       category_slug: "aesthetic",
       icon: "star",
@@ -74,7 +43,6 @@ const TreatmentsPage = () => {
       slug: t.teethWhiteningSlug,
       title: t.teethWhitening,
       description: t.teethWhiteningDesc,
-      featured_image: teethWhiteningImg,
       category: "Aesthetic & Smile Design",
       category_slug: "aesthetic",
       icon: "zap",
@@ -83,7 +51,6 @@ const TreatmentsPage = () => {
       slug: t.smileMakeoverSlug,
       title: t.smileMakeover,
       description: t.smileMakeoverDesc,
-      featured_image: smileMakeoverImg,
       category: "Aesthetic & Smile Design",
       category_slug: "aesthetic",
       icon: "heart",
@@ -92,7 +59,6 @@ const TreatmentsPage = () => {
       slug: t.implantsSlug,
       title: t.dentalImplants,
       description: t.dentalImplantsDesc,
-      featured_image: implantImg,
       category: "Implants & Restorations",
       category_slug: "implants",
       icon: "shield",
@@ -101,7 +67,6 @@ const TreatmentsPage = () => {
       slug: t.allOn4Slug,
       title: t.allOn4,
       description: t.allOn4Desc,
-      featured_image: fullMouthImg,
       category: "Implants & Restorations",
       category_slug: "implants",
       icon: "award",
@@ -110,7 +75,6 @@ const TreatmentsPage = () => {
       slug: t.crownsSlug,
       title: t.crowns,
       description: t.crownsDesc,
-      featured_image: crownsImg,
       category: "Implants & Restorations",
       category_slug: "implants",
       icon: "crown",
@@ -119,7 +83,6 @@ const TreatmentsPage = () => {
       slug: t.zirconiaCrownsSlug,
       title: t.zirconiaCrowns,
       description: t.zirconiaCrownsDesc,
-      featured_image: zirconiaCrownsImg,
       category: "Implants & Restorations",
       category_slug: "implants",
       icon: "award",
@@ -128,7 +91,6 @@ const TreatmentsPage = () => {
       slug: t.fullMouthRestorationSlug,
       title: t.fullMouthRestoration,
       description: t.fullMouthRestorationDesc,
-      featured_image: fullMouthImg,
       category: "Implants & Restorations",
       category_slug: "implants",
       icon: "shield",
@@ -137,7 +99,6 @@ const TreatmentsPage = () => {
       slug: t.rootCanalSlug,
       title: t.rootCanal,
       description: t.rootCanalDesc,
-      featured_image: implantImg,
       category: "Specialist Treatments",
       category_slug: "specialist",
       icon: "activity",
@@ -146,14 +107,13 @@ const TreatmentsPage = () => {
       slug: t.clearAlignersSlug,
       title: t.clearAligners,
       description: t.clearAlignersDesc,
-      featured_image: veneersImg,
       category: "Orthodontics & Prevention",
       category_slug: "orthodontics",
       icon: "check",
     },
   ];
 
-  const treatments = dbTreatments && !treatmentsError ? dbTreatments : fallback;
+  const treatments = dbTreatments?.length && !treatmentsError ? dbTreatments : fallback;
   const groups = treatments.reduce<Record<string, typeof treatments>>(
     (result, treatment) => {
       const label =
@@ -193,10 +153,7 @@ const TreatmentsPage = () => {
             </motion.h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {items.map((treatment, index) => {
-                const Icon =
-                  iconMap[
-                    (treatment.icon || "sparkle") as keyof typeof iconMap
-                  ] || Sparkles;
+                const Icon = getTreatmentIcon(treatment.slug, treatment.title);
                 return (
                   <motion.div
                     key={treatment.slug}
@@ -209,16 +166,7 @@ const TreatmentsPage = () => {
                       to={localePath(`/${treatment.slug}`)}
                       className="card-treatment block group"
                     >
-                      <div className="aspect-[4/3] overflow-hidden bg-secondary">
-                        {treatment.featured_image && (
-                          <img
-                            src={treatment.featured_image}
-                            alt={treatment.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
-                          />
-                        )}
-                      </div>
+                      <TreatmentIconPanel slug={treatment.slug} title={treatment.title} compact />
                       <div className="p-6">
                         <div className="flex items-center gap-2 mb-3">
                           <Icon className="h-5 w-5 text-primary" />

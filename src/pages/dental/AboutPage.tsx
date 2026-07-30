@@ -7,14 +7,13 @@ import { Award, GraduationCap, Globe, Heart, MapPin, Smile, Clock, Users } from 
 import { useDoctorsFromDb } from '@/hooks/useDoctorsHybrid';
 import { useSitePage } from '@/hooks/useCmsContent';
 import { useSEO } from '@/hooks/useSEO';
-import heroImg from '@/assets/hero-clinic.jpg';
+import heroImg from '@/assets/clinic/clinic_room3.jpg';
 import photoNural from '@/assets/doctors/nural_temelci.jpg';
 import photoAli from '@/assets/doctors/ali_temelci.jpg';
 import photoRasih from '@/assets/doctors/rasih_denktash.jpg';
 
 import photoSerife from '@/assets/doctors/serife_kole.jpg';
 import photoAnna from '@/assets/doctors/anna_zubtcovskaia.jpg';
-import doctorPlaceholder from '@/assets/doctor-portrait.jpg';
 
 const doctors = [
   {
@@ -111,13 +110,13 @@ const AboutPage = () => {
   // The CMS is authoritative when available. Known clinicians retain their
   // existing education details, while newly added clinicians appear too.
   const staticBySlug = new Map(doctors.map(doctor => [doctor.slug, doctor]));
-  const doctorsToRender = (dbDoctors && !doctorsError)
+  const doctorsToRender = (dbDoctors?.length && !doctorsError)
     ? dbDoctors.map((db) => {
           const existing = staticBySlug.get(db.slug);
           return {
             slug: db.slug,
             name: db.name,
-            photo: db.photo || existing?.photo || doctorPlaceholder,
+            photo: db.photo || existing?.photo || null,
             title: db.title || existing?.title.en || 'Dental clinician',
             bio: db.bio || existing?.bio.en || '',
             university: existing?.university.en || '',
@@ -205,8 +204,8 @@ const AboutPage = () => {
                 transition={{ delay: i * 0.08 }}
               >
                 {/* Full-width square photo */}
-                <div className="aspect-square w-full overflow-hidden">
-                  <img src={doc.photo} alt={doc.name} className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" />
+                <div className="aspect-square w-full overflow-hidden bg-primary/5">
+                  {doc.photo ? <img src={doc.photo} alt={doc.name} className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500" /> : <div className="flex h-full w-full items-center justify-center text-5xl font-display font-bold text-primary/60" aria-label={doc.name}>{doc.initials}</div>}
                 </div>
                 <div className="p-6">
                   <div className="mb-4">

@@ -9,8 +9,8 @@ import room2 from '@/assets/clinic/clinic_room2.jpg';
 import room3 from '@/assets/clinic/clinic_room3.jpg';
 import room4 from '@/assets/clinic/clinic_room4.jpg';
 import ctScan from '@/assets/clinic/clinic_ct.jpg';
-import heroImg from '@/assets/hero-clinic.jpg';
-import doctorPortrait from '@/assets/doctor-portrait.jpg';
+import heroImg from '@/assets/clinic/clinic_room1.jpg';
+import teamPortrait from '@/assets/doctors/nural_temelci.jpg';
 import { useSEO } from '@/hooks/useSEO';
 
 const GALLERY = [
@@ -186,7 +186,7 @@ const OurClinicPage = () => {
       </section>
 
       {/* ABOUT THE CLINIC */}
-      <section className="section-padding bg-secondary/30">
+      <section className="section-padding overflow-hidden bg-secondary/30">
         <div className="container-dental">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -195,8 +195,8 @@ const OurClinicPage = () => {
               viewport={{ once: true }}
             >
               <img
-                src={doctorPortrait}
-                alt="Temelci Dental Team"
+                src={teamPortrait}
+                alt="Dt. Nural Temelci at Temelci Dental"
                 className="rounded-2xl shadow-xl w-full object-cover max-h-[480px]"
               />
             </motion.div>
