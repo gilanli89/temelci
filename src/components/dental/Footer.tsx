@@ -4,6 +4,8 @@ import { WhatsAppButton } from './WhatsAppButton';
 import { MapPin, Phone, Mail, Languages, Clock, HeartHandshake } from 'lucide-react';
 import { useSiteSettings } from '@/hooks/useCmsContent';
 
+const CONTACT_PHONE = '+90 539 101 11 13';
+
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
 
 export const Footer = () => {
@@ -11,7 +13,7 @@ export const Footer = () => {
   const { data: settings } = useSiteSettings();
   const brandName = settings?.brand_name || 'Temelci Dental Clinic';
   const address = settings?.address || t.contactAddress;
-  const phone = settings?.phone || t.contactPhone;
+  const phone = CONTACT_PHONE;
   const email = settings?.email || t.contactEmail;
 
   const linkClass = "block text-sm opacity-60 hover:opacity-100 hover:text-primary transition-all duration-200 py-0.5";
@@ -54,7 +56,7 @@ export const Footer = () => {
                 <MapPin className="h-4 w-4 mt-0.5 shrink-0" />
                 <span>{address}</span>
               </a>
-              <a href={`tel:${phone.replace(/\D/g,'')}`}
+              <a href={`tel:+${phone.replace(/\D/g, '')}`}
                 className="flex items-center gap-2.5 text-sm opacity-60 hover:opacity-100 transition-opacity">
                 <Phone className="h-4 w-4 shrink-0" />
                 <span>{phone}</span>
