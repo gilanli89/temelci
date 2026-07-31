@@ -102,7 +102,7 @@ $headers = [
 ];
 
 $sent = mail(
-    'info@temelcidentist.com, cyprusdentalinfo@gmail.com',
+    'info@temelcidentist.com, cypdentalinfo@gmail.com',
     $subject,
     $body,
     implode("\r\n", $headers)
