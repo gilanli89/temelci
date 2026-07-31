@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { useSitePage, useSiteSettings } from '@/hooks/useCmsContent';
@@ -13,7 +13,9 @@ export default function ContactPage() {
   const { data: settings } = useSiteSettings();
   const { data: page } = useSitePage('contact');
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
+  const [website, setWebsite] = useState('');
   const [sending, setSending] = useState(false);
+  const startedAt = useRef(Date.now());
 
   const phone = '+90 539 101 11 13';
   const email = settings?.email || t.contactEmail;
@@ -31,15 +33,28 @@ export default function ContactPage() {
   async function submit(event: React.FormEvent) {
     event.preventDefault();
     setSending(true);
-    const { error } = await supabase.from('leads').insert({ ...form, source: 'contact', lang });
-    setSending(false);
-    if (error) toast.error(ui.error);
-    else { toast.success(ui.success); setForm({ name: '', email: '', phone: '', message: '' }); }
+    try {
+      const response = await fetch('/contact-mail.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ ...form, website, lang, startedAt: startedAt.current }),
+      });
+      if (!response.ok) throw new Error('Mail delivery failed');
+      await supabase.from('leads').insert({ ...form, source: 'contact', lang });
+      toast.success(ui.success);
+      setForm({ name: '', email: '', phone: '', message: '' });
+      setWebsite('');
+      startedAt.current = Date.now();
+    } catch {
+      toast.error(ui.error);
+    } finally {
+      setSending(false);
+    }
   }
 
   return <>
     <section className="section-padding bg-secondary/30"><div className="container-dental text-center"><h1 className="heading-display mb-4">{page?.hero_title || t.contactTitle}</h1><p className="text-body max-w-2xl mx-auto">{page?.hero_description || t.contactSubtitle}</p></div></section>
-    <section className="section-padding bg-background"><div className="container-dental max-w-5xl"><div className="grid grid-cols-1 lg:grid-cols-2 gap-12"><motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}><h2 className="heading-section mb-6">{ui.talk}</h2><div className="space-y-6 mb-8"><ContactItem icon={MapPin} title={ui.address} value={address} /><ContactItem icon={Phone} title={ui.phone} value={phone} href={`tel:${phone.replace(/\D/g, '')}`} /><ContactItem icon={Mail} title={ui.email} value={email} href={`mailto:${email}`} /><ContactItem icon={Clock} title={ui.hours} value={ui.hoursValue} /></div><WhatsAppButton text={t.bookWhatsApp} variant="hero" /></motion.div><motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}><form className="bg-card rounded-2xl border border-border p-8 space-y-5" onSubmit={submit}><div><label className="block text-sm font-medium mb-2">{ui.name}</label><input value={form.name} onChange={e => setForm(current => ({ ...current, name: e.target.value }))} maxLength={200} className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" required /></div><div className="grid sm:grid-cols-2 gap-4"><div><label className="block text-sm font-medium mb-2">{ui.email}</label><input type="email" value={form.email} onChange={e => setForm(current => ({ ...current, email: e.target.value }))} maxLength={255} className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" required /></div><div><label className="block text-sm font-medium mb-2">{ui.phoneField}</label><input type="tel" value={form.phone} onChange={e => setForm(current => ({ ...current, phone: e.target.value }))} maxLength={50} className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" /></div></div><div><label className="block text-sm font-medium mb-2">{ui.help}</label><textarea value={form.message} onChange={e => setForm(current => ({ ...current, message: e.target.value }))} maxLength={5000} rows={5} className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-none" required /></div><p className="text-xs text-muted-foreground">{ui.privacy}</p><button type="submit" disabled={sending} className="w-full px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity">{sending ? ui.sending : ui.send}</button></form></motion.div></div></div></section>
+    <section className="section-padding bg-background"><div className="container-dental max-w-5xl"><div className="grid grid-cols-1 lg:grid-cols-2 gap-12"><motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}><h2 className="heading-section mb-6">{ui.talk}</h2><div className="space-y-6 mb-8"><ContactItem icon={MapPin} title={ui.address} value={address} /><ContactItem icon={Phone} title={ui.phone} value={phone} href={`tel:${phone.replace(/\D/g, '')}`} /><ContactItem icon={Mail} title={ui.email} value={email} href={`mailto:${email}`} /><ContactItem icon={Clock} title={ui.hours} value={ui.hoursValue} /></div><WhatsAppButton text={t.bookWhatsApp} variant="hero" /></motion.div><motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}><form className="bg-card rounded-2xl border border-border p-8 space-y-5" onSubmit={submit}><div className="absolute -left-[10000px]" aria-hidden="true"><label htmlFor="contact-website">Website</label><input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" value={website} onChange={event => setWebsite(event.target.value)} /></div><div><label className="block text-sm font-medium mb-2">{ui.name}</label><input value={form.name} onChange={e => setForm(current => ({ ...current, name: e.target.value }))} maxLength={200} autoComplete="name" className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" required /></div><div className="grid sm:grid-cols-2 gap-4"><div><label className="block text-sm font-medium mb-2">{ui.email}</label><input type="email" value={form.email} onChange={e => setForm(current => ({ ...current, email: e.target.value }))} maxLength={255} autoComplete="email" className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" required /></div><div><label className="block text-sm font-medium mb-2">{ui.phoneField}</label><input type="tel" value={form.phone} onChange={e => setForm(current => ({ ...current, phone: e.target.value }))} maxLength={50} autoComplete="tel" className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring" /></div></div><div><label className="block text-sm font-medium mb-2">{ui.help}</label><textarea value={form.message} onChange={e => setForm(current => ({ ...current, message: e.target.value }))} minLength={5} maxLength={5000} rows={5} className="w-full px-4 py-3 rounded-xl border border-input bg-background text-sm focus:outline-none focus:ring-2 focus:ring-ring resize-none" required /></div><p className="text-xs text-muted-foreground">{ui.privacy}</p><button type="submit" disabled={sending} className="w-full px-6 py-3 rounded-xl bg-primary text-primary-foreground font-semibold hover:opacity-90 disabled:opacity-50 transition-opacity">{sending ? ui.sending : ui.send}</button></form></motion.div></div></div></section>
     {settings?.maps_embed_url && <section className="bg-background pb-16"><div className="container-dental max-w-5xl"><div className="rounded-2xl overflow-hidden border border-border"><iframe src={settings.maps_embed_url} width="100%" height="350" style={{ border: 0 }} allowFullScreen loading="lazy" title={ui.map} /></div></div></section>}
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'Dentist', '@id': 'https://temelcidentist.com/#clinic', name: settings?.brand_name || 'Temelci Dental Clinic', url: `https://temelcidentist.com/${lang}`, telephone: '+905391011113', email, address: { '@type': 'PostalAddress', streetAddress: address, addressLocality: 'Kyrenia', addressCountry: 'CY' }, openingHoursSpecification: { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], opens: '09:00', closes: '18:00' } }) }} />
   </>;

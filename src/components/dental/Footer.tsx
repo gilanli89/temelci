@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { WhatsAppButton } from './WhatsAppButton';
-import { MapPin, Phone, Mail, Languages, Clock, HeartHandshake } from 'lucide-react';
+import { MapPin, Phone, Languages, Clock, HeartHandshake } from 'lucide-react';
 import { useSiteSettings } from '@/hooks/useCmsContent';
 
 const CONTACT_PHONE = '+90 539 101 11 13';
@@ -14,7 +14,6 @@ export const Footer = () => {
   const brandName = settings?.brand_name || 'Temelci Dental Clinic';
   const address = settings?.address || t.contactAddress;
   const phone = CONTACT_PHONE;
-  const email = settings?.email || t.contactEmail;
   const ui = {
     en: { careTeam: 'English-speaking care team', coordination: 'Personal treatment coordination', familyClinic: 'Established family clinic', allTreatments: 'All Treatments', clinic: 'Clinic', lab: 'Dental Lab', tourism: 'Tourism', freeQuote: 'Free Quote', hollywoodPackage: 'Hollywood Smile Package', allOn4Package: 'All-on-4 Package', doctors: 'Our Doctors', profile: 'Dr. Şerife Köle Profile', location: 'Kyrenia (Girne), North Cyprus' },
     de: { careTeam: 'Mehrsprachiges Betreuungsteam', coordination: 'Persönliche Behandlungskoordination', familyClinic: 'Etablierte Familienklinik', allTreatments: 'Alle Behandlungen', clinic: 'Klinik', lab: 'Dentallabor', tourism: 'Zahntourismus', freeQuote: 'Kostenlose Anfrage', hollywoodPackage: 'Hollywood-Smile-Paket', allOn4Package: 'All-on-4-Paket', doctors: 'Unsere Behandler', profile: 'Profil Dr. Şerife Köle', location: 'Kyrenia (Girne), Nordzypern' },
@@ -67,11 +66,6 @@ export const Footer = () => {
                 className="flex items-center gap-2.5 text-sm opacity-60 hover:opacity-100 transition-opacity">
                 <Phone className="h-4 w-4 shrink-0" />
                 <span>{phone}</span>
-              </a>
-              <a href={`mailto:${email}`}
-                className="flex items-center gap-2.5 text-sm opacity-60 hover:opacity-100 transition-opacity">
-                <Mail className="h-4 w-4 shrink-0" />
-                <span>{email}</span>
               </a>
             </address>
             <WhatsAppButton text={t.bookWhatsApp} />
@@ -187,8 +181,6 @@ export const Footer = () => {
             <p>© {new Date().getFullYear()} {brandName}. {t.footerRights}</p>
             <div className="flex flex-wrap gap-4 justify-center">
               <span>{ui.location}</span>
-              <span>·</span>
-              <a href={`mailto:${email}`} className="hover:opacity-80 transition-opacity">{email}</a>
               <span>·</span>
               <span>{t.privacyPolicy}</span>
             </div>
