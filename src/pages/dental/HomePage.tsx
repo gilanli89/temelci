@@ -15,8 +15,7 @@ import photoRasih from '@/assets/doctors/rasih_denktash.jpg';
 import photoSerife from '@/assets/doctors/serife_kole.jpg';
 import photoAnna from '@/assets/doctors/anna_zubtcovskaia.jpg';
 
-// Photo: Michael Dam / Unsplash — https://unsplash.com/photos/mEZ3PoFGs_k
-const heroImg = '/hero-smiling-patient.webp';
+const heroImg = '/hero-tech-implant-clinic.webp';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -33,11 +32,11 @@ const HomePage = () => {
   const { data: dbFaqs, isError: faqsError } = useFaqs('global');
   const { data: settings } = useSiteSettings();
   const ui = {
-    en: { digital: 'Digital', kyrenia: 'Kyrenia', explore: 'Explore Temelci Dental', clinicImageAlt: 'A real treatment room at Temelci Dental Clinic', clinicLabel: 'Our clinic in Kyrenia', realClinic: 'Real clinic · Real team', before: 'Before', after: 'After', clinicalCase: 'Clinical case', transformation: 'Patient transformation' },
-    de: { digital: 'Digital', kyrenia: 'Kyrenia', explore: 'Temelci Dental entdecken', clinicImageAlt: 'Ein echter Behandlungsraum der Temelci Dental Clinic', clinicLabel: 'Unsere Klinik in Kyrenia', realClinic: 'Echte Klinik · Echtes Team', before: 'Vorher', after: 'Nachher', clinicalCase: 'Klinischer Fall', transformation: 'Patientenbehandlung' },
-    tr: { digital: 'Dijital', kyrenia: 'Girne', explore: 'Temelci Dental’i keşfedin', clinicImageAlt: 'Temelci Dental Clinic’in gerçek tedavi odası', clinicLabel: 'Girne’deki kliniğimiz', realClinic: 'Gerçek klinik · Gerçek ekip', before: 'Önce', after: 'Sonra', clinicalCase: 'Klinik vaka', transformation: 'Hasta dönüşümü' },
-    he: { digital: 'דיגיטלי', kyrenia: 'קירניה', explore: 'גלו את Temelci Dental', clinicImageAlt: 'חדר טיפולים אמיתי במרפאת Temelci Dental', clinicLabel: 'המרפאה שלנו בקירניה', realClinic: 'מרפאה אמיתית · צוות אמיתי', before: 'לפני', after: 'אחרי', clinicalCase: 'מקרה קליני', transformation: 'שינוי חיוך של מטופל' },
-    ru: { digital: 'Цифровое', kyrenia: 'Кирения', explore: 'Откройте Temelci Dental', clinicImageAlt: 'Настоящий лечебный кабинет клиники Temelci Dental', clinicLabel: 'Наша клиника в Кирении', realClinic: 'Настоящая клиника · Настоящая команда', before: 'До', after: 'После', clinicalCase: 'Клинический случай', transformation: 'Преображение пациента' },
+    en: { digital: 'Digital', kyrenia: 'Kyrenia', explore: 'Explore Temelci Dental', heroAlt: 'Technology-led dental implant clinic with digital 3D planning', clinicImageAlt: 'A real treatment room at Temelci Dental Clinic', clinicLabel: 'Our clinic in Kyrenia', realClinic: 'Real clinic · Real team', before: 'Before', after: 'After', clinicalCase: 'Clinical case', transformation: 'Patient transformation' },
+    de: { digital: 'Digital', kyrenia: 'Kyrenia', explore: 'Temelci Dental entdecken', heroAlt: 'Technologiegestützte Implantatklinik mit digitaler 3D-Planung', clinicImageAlt: 'Ein echter Behandlungsraum der Temelci Dental Clinic', clinicLabel: 'Unsere Klinik in Kyrenia', realClinic: 'Echte Klinik · Echtes Team', before: 'Vorher', after: 'Nachher', clinicalCase: 'Klinischer Fall', transformation: 'Patientenbehandlung' },
+    tr: { digital: 'Dijital', kyrenia: 'Girne', explore: 'Temelci Dental’i keşfedin', heroAlt: 'Dijital 3B planlama kullanılan teknoloji odaklı implant kliniği', clinicImageAlt: 'Temelci Dental Clinic’in gerçek tedavi odası', clinicLabel: 'Girne’deki kliniğimiz', realClinic: 'Gerçek klinik · Gerçek ekip', before: 'Önce', after: 'Sonra', clinicalCase: 'Klinik vaka', transformation: 'Hasta dönüşümü' },
+    he: { digital: 'דיגיטלי', kyrenia: 'קירניה', explore: 'גלו את Temelci Dental', heroAlt: 'מרפאת שתלים מתקדמת עם תכנון תלת-ממדי דיגיטלי', clinicImageAlt: 'חדר טיפולים אמיתי במרפאת Temelci Dental', clinicLabel: 'המרפאה שלנו בקירניה', realClinic: 'מרפאה אמיתית · צוות אמיתי', before: 'לפני', after: 'אחרי', clinicalCase: 'מקרה קליני', transformation: 'שינוי חיוך של מטופל' },
+    ru: { digital: 'Цифровое', kyrenia: 'Кирения', explore: 'Откройте Temelci Dental', heroAlt: 'Современная имплантологическая клиника с цифровым 3D-планированием', clinicImageAlt: 'Настоящий лечебный кабинет клиники Temelci Dental', clinicLabel: 'Наша клиника в Кирении', realClinic: 'Настоящая клиника · Настоящая команда', before: 'До', after: 'После', clinicalCase: 'Клинический случай', transformation: 'Преображение пациента' },
   }[lang];
 
   useSEO({
@@ -127,7 +126,7 @@ const HomePage = () => {
             </motion.div>
           </div>
           <div className="relative order-1 min-h-[40vh] overflow-hidden lg:order-2 lg:min-h-full">
-            <img src={heroImg} alt="Confident smiling woman" className="absolute inset-0 h-full w-full object-cover object-[center_24%]" />
+            <img src={heroImg} alt={ui.heroAlt} className="absolute inset-0 h-full w-full object-cover object-[58%_center]" />
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/45 via-transparent to-transparent lg:bg-gradient-to-r lg:from-foreground/25 lg:to-transparent" />
           </div>
         </div>
