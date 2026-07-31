@@ -92,8 +92,9 @@ $body = implode("\r\n", [
     'Submitted: ' . gmdate('Y-m-d H:i:s') . ' UTC',
 ]);
 
+$sender = 'u722669262@srv1301.main-hosting.eu';
 $headers = [
-    'From: Temelci Dental Website <info@temelcidentist.com>',
+    'From: Temelci Dental Website <' . $sender . '>',
     'Reply-To: ' . $email,
     'MIME-Version: 1.0',
     'Content-Type: text/plain; charset=UTF-8',
@@ -101,12 +102,18 @@ $headers = [
     'X-Mailer: TemelciDental-ContactForm',
 ];
 
-$sent = mail(
-    'info@temelcidentist.com, cypdentalinfo@gmail.com',
-    $subject,
-    $body,
-    implode("\r\n", $headers)
-);
+$recipients = ['info@temelcidentist.com', 'cypdentalinfo@gmail.com'];
+$sent = true;
+foreach ($recipients as $recipient) {
+    $accepted = mail(
+        $recipient,
+        $subject,
+        $body,
+        implode("\r\n", $headers),
+        '-f' . $sender
+    );
+    $sent = $sent && $accepted;
+}
 
 if (!$sent) {
     error_log('Temelci contact form: PHP mail() returned false');
