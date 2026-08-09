@@ -45,6 +45,7 @@ const SettingsAdmin = lazy(() => import("./pages/admin/SettingsAdmin"));
 const UsersAdmin = lazy(() => import("./pages/admin/UsersAdmin"));
 const XrayList = lazy(() => import("./pages/admin/XrayList"));
 const XrayAnnotator = lazy(() => import("./pages/admin/XrayAnnotator"));
+const XrayPricingAdmin = lazy(() => import("./pages/admin/XrayPricingAdmin"));
 const PagesAdmin = lazy(() => import("./pages/admin/PagesAdmin"));
 const ReviewsAdmin = lazy(() => import("./pages/admin/ReviewsAdmin"));
 const FaqsAdmin = lazy(() => import("./pages/admin/FaqsAdmin"));
@@ -251,6 +252,7 @@ const App = () => (
               <Route path="faqs" element={<RequireAdmin><FaqsAdmin /></RequireAdmin>} />
               <Route path="xrays" element={<RequireAdmin allow={['super_admin','admin','doctor']}><XrayList /></RequireAdmin>} />
               <Route path="xrays/:id" element={<RequireAdmin allow={['super_admin','admin','doctor']}><XrayAnnotator /></RequireAdmin>} />
+              <Route path="xray-pricing" element={<RequireAdmin allow={['super_admin','admin']}><XrayPricingAdmin /></RequireAdmin>} />
               <Route path="leads" element={<RequireAdmin allow={['super_admin','admin','lead_manager']}><LeadsAdmin /></RequireAdmin>} />
               <Route path="media" element={<RequireAdmin allow={['super_admin','admin','editor']}><MediaLibrary /></RequireAdmin>} />
               <Route path="settings" element={<RequireAdmin allow={['super_admin','admin']}><SettingsAdmin /></RequireAdmin>} />

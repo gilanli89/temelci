@@ -335,6 +335,7 @@ export type Database = {
           created_at: string
           email: string | null
           id: string
+          is_demo: boolean
           lang: string | null
           message: string | null
           name: string | null
@@ -348,6 +349,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           id?: string
+          is_demo?: boolean
           lang?: string | null
           message?: string | null
           name?: string | null
@@ -361,6 +363,7 @@ export type Database = {
           created_at?: string
           email?: string | null
           id?: string
+          is_demo?: boolean
           lang?: string | null
           message?: string | null
           name?: string | null
@@ -1041,6 +1044,48 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      xray_pricing_catalog: {
+        Row: {
+          active: boolean
+          brand: string | null
+          code: string
+          created_at: string
+          currency: string
+          display_name: string
+          id: string
+          kind: string
+          sort_order: number
+          unit_price: number
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          brand?: string | null
+          code: string
+          created_at?: string
+          currency?: string
+          display_name: string
+          id?: string
+          kind: string
+          sort_order?: number
+          unit_price?: number
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          brand?: string | null
+          code?: string
+          created_at?: string
+          currency?: string
+          display_name?: string
+          id?: string
+          kind?: string
+          sort_order?: number
+          unit_price?: number
+          updated_at?: string
         }
         Relationships: []
       }

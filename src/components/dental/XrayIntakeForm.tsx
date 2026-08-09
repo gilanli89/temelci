@@ -3,6 +3,7 @@ import { CalendarDays, CheckCircle2, Scan, ShieldCheck, Upload } from 'lucide-re
 import { supabase } from '@/integrations/supabase/client';
 import { useOptionalLanguage, type ActiveLanguage } from '@/i18n/LanguageContext';
 import { uploadToBucket } from '@/lib/mediaUpload';
+import { formatLocalDateInputValue, isVisitDateValid } from '@/lib/dateInput';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
@@ -56,8 +57,6 @@ const COPY: Record<ActiveLanguage, Copy> = {
   },
 };
 
-const today = () => new Date().toLocaleDateString('en-CA');
-
 export function XrayIntakeForm({ compact = false, onComplete }: { compact?: boolean; onComplete?: () => void }) {
   const language = useOptionalLanguage();
   const lang = language?.lang || 'en';
@@ -68,7 +67,7 @@ export function XrayIntakeForm({ compact = false, onComplete }: { compact?: bool
   const [consent, setConsent] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
-  const minDate = useMemo(today, []);
+  const minDate = useMemo(formatLocalDateInputValue, []);
 
   useEffect(() => () => { if (preview) URL.revokeObjectURL(preview); }, [preview]);
 
@@ -87,7 +86,7 @@ export function XrayIntakeForm({ compact = false, onComplete }: { compact?: bool
     const lastName = form.lastName.trim();
     if (!firstName || !lastName) return toast.error(copy.missing);
     if (form.phone.replace(/\D/g, '').length < 7) return toast.error(copy.invalidPhone);
-    if (!form.preferredVisitDate || form.preferredVisitDate < minDate) return toast.error(copy.invalidDate);
+    if (!isVisitDateValid(form.preferredVisitDate, minDate)) return toast.error(copy.invalidDate);
     if (!file) return toast.error(copy.missingXray);
     if (!consent) return toast.error(copy.missingConsent);
 

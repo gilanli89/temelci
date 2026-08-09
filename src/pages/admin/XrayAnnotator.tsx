@@ -10,9 +10,45 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from 'sonner';
-import { ArrowLeft, Undo, Redo, Trash2, Save, Copy, ExternalLink, ZoomIn, ZoomOut, Send, MousePointer2, CheckCircle2, MessageCircle } from 'lucide-react';
+import {
+  Activity,
+  ArrowLeft,
+  CheckCircle2,
+  Copy,
+  Crown,
+  ExternalLink,
+  MessageCircle,
+  MousePointer2,
+  Redo,
+  Save,
+  Send,
+  Smile,
+  StickyNote,
+  Syringe,
+  Trash2,
+  Undo,
+  X,
+  ZoomIn,
+  ZoomOut,
+  type LucideIcon,
+} from 'lucide-react';
 import { uploadDataUrl } from '@/lib/mediaUpload';
-import { annotationToTreatmentItem, createAnnotation, DentalArch, getXrayTool, normalizeAnnotations, XrayAnnotation, XRAY_TOOLS, XrayTool, xrayPlanTotal } from '@/lib/xrayPlanning';
+import {
+  annotationToTreatmentItem,
+  applyPricingItem,
+  createAnnotation,
+  DEFAULT_XRAY_PRICING_ITEMS,
+  DentalArch,
+  getXrayTool,
+  normalizeAnnotations,
+  pricingItemsForTool,
+  XrayAnnotation,
+  XrayPricingItem,
+  XRAY_TOOLS,
+  XrayTool,
+  xrayPlanTotal,
+} from '@/lib/xrayPlanning';
+import { getDemoXrayCase, isDirectXrayUrl, isVirtualDemoXray } from '@/lib/xrayDemoCases';
 
 interface XrayRequest {
   id: string;
@@ -31,6 +67,7 @@ interface XrayRequest {
   delivery_error: string | null;
   plan_version: number | null;
   plan_expires_at: string | null;
+  is_demo?: boolean;
 }
 
 interface DeliveryResult {
@@ -46,49 +83,81 @@ function useImg(src: string): [HTMLImageElement | undefined] {
   return [image];
 }
 
-function AnnotationShape({ annotation, currency, selected }: { annotation: XrayAnnotation; currency: string; selected: boolean }) {
+const TOOL_ICONS: Record<XrayTool, LucideIcon> = {
+  implant: Syringe,
+  extraction: X,
+  crown: Crown,
+  root_canal: Activity,
+  all_on_4: Smile,
+  all_on_6: Smile,
+  note: StickyNote,
+};
+
+function AnnotationShape({ annotation, selected }: { annotation: XrayAnnotation; selected: boolean }) {
   const tool = getXrayTool(annotation.kind);
   const fullArchCount = annotation.kind === 'all_on_4' ? 4 : 6;
   const fullArch = annotation.kind === 'all_on_4' || annotation.kind === 'all_on_6';
   const archDirection = annotation.arch === 'lower' ? -1 : 1;
+  const compactCaption = annotation.tooth ? `#${annotation.tooth}` : tool.shortLabel;
+  const captionWidth = Math.max(34, compactCaption.length * 8 + 14);
+  const captionY = fullArch ? 24 : -48;
   return (
     <>
-      {selected && <Circle name="selection" radius={fullArch ? 62 : 21} stroke="#38bdf8" strokeWidth={3} dash={[6, 4]} />}
+      {selected && <Circle name="selection" listening={false} radius={fullArch ? 62 : 21} stroke="#38bdf8" strokeWidth={3} dash={[6, 4]} />}
       {annotation.kind === 'implant' && <>
         <Rect x={-6} y={-17} width={12} height={30} cornerRadius={4} fill={tool.color} stroke="white" strokeWidth={2} />
-        <Line points={[-6, -8, 6, -4, -6, 0, 6, 4, -6, 8]} stroke="white" strokeWidth={1.5} />
+        <Line listening={false} points={[-6, -8, 6, -4, -6, 0, 6, 4, -6, 8]} stroke="white" strokeWidth={1.5} />
       </>}
       {annotation.kind === 'extraction' && <>
         <Circle radius={17} fill="rgba(239,68,68,.2)" stroke={tool.color} strokeWidth={2} />
-        <Line points={[-12, -12, 12, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
-        <Line points={[12, -12, -12, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
+        <Line listening={false} points={[-12, -12, 12, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
+        <Line listening={false} points={[12, -12, -12, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
       </>}
       {annotation.kind === 'crown' && <>
         <Circle radius={16} fill="rgba(139,92,246,.25)" stroke={tool.color} strokeWidth={4} />
-        <Text text="C" fill="white" fontSize={14} fontStyle="bold" x={-5} y={-7} />
+        <Text listening={false} text="C" fill="white" fontSize={14} fontStyle="bold" x={-5} y={-7} />
       </>}
       {annotation.kind === 'root_canal' && <>
         <Circle radius={16} fill="rgba(245,158,11,.25)" stroke={tool.color} strokeWidth={3} />
-        <Line points={[0, -12, 0, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
-        <Circle y={-12} radius={4} fill={tool.color} />
+        <Line listening={false} points={[0, -12, 0, 12]} stroke={tool.color} strokeWidth={5} lineCap="round" />
+        <Circle listening={false} y={-12} radius={4} fill={tool.color} />
       </>}
       {annotation.kind === 'note' && <>
         <Circle radius={16} fill={tool.color} stroke="white" strokeWidth={2} />
-        <Text text="N" fill="white" fontSize={14} fontStyle="bold" x={-5} y={-7} />
+        <Text listening={false} text="N" fill="white" fontSize={14} fontStyle="bold" x={-5} y={-7} />
       </>}
       {fullArch && <>
         <Line points={[-58, 8 * archDirection, -32, -4 * archDirection, 0, -9 * archDirection, 32, -4 * archDirection, 58, 8 * archDirection]} stroke={tool.color} strokeWidth={5} tension={0.4} lineCap="round" />
         {Array.from({ length: fullArchCount }, (_, index) => {
           const x = fullArchCount === 4 ? -42 + index * 28 : -50 + index * 20;
           const y = (Math.abs(x) / 10 - 7) * archDirection;
-          return <Group key={index} x={x} y={y}><Circle radius={8} fill={tool.color} stroke="white" strokeWidth={2} /><Text text={String(index + 1)} x={-3} y={-4} fill="white" fontSize={9} fontStyle="bold" /></Group>;
+          return <Group listening={false} key={index} x={x} y={y}><Circle radius={8} fill={tool.color} stroke="white" strokeWidth={2} /><Text text={String(index + 1)} x={-3} y={-4} fill="white" fontSize={9} fontStyle="bold" /></Group>;
         })}
       </>}
-      <Text
-        text={`${annotation.label}${annotation.tooth ? ` · #${annotation.tooth}` : ''}${annotation.price ? ` · ${currency} ${annotation.price}` : ''}`}
-        fill="white" fontSize={12} fontStyle="bold" x={fullArch ? -58 : 22} y={fullArch ? 22 : -8}
-        shadowColor="black" shadowBlur={5} shadowOpacity={1}
-      />
+      {selected && (
+        <Group listening={false}>
+          <Rect
+            x={-captionWidth / 2}
+            y={captionY}
+            width={captionWidth}
+            height={22}
+            cornerRadius={11}
+            fill="rgba(15,23,42,.92)"
+            stroke="rgba(255,255,255,.75)"
+            strokeWidth={1}
+          />
+          <Text
+            text={compactCaption}
+            x={-captionWidth / 2}
+            y={captionY + 5}
+            width={captionWidth}
+            align="center"
+            fill="white"
+            fontSize={11}
+            fontStyle="bold"
+          />
+        </Group>
+      )}
     </>
   );
 }
@@ -102,6 +171,8 @@ export default function XrayAnnotator() {
   const [future, setFuture] = useState<XrayAnnotation[][]>([]);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [selectedTool, setSelectedTool] = useState<XrayTool>('implant');
+  const [selectedPricingCode, setSelectedPricingCode] = useState('');
+  const [pricingCatalog, setPricingCatalog] = useState<XrayPricingItem[]>([]);
   const [arch, setArch] = useState<DentalArch>('upper');
   const [baseSize, setBaseSize] = useState({ width: 800, height: 600 });
   const [zoom, setZoom] = useState(1);
@@ -116,6 +187,15 @@ export default function XrayAnnotator() {
 
   useEffect(() => {
     if (!id) return;
+    const demoCase = getDemoXrayCase(id);
+    if (demoCase) {
+      setRequest(demoCase);
+      setAnnotations(normalizeAnnotations(demoCase.annotations));
+      setNotes('');
+      setCurrency(demoCase.currency);
+      setSourceUrl(demoCase.xray_image_url);
+      return;
+    }
     (async () => {
       const { data, error } = await supabase.rpc('claim_xray_request', { _request_id: id });
       if (error || !data) {
@@ -128,7 +208,7 @@ export default function XrayAnnotator() {
       setAnnotations(normalizeAnnotations(claimed.annotations));
       setNotes(claimed.doctor_notes || '');
       setCurrency(claimed.currency || 'EUR');
-      if (/^https?:\/\//.test(claimed.xray_image_url)) setSourceUrl(claimed.xray_image_url);
+      if (isDirectXrayUrl(claimed.xray_image_url)) setSourceUrl(claimed.xray_image_url);
       else {
         const { data: signed, error: signError } = await supabase.storage.from('xrays').createSignedUrl(claimed.xray_image_url, 3600);
         if (signError || !signed) toast.error('The private X-ray image could not be opened.');
@@ -136,6 +216,23 @@ export default function XrayAnnotator() {
       }
     })();
   }, [id, navigate]);
+
+  useEffect(() => {
+    (async () => {
+      const { data, error } = await supabase
+        .from('xray_pricing_catalog')
+        .select('*')
+        .eq('active', true)
+        .order('sort_order')
+        .order('display_name');
+      if (error) {
+        setPricingCatalog(DEFAULT_XRAY_PRICING_ITEMS);
+        toast.warning('Unit price migration is pending. Preview presets are loaded with zero fees.');
+        return;
+      }
+      setPricingCatalog((data || []) as XrayPricingItem[]);
+    })();
+  }, []);
 
   useEffect(() => {
     function resize() {
@@ -150,6 +247,14 @@ export default function XrayAnnotator() {
 
   const drawingSize = useMemo(() => ({ width: baseSize.width * zoom, height: baseSize.height * zoom }), [baseSize, zoom]);
   const selectedAnnotation = annotations.find(annotation => annotation.id === selectedId);
+  const toolPricingItems = useMemo(
+    () => pricingItemsForTool(pricingCatalog, selectedTool, currency),
+    [currency, pricingCatalog, selectedTool],
+  );
+  const selectedAnnotationPricingItems = useMemo(
+    () => selectedAnnotation ? pricingItemsForTool(pricingCatalog, selectedAnnotation.kind, currency) : [],
+    [currency, pricingCatalog, selectedAnnotation],
+  );
   const total = xrayPlanTotal(annotations);
   const closed = request ? ['accepted', 'rejected', 'archived'].includes(request.status) : false;
 
@@ -179,6 +284,16 @@ export default function XrayAnnotator() {
   }, [annotations, push]);
 
   useEffect(() => {
+    if (!toolPricingItems.length) {
+      setSelectedPricingCode('');
+      return;
+    }
+    if (!toolPricingItems.some(item => item.code === selectedPricingCode)) {
+      setSelectedPricingCode(toolPricingItems[0].code);
+    }
+  }, [selectedPricingCode, toolPricingItems]);
+
+  useEffect(() => {
     function keyboard(event: KeyboardEvent) {
       const target = event.target as HTMLElement | null;
       if (target?.matches('input,textarea,[contenteditable="true"]')) return;
@@ -202,7 +317,9 @@ export default function XrayAnnotator() {
     if (event.target !== event.target.getStage() && targetName !== 'xray-background') return;
     const position = event.target.getStage().getPointerPosition();
     if (!position) return;
-    const annotation = createAnnotation(selectedTool, position.x / drawingSize.width, position.y / drawingSize.height, arch);
+    const baseAnnotation = createAnnotation(selectedTool, position.x / drawingSize.width, position.y / drawingSize.height, arch);
+    const pricingItem = toolPricingItems.find(item => item.code === selectedPricingCode) || toolPricingItems[0];
+    const annotation = pricingItem ? applyPricingItem(baseAnnotation, pricingItem) : baseAnnotation;
     push([...annotations, annotation]);
     setSelectedId(annotation.id);
   }
@@ -212,10 +329,27 @@ export default function XrayAnnotator() {
       if (annotation.id !== annotationId) return annotation;
       const updated = { ...annotation, ...patch };
       if (patch.arch && (updated.kind === 'all_on_4' || updated.kind === 'all_on_6')) {
-        updated.label = `${getXrayTool(updated.kind).label} (${patch.arch})`;
+        const pricingItem = pricingCatalog.find(item => item.code === updated.pricingCode);
+        updated.label = `${pricingItem?.display_name || getXrayTool(updated.kind).label} (${patch.arch})`;
       }
       return updated;
     }));
+  }
+
+  function changeAnnotationKind(annotation: XrayAnnotation, kind: XrayTool) {
+    const fullArch = kind === 'all_on_4' || kind === 'all_on_6';
+    const base: XrayAnnotation = {
+      ...annotation,
+      kind,
+      label: fullArch ? `${getXrayTool(kind).label} (${annotation.arch || arch})` : getXrayTool(kind).label,
+      price: null,
+      pricingCode: undefined,
+      brand: undefined,
+      ...(fullArch ? { arch: annotation.arch || arch } : { arch: undefined }),
+    };
+    const pricingItem = pricingItemsForTool(pricingCatalog, kind, currency)[0];
+    const next = pricingItem ? applyPricingItem(base, pricingItem) : base;
+    push(annotations.map(item => item.id === annotation.id ? next : item));
   }
 
   async function persist(markReady: boolean) {
@@ -226,6 +360,22 @@ export default function XrayAnnotator() {
     }
     setSaving(true);
     try {
+      if (request.is_demo || isVirtualDemoXray(request.id)) {
+        const savedDemo: XrayRequest = {
+          ...request,
+          annotations,
+          doctor_notes: notes,
+          currency,
+          status: markReady ? 'ready' : 'in_review',
+          plan_version: (request.plan_version || 0) + 1,
+        };
+        setRequest(savedDemo);
+        setHistory([]);
+        setFuture([]);
+        toast.success(markReady ? 'Demo plan ready — no patient contacted' : 'Demo draft saved locally');
+        return savedDemo;
+      }
+
       let annotatedPath = request.annotated_image_url || '';
       if (stageRef.current) {
         const selectionNodes = stageRef.current.find('.selection');
@@ -262,6 +412,7 @@ export default function XrayAnnotator() {
   async function sendPlan() {
     const saved = await persist(true);
     if (!saved) return;
+    if (saved.is_demo || isVirtualDemoXray(saved.id)) return;
     setSaving(true);
     try {
       const { data, error } = await supabase.functions.invoke<DeliveryResult>('send-xray-plan', { body: { requestId: saved.id } });
@@ -288,7 +439,7 @@ export default function XrayAnnotator() {
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" aria-label="Back to X-ray pool" onClick={() => navigate('/admin/xrays')}><ArrowLeft className="w-4 h-4" /></Button>
           <div>
-            <div className="flex items-center gap-2"><h1 className="font-display text-xl font-bold">{request.patient_name}</h1><span className="rounded bg-primary/10 text-primary text-[10px] uppercase font-bold px-2 py-1">{request.status.replace('_', ' ')}</span></div>
+            <div className="flex items-center gap-2"><h1 className="font-display text-xl font-bold">{request.patient_name}</h1><span className="rounded bg-primary/10 text-primary text-[10px] uppercase font-bold px-2 py-1">{request.status.replace('_', ' ')}</span>{request.is_demo && <span className="rounded bg-fuchsia-100 text-fuchsia-700 text-[10px] uppercase font-bold px-2 py-1">Demo</span>}</div>
             <p className="text-xs text-muted-foreground">{request.phone} · {request.email || 'No email'} · Plan v{request.plan_version || 0}</p>
           </div>
         </div>
@@ -307,15 +458,42 @@ export default function XrayAnnotator() {
           <Card className="p-3">
             <div className="flex items-center gap-2 flex-wrap">
               <span className="text-xs font-bold uppercase text-muted-foreground mr-1">Plan tools</span>
-              {XRAY_TOOLS.map(tool => (
-                <button key={tool.kind} type="button" title={tool.description} disabled={closed} onClick={() => setSelectedTool(tool.kind)}
-                  className={`rounded-lg border px-3 py-2 text-xs font-semibold transition ${selectedTool === tool.kind ? 'text-white shadow-sm' : 'bg-background hover:bg-secondary'}`}
-                  style={selectedTool === tool.kind ? { backgroundColor: tool.color, borderColor: tool.color } : { borderColor: `${tool.color}66`, color: tool.color }}>
-                  {tool.shortLabel} · {tool.label}
-                </button>
-              ))}
+              {XRAY_TOOLS.map(tool => {
+                const ToolIcon = TOOL_ICONS[tool.kind];
+                return (
+                  <button
+                    key={tool.kind}
+                    type="button"
+                    title={tool.description}
+                    aria-label={tool.label}
+                    disabled={closed}
+                    onClick={() => {
+                      setSelectedTool(tool.kind);
+                      setSelectedPricingCode(pricingItemsForTool(pricingCatalog, tool.kind, currency)[0]?.code || '');
+                    }}
+                    className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border px-3 py-2 text-xs font-semibold transition sm:min-w-28 ${selectedTool === tool.kind ? 'text-white shadow-sm' : 'bg-background hover:bg-secondary'}`}
+                    style={selectedTool === tool.kind ? { backgroundColor: tool.color, borderColor: tool.color } : { borderColor: `${tool.color}66`, color: tool.color }}
+                  >
+                    <ToolIcon className="h-4 w-4 shrink-0" />
+                    <span className="hidden sm:inline">{tool.label}</span>
+                    <span className="sm:hidden">{tool.shortLabel}</span>
+                  </button>
+                );
+              })}
               {(selectedTool === 'all_on_4' || selectedTool === 'all_on_6') && (
                 <Select value={arch} onValueChange={value => setArch(value as DentalArch)}><SelectTrigger className="w-28 h-9"><SelectValue /></SelectTrigger><SelectContent><SelectItem value="upper">Upper arch</SelectItem><SelectItem value="lower">Lower arch</SelectItem></SelectContent></Select>
+              )}
+              {toolPricingItems.length > 0 && (
+                <Select value={selectedPricingCode || toolPricingItems[0].code} onValueChange={setSelectedPricingCode}>
+                  <SelectTrigger className="h-9 min-w-52 flex-1 sm:flex-none"><SelectValue placeholder="Unit price preset" /></SelectTrigger>
+                  <SelectContent>
+                    {toolPricingItems.map(item => (
+                      <SelectItem key={item.code} value={item.code}>
+                        {item.display_name} · {item.currency} {Number(item.unit_price).toLocaleString()}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               )}
               <div className="ml-auto flex items-center gap-1">
                 <Button variant="outline" size="icon" aria-label="Zoom out" onClick={() => setZoom(value => Math.max(1, +(value - 0.25).toFixed(2)))} disabled={zoom <= 1}><ZoomOut className="w-4 h-4" /></Button>
@@ -338,14 +516,14 @@ export default function XrayAnnotator() {
                         x: Math.min(1, Math.max(0, event.target.x() / drawingSize.width)),
                         y: Math.min(1, Math.max(0, event.target.y() / drawingSize.height)),
                       })}>
-                      <AnnotationShape annotation={annotation} currency={currency} selected={selectedId === annotation.id} />
+                      <AnnotationShape annotation={annotation} selected={selectedId === annotation.id} />
                     </Group>
                   ))}
                 </Layer>
               </Stage>
             )}
           </Card>
-          <p className="text-xs text-muted-foreground flex items-center gap-2"><MousePointer2 className="w-3 h-3" />Choose a tool, click the X-ray to place it, then drag to reposition. Ctrl/Cmd+Z undo · Shift+Ctrl/Cmd+Z redo · Delete removes the selected marker.</p>
+          <p className="text-xs text-muted-foreground flex items-center gap-2"><MousePointer2 className="w-3 h-3" />Choose an icon, tap the X-ray to place it, or tap an existing marker to edit it. Labels only appear on the selected marker. Ctrl/Cmd+Z undo · Shift+Ctrl/Cmd+Z redo.</p>
         </div>
 
         <aside className="space-y-3">
@@ -358,14 +536,42 @@ export default function XrayAnnotator() {
               </div>
               <div className="space-y-3">
                 <div><Label>Treatment</Label><Select value={selectedAnnotation.kind} disabled={closed} onValueChange={value => {
-                  const kind = value as XrayTool;
-                  const fullArch = kind === 'all_on_4' || kind === 'all_on_6';
-                  updateAnnotation(selectedAnnotation.id, { kind, label: fullArch ? `${getXrayTool(kind).label} (${selectedAnnotation.arch || arch})` : getXrayTool(kind).label, ...(fullArch ? { arch: selectedAnnotation.arch || arch } : {}) });
+                  changeAnnotationKind(selectedAnnotation, value as XrayTool);
                 }}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent>{XRAY_TOOLS.map(tool => <SelectItem key={tool.kind} value={tool.kind}>{tool.label}</SelectItem>)}</SelectContent></Select></div>
                 {(selectedAnnotation.kind === 'all_on_4' || selectedAnnotation.kind === 'all_on_6') && <div><Label>Dental arch</Label><Select value={selectedAnnotation.arch || 'upper'} disabled={closed} onValueChange={value => updateAnnotation(selectedAnnotation.id, { arch: value as DentalArch })}><SelectTrigger><SelectValue /></SelectTrigger><SelectContent><SelectItem value="upper">Upper arch</SelectItem><SelectItem value="lower">Lower arch</SelectItem></SelectContent></Select></div>}
+                {selectedAnnotationPricingItems.length > 0 && (
+                  <div>
+                    <Label>Unit price preset</Label>
+                    <Select
+                      value={selectedAnnotation.pricingCode || 'manual'}
+                      disabled={closed}
+                      onValueChange={value => {
+                        if (value === 'manual') {
+                          updateAnnotation(selectedAnnotation.id, { pricingCode: undefined, brand: undefined });
+                          return;
+                        }
+                        const pricingItem = selectedAnnotationPricingItems.find(item => item.code === value);
+                        if (pricingItem) {
+                          const priced = applyPricingItem(selectedAnnotation, pricingItem);
+                          updateAnnotation(selectedAnnotation.id, priced);
+                        }
+                      }}
+                    >
+                      <SelectTrigger><SelectValue /></SelectTrigger>
+                      <SelectContent>
+                        {selectedAnnotationPricingItems.map(item => (
+                          <SelectItem key={item.code} value={item.code}>
+                            {item.display_name} · {item.currency} {Number(item.unit_price).toLocaleString()}
+                          </SelectItem>
+                        ))}
+                        <SelectItem value="manual">Manual override</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
                 <div className="grid grid-cols-2 gap-2">
                   <div><Label>Tooth #</Label><Input disabled={closed} value={selectedAnnotation.tooth} onChange={event => updateAnnotation(selectedAnnotation.id, { tooth: event.target.value })} placeholder="FDI: 14" maxLength={50} /></div>
-                  <div><Label>Price</Label><Input disabled={closed} type="number" min="0" value={selectedAnnotation.price ?? ''} onChange={event => updateAnnotation(selectedAnnotation.id, { price: event.target.value ? Math.max(0, +event.target.value) : null })} /></div>
+                  <div><Label>Price</Label><Input disabled={closed} type="number" min="0" value={selectedAnnotation.price ?? ''} onChange={event => updateAnnotation(selectedAnnotation.id, { price: event.target.value ? Math.max(0, +event.target.value) : null, pricingCode: undefined })} /></div>
                 </div>
                 <div><Label>Item note</Label><Textarea disabled={closed} rows={3} value={selectedAnnotation.note} onChange={event => updateAnnotation(selectedAnnotation.id, { note: event.target.value })} maxLength={2000} /></div>
               </div>
@@ -378,9 +584,38 @@ export default function XrayAnnotator() {
             <p className="text-xs text-muted-foreground text-right">{annotations.length} treatment item(s)</p>
           </Card>
 
+          {annotations.length > 0 && (
+            <Card className="divide-y">
+              <div className="p-4">
+                <h3 className="font-semibold">Treatment summary</h3>
+                <p className="text-xs text-muted-foreground">The saved patient plan uses these itemised fees.</p>
+              </div>
+              {annotations.map((annotation, index) => (
+                <button
+                  key={annotation.id}
+                  type="button"
+                  onClick={() => setSelectedId(annotation.id)}
+                  className={`flex w-full items-center justify-between gap-3 p-3 text-left text-sm transition hover:bg-secondary/50 ${selectedId === annotation.id ? 'bg-primary/5' : ''}`}
+                >
+                  <span className="min-w-0">
+                    <span className="font-medium">{index + 1}. {annotation.label}</span>
+                    {annotation.tooth && <span className="ml-1 text-xs text-muted-foreground">#{annotation.tooth}</span>}
+                  </span>
+                  <span className="shrink-0 font-semibold">{currency} {(annotation.price ?? 0).toLocaleString()}</span>
+                </button>
+              ))}
+            </Card>
+          )}
+
           <Card className="p-4"><Label>Doctor notes visible to patient</Label><Textarea disabled={closed} rows={5} value={notes} onChange={event => setNotes(event.target.value)} maxLength={10000} placeholder="Explain priorities, sequencing and the need for an in-person examination…" /></Card>
 
-          {['ready', 'sent', 'accepted', 'rejected'].includes(request.status) && (
+          {(request.is_demo || isVirtualDemoXray(request.id)) && (
+            <Card className="border-blue-200 bg-blue-50 p-4 text-sm text-blue-900">
+              Demo mode: draft and plan actions stay in this browser session. No database record, share link or WhatsApp message is created.
+            </Card>
+          )}
+
+          {!request.is_demo && !isVirtualDemoXray(request.id) && ['ready', 'sent', 'accepted', 'rejected'].includes(request.status) && (
             <Card className="p-4 bg-primary/5 border-primary/30">
               <h3 className="font-semibold mb-2">Secure patient plan</h3>
               <div className="flex gap-2"><Input readOnly value={shareUrl} /><Button size="icon" variant="outline" aria-label="Copy secure link" onClick={() => { navigator.clipboard.writeText(shareUrl); toast.success('Secure link copied'); }}><Copy className="w-4 h-4" /></Button><Button size="icon" variant="outline" asChild><a href={shareUrl} target="_blank" rel="noreferrer" aria-label="Open patient plan"><ExternalLink className="w-4 h-4" /></a></Button></div>
